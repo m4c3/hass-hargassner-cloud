@@ -6,51 +6,33 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
     DOMAIN, NAME, PLATFORMS,
     CONF_USERNAME, CONF_PASSWORD, CONF_CLIENT_SECRET, CONF_INSTALLATION,
-    DEFAULT_SCAN_INTERVAL
+    DEFAULT_SCAN_INTERVAL, AUTH_URL, WIDGETS_URL_TMPL
 )
+from .api import HargassnerClient
 
 _LOGGER = logging.getLogger(__name__)
 
 class HargassnerHub:
     def __init__(self, hass: HomeAssistant, username: str, password: str, client_secret: str, installation: str):
         self.hass = hass
-        self.username = username
-        self.password = password
-        self.client_secret = client_secret
-        self.installation = installation
-        self.client = None  # late init
-
-    async def async_connect(self):
-        # Import on runtime to avoid blocking setup without deps
-        from hargassner import Hargassner
-        self.client = Hargassner(
-            username=self.username,
-            password=self.password,
-            client_secret=self.client_secret,
-            installation=self.installation,
+        self.client = HargassnerClient(
+            async_get_clientsession(hass),
+            username=username,
+            password=password,
+            client_secret=client_secret,
+            installation=installation,
+            auth_url=AUTH_URL,
+            widgets_url=WIDGETS_URL_TMPL.format(installation=installation),
         )
-        # Some libs are sync-only; run in executor if needed
-        await self.hass.async_add_executor_job(self.client.login)
 
     async def async_fetch(self):
-        # Returns the full widgets payload (dict)
-        def _fetch():
-            # Assuming the library exposes a method to read widgets/state
-            # Common naming patterns: get_widgets(), get_state(), read_widgets()
-            # We try the canonical name and fall back for older versions.
-            if hasattr(self.client, "get_widgets"):
-                return self.client.get_widgets()
-            if hasattr(self.client, "get_state"):
-                return self.client.get_state()
-            if hasattr(self.client, "widgets"):
-                return self.client.widgets()
-            raise RuntimeError("Hargassner client: no data method found")
-        return await self.hass.async_add_executor_job(_fetch)
+        return await self.client.get_widgets()
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data.setdefault(DOMAIN, {})
@@ -62,7 +44,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         entry.data[CONF_CLIENT_SECRET],
         entry.data[CONF_INSTALLATION],
     )
-    await hub.async_connect()
 
     async def _async_update():
         try:

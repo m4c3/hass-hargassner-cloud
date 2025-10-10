@@ -9,4 +9,6 @@ CONF_CLIENT_SECRET = "client_secret"
 CONF_INSTALLATION = "installation"
 
 DEFAULT_SCAN_INTERVAL = 60  # seconds
-TOKEN_REFRESH_INTERVAL = 3600  # seconds
+
+AUTH_URL = "https://web.hargassner.at/api/auth/login"
+WIDGETS_URL_TMPL = "https://web.hargassner.at/api/widgets?installationId={installation}"
