@@ -11,4 +11,4 @@ CONF_INSTALLATION = "installation"
 DEFAULT_SCAN_INTERVAL = 60  # seconds
 
 AUTH_URL = "https://web.hargassner.at/api/auth/login"
-WIDGETS_URL_TMPL = "https://web.hargassner.at/api/widgets?installationId={installation}"
+WIDGETS_URL_TMPL = "https://web.hargassner.at/api/installations/{installation}/widgets"
