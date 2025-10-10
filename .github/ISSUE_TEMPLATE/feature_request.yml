@@ -1,0 +1,31 @@
+name: 💡 Feature request
+description: Suggest a new feature or improvement for the Hargassner Cloud integration
+title: "[Feature]: "
+labels: ["enhancement"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement!  
+        Please describe what you would like to see added or changed.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What new functionality would you like to see?
+      placeholder: "Describe your feature or enhancement idea"
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / Use case
+      description: Why is this feature important or helpful?
+      placeholder: "Explain the benefit or problem this feature would solve"
+  - type: input
+    id: version
+    attributes:
+      label: Current version
+      description: Which version of the integration are you currently using?
+      placeholder: "e.g. 0.2.0"

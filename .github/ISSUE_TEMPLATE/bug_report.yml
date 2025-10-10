@@ -1,0 +1,40 @@
+name: 🐛 Bug report
+description: Report a bug or unexpected behavior in the Hargassner Cloud integration
+title: "[Bug]: "
+labels: ["bug"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug!  
+        Please fill out as many details as possible so we can reproduce and fix the issue.
+  - type: input
+    id: version
+    attributes:
+      label: Integration version
+      description: Which version of the Hargassner Cloud integration are you using?
+      placeholder: "e.g. 0.2.0"
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened and what did you expect to happen?
+      placeholder: "Describe the issue briefly"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Please describe how to reproduce the issue step-by-step.
+      placeholder: |
+        1. Go to ...
+        2. Click on ...
+        3. Observe the behavior ...
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or screenshots
+      description: Paste any relevant logs or attach screenshots to help us understand the issue.
+      render: shell
