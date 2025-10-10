@@ -1,22 +1,19 @@
 {
   "domain": "hargassner_cloud",
   "name": "Hargassner Cloud",
-  "documentation": "https://github.com/your-user/hass-hargassner-cloud",
-  "issue_tracker": "https://github.com/your-user/hass-hargassner-cloud/issues",
-  "version": "0.1.1",
+  "codeowners": [
+    "@m4c3"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/m4c3/hass-hargassner-cloud",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/m4c3/hass-hargassner-cloud/issues",
+  "loggers": [
+    "custom_components.hargassner_cloud"
+  ],
   "requirements": [
     "hargassner>=1.0.5"
   ],
-  "codeowners": [
-    "@your-handle"
-  ],
-  "iot_class": "cloud_polling",
-  "integration_type": "hub",
-  "config_flow": true,
-  "after_dependencies": [
-    "http"
-  ],
-  "loggers": [
-    "custom_components.hargassner_cloud"
-  ]
+  "version": "0.1.2"
 }
