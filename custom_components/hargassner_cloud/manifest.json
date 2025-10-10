@@ -1,0 +1,22 @@
+{
+  "domain": "hargassner_cloud",
+  "name": "Hargassner Cloud",
+  "documentation": "https://github.com/your-user/hass-hargassner-cloud",
+  "issue_tracker": "https://github.com/your-user/hass-hargassner-cloud/issues",
+  "version": "0.1.1",
+  "requirements": [
+    "hargassner>=1.0.5"
+  ],
+  "codeowners": [
+    "@your-handle"
+  ],
+  "iot_class": "cloud_polling",
+  "integration_type": "hub",
+  "config_flow": true,
+  "after_dependencies": [
+    "http"
+  ],
+  "loggers": [
+    "custom_components.hargassner_cloud"
+  ]
+}
