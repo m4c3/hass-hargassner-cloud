@@ -48,3 +48,28 @@ MIT
 4. Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen** konfigurieren.
 
 > Alternativ: Ohne HACS einfach den Ordner `custom_components/hargassner_cloud/` manuell in `config/` kopieren.
+
+
+---
+
+## Repo-Setup (Remote & Push)
+```bash
+git init
+git add .
+git commit -m "chore: init HACS-ready 0.1.2"
+git branch -M main
+git remote add origin git@github.com:m4c3/hass-hargassner-cloud.git   # SSH
+# oder per HTTPS:
+# git remote add origin https://github.com/m4c3/hass-hargassner-cloud.git
+git push -u origin main
+git tag v0.1.2
+git push origin v0.1.2
+```
+
+## HACS: Custom Repository hinzufügen
+- Repository URL: https://github.com/m4c3/hass-hargassner-cloud
+- Category: Integration
+
+## Brands-PR (optional, für Store-Logos)
+Lege in `home-assistant/brands` einen Ordner an:
+`custom_integrations/hargassner_cloud/` mit `icon.png` und `logo.png` (siehe `brands_assets/` als Platzhalter).

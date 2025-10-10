@@ -1,0 +1,2 @@
+Suggested GitHub topics:
+home-assistant, hacs, integration, custom-component, heating, hargassner

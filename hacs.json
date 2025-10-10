@@ -1,12 +1,5 @@
 {
   "name": "Hargassner Cloud",
-  "content_in_root": false,
-  "homeassistant": "2024.1.0",
-  "render_readme": true,
-  "country": [
-    "DE",
-    "AT",
-    "CH"
-  ],
-  "zip_release": false
+  "homeassistant": "2024.6.0",
+  "render_readme": true
 }
