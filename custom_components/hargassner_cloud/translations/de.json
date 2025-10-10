@@ -1,0 +1,25 @@
+{
+  "title": "Hargassner Cloud",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit Hargassner Cloud verbinden",
+        "description": "Bitte Zugangsdaten eingeben",
+        "data": {
+          "username": "E-Mail",
+          "password": "Passwort",
+          "client_secret": "Client Secret",
+          "installation": "Installation-ID"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Erneut anmelden",
+        "description": "Bitte Zugangsdaten best\u00e4tigen/erneuern"
+      }
+    },
+    "error": {
+      "auth": "Anmeldung fehlgeschlagen. Pr\u00fcfe Zugangsdaten.",
+      "unknown": "Unbekannter Fehler"
+    }
+  }
+}

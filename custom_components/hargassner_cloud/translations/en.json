@@ -1,0 +1,25 @@
+{
+  "title": "Hargassner Cloud",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Hargassner Cloud",
+        "description": "Please enter your credentials",
+        "data": {
+          "username": "Email",
+          "password": "Password",
+          "client_secret": "Client Secret",
+          "installation": "Installation ID"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reauthenticate",
+        "description": "Please confirm/renew your credentials"
+      }
+    },
+    "error": {
+      "auth": "Authentication failed. Check your credentials.",
+      "unknown": "Unknown error"
+    }
+  }
+}
