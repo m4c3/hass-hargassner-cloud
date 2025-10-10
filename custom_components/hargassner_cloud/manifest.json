@@ -12,8 +12,6 @@
   "loggers": [
     "custom_components.hargassner_cloud"
   ],
-  "requirements": [
-    "hargassner>=1.0.5"
-  ],
-  "version": "0.1.2"
+  "requirements": [],
+  "version": "0.3.0"
 }
