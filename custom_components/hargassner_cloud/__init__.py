@@ -11,11 +11,14 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .const import (
     DOMAIN, NAME, PLATFORMS,
     CONF_USERNAME, CONF_PASSWORD, CONF_CLIENT_SECRET, CONF_CLIENT_ID, CONF_INSTALLATION, CONF_BASE_URL,
-    DEFAULT_SCAN_INTERVAL, DEFAULT_BASE_URL
+    DEFAULT_SCAN_INTERVAL, DEFAULT_BASE_URL, CONF_MAPPING_OVERRIDES_JSON
 )
 from .api import HargassnerClient, HargassnerAuthError
+from .utils.logfilter import RedactSecretsFilter
 
 _LOGGER = logging.getLogger(__name__)
+# Punkt 12: Logger-Filter anschließen
+_LOGGER.addFilter(RedactSecretsFilter())
 
 
 class HargassnerHub:
@@ -48,6 +51,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         entry.data.get(CONF_CLIENT_ID),
     )
 
+    # Mapping-Overrides aus OptionsFlow (JSON-Text)
+    mapping_overrides_text = entry.options.get(CONF_MAPPING_OVERRIDES_JSON, "")
+    hass.data[DOMAIN][entry.entry_id] = {
+        "hub": hub,
+        "coordinator": None,  # wird gleich gesetzt
+        "mapping_overrides_json": mapping_overrides_text,
+    }
+
     async def _async_update():
         try:
             data = await hub.async_fetch()
@@ -57,7 +68,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         except Exception as err:
             raise UpdateFailed(str(err)) from err
 
-    # ---- Scan-Intervall aus OptionsFlow oder Default ----
+    # Scan-Intervall aus Options oder Default
     update_seconds = entry.options.get("scan_interval_seconds", DEFAULT_SCAN_INTERVAL)
 
     coordinator = DataUpdateCoordinator(
@@ -69,10 +80,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     )
     await coordinator.async_config_entry_first_refresh()
 
-    hass.data[DOMAIN][entry.entry_id] = {
-        "hub": hub,
-        "coordinator": coordinator,
-    }
+    hass.data[DOMAIN][entry.entry_id]["coordinator"] = coordinator
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True

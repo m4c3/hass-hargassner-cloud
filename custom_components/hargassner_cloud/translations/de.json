@@ -1,25 +1,111 @@
 {
-  "title": "Hargassner Cloud",
-  "config": {
-    "step": {
-      "user": {
-        "title": "Mit Hargassner Cloud verbinden",
-        "description": "Bitte Zugangsdaten eingeben",
-        "data": {
-          "username": "E-Mail",
-          "password": "Passwort",
-          "client_secret": "Client Secret",
-          "installation": "Installation-ID"
-        }
+  "state": {
+    "on": "Ein",
+    "off": "Aus"
+  },
+  "entity": {
+    "sensor": {
+      "heater_state": {
+        "name": "Heizungsstatus"
       },
-      "reauth_confirm": {
-        "title": "Erneut anmelden",
-        "description": "Bitte Zugangsdaten best\u00e4tigen/erneuern"
+      "heater_program": {
+        "name": "Heizprogramm"
+      },
+      "heater_smoke_temp": {
+        "name": "Rauchgastemperatur"
+      },
+      "heater_temp_current": {
+        "name": "Heizungstemperatur"
+      },
+      "outdoor_temp": {
+        "name": "Außentemperatur"
+      },
+      "outdoor_temp_avg": {
+        "name": "Außentemperatur (Ø)"
+      },
+      "heater_efficiency": {
+        "name": "Effizienz"
+      },
+      "buffer_state": {
+        "name": "Pufferstatus"
+      },
+      "buffer_charge": {
+        "name": "Pufferladung"
+      },
+      "buffer_temp_top": {
+        "name": "Puffertemperatur oben"
+      },
+      "buffer_temp_center": {
+        "name": "Puffertemperatur Mitte"
+      },
+      "buffer_temp_bottom": {
+        "name": "Puffertemperatur unten"
+      },
+      "boiler1_temp_current": {
+        "name": "Boiler 1 Temperatur"
+      },
+      "boiler1_charge": {
+        "name": "Boiler 1 Ladung"
+      },
+      "hc1_flow_temp_current": {
+        "name": "HK1 Vorlauf"
+      },
+      "hc1_flow_temp_target": {
+        "name": "HK1 Soll-Vorlauf"
+      },
+      "hc1_room_temp_target": {
+        "name": "HK1 Soll-Raum"
+      },
+      "hc1_room_temp_current": {
+        "name": "HK1 Raumtemperatur"
+      },
+      "hc2_flow_temp_current": {
+        "name": "HK2 Vorlauf"
+      },
+      "hc2_flow_temp_target": {
+        "name": "HK2 Soll-Vorlauf"
+      },
+      "hc2_room_temp_target": {
+        "name": "HK2 Soll-Raum"
+      },
+      "hc2_room_temp_current": {
+        "name": "HK2 Raumtemperatur"
       }
     },
-    "error": {
-      "auth": "Anmeldung fehlgeschlagen. Pr\u00fcfe Zugangsdaten.",
-      "unknown": "Unbekannter Fehler"
+    "binary_sensor": {
+      "online": {
+        "name": "Online"
+      },
+      "heater_on": {
+        "name": "Heizung an"
+      },
+      "heater_exhaust_guard": {
+        "name": "Abgasüberwachung"
+      },
+      "buffer_pump_active": {
+        "name": "Pufferpumpe aktiv"
+      },
+      "buffer_force_charging_active": {
+        "name": "Puffer Zwangsladung"
+      },
+      "boiler1_pump_active": {
+        "name": "Boiler 1 Pumpe aktiv"
+      },
+      "boiler1_force_charging_active": {
+        "name": "Boiler 1 Zwangsladung"
+      },
+      "hc1_pump_active": {
+        "name": "HK1 Pumpe aktiv"
+      },
+      "hc1_active": {
+        "name": "HK1 aktiv"
+      },
+      "hc2_pump_active": {
+        "name": "HK2 Pumpe aktiv"
+      },
+      "hc2_active": {
+        "name": "HK2 aktiv"
+      }
     }
   }
 }

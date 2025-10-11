@@ -11,10 +11,13 @@ from homeassistant.components.binary_sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, CONF_INSTALLATION, CONF_BASE_URL, CONF_AREA
+from .helpers import value_at
+from .adapters import as_bool
 
 
 @dataclass
@@ -22,47 +25,18 @@ class HargassnerBinaryDescription(BinarySensorEntityDescription):
     value_fn: Callable[[dict[str, Any]], bool | None] | None = None
 
 
-def _widgets(root: dict[str, Any]) -> list[dict[str, Any]]:
-    return (root or {}).get("data") or []
-
-
-def _find(root: dict[str, Any], widget: str, number: str | None = None) -> dict[str, Any] | None:
-    for w in _widgets(root):
-        if w.get("widget") != widget:
-            continue
-        if number is not None and str(w.get("number")) != str(number):
-            continue
-        return w
-    return None
-
-
-def _val(root: dict[str, Any], widget: str, field: str, number: str | None = None):
-    w = _find(root, widget, number)
-    return (w.get("values") or {}).get(field) if w else None
-
-
-def _is_true(x) -> bool | None:
-    if x is None:
-        return None
-    if isinstance(x, bool):
-        return x
-    if isinstance(x, (int, float)):
-        return bool(x)
-    if isinstance(x, str):
-        return x.lower() in ("true", "on", "1", "yes")
-    return None
-
-
 def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc: list[HargassnerBinaryDescription] = []
 
-    # Meta connectivity
+    # Meta connectivity (Diagnose)
     desc.append(
         HargassnerBinaryDescription(
             key="online",
             name="Online",
+            translation_key="online",
             device_class=BinarySensorDeviceClass.CONNECTIVITY,
-            value_fn=lambda root: _is_true((root.get("meta") or {}).get("online_state")),
+            entity_category=EntityCategory.DIAGNOSTIC,
+            value_fn=lambda root: as_bool((root.get("meta") or {}).get("online_state")),
         )
     )
 
@@ -71,16 +45,19 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
         HargassnerBinaryDescription(
             key="heater_on",
             name="Heater On",
+            translation_key="heater_on",
             device_class=BinarySensorDeviceClass.POWER,
-            value_fn=lambda r: None if _val(r, "HEATER", "state") is None else _val(r, "HEATER", "state") != "STATE_OFF",
+            value_fn=lambda r: None if value_at(r, "HEATER", "state") is None else (value_at(r, "HEATER", "state") != "STATE_OFF"),
         )
     )
     desc.append(
         HargassnerBinaryDescription(
             key="heater_exhaust_guard",
             name="Exhaust Guard",
+            translation_key="heater_exhaust_guard",
             device_class=BinarySensorDeviceClass.SAFETY,
-            value_fn=lambda r: _is_true(_val(r, "HEATER", "heater_exhaust_guard")),
+            entity_category=EntityCategory.DIAGNOSTIC,
+            value_fn=lambda r: as_bool(value_at(r, "HEATER", "heater_exhaust_guard")),
         )
     )
 
@@ -89,16 +66,18 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
         HargassnerBinaryDescription(
             key="buffer_pump_active",
             name="Buffer Pump Active",
+            translation_key="buffer_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "BUFFER", "pump_active")),
+            value_fn=lambda r: as_bool(value_at(r, "BUFFER", "pump_active")),
         )
     )
     desc.append(
         HargassnerBinaryDescription(
             key="buffer_force_charging_active",
             name="Buffer Force Charging",
+            translation_key="buffer_force_charging_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "BUFFER", "force_charging_active")),
+            value_fn=lambda r: as_bool(value_at(r, "BUFFER", "force_charging_active")),
         )
     )
 
@@ -107,16 +86,18 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
         HargassnerBinaryDescription(
             key="boiler1_pump_active",
             name="Boiler 1 Pump Active",
+            translation_key="boiler1_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "BOILER", "pump_active", number="1")),
+            value_fn=lambda r: as_bool(value_at(r, "BOILER", "pump_active", number="1")),
         )
     )
     desc.append(
         HargassnerBinaryDescription(
             key="boiler1_force_charging_active",
             name="Boiler 1 Force Charging",
+            translation_key="boiler1_force_charging_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "BOILER", "force_charging_active", number="1")),
+            value_fn=lambda r: as_bool(value_at(r, "BOILER", "force_charging_active", number="1")),
         )
     )
 
@@ -125,32 +106,36 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
         HargassnerBinaryDescription(
             key="hc1_pump_active",
             name="HC1 Pump Active",
+            translation_key="hc1_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "HEATING_CIRCUIT_RADIATOR", "pump_active", number="1")),
+            value_fn=lambda r: as_bool(value_at(r, "HEATING_CIRCUIT_RADIATOR", "pump_active", number="1")),
         )
     )
     desc.append(
         HargassnerBinaryDescription(
             key="hc1_active",
             name="HC1 Active",
+            translation_key="hc1_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "HEATING_CIRCUIT_RADIATOR", "active", number="1")),
+            value_fn=lambda r: as_bool(value_at(r, "HEATING_CIRCUIT_RADIATOR", "active", number="1")),
         )
     )
     desc.append(
         HargassnerBinaryDescription(
             key="hc2_pump_active",
             name="HC2 Pump Active",
+            translation_key="hc2_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "HEATING_CIRCUIT_FLOOR", "pump_active", number="2")),
+            value_fn=lambda r: as_bool(value_at(r, "HEATING_CIRCUIT_FLOOR", "pump_active", number="2")),
         )
     )
     desc.append(
         HargassnerBinaryDescription(
             key="hc2_active",
             name="HC2 Active",
+            translation_key="hc2_active",
             device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: _is_true(_val(r, "HEATING_CIRCUIT_FLOOR", "active", number="2")),
+            value_fn=lambda r: as_bool(value_at(r, "HEATING_CIRCUIT_FLOOR", "active", number="2")),
         )
     )
 
@@ -175,7 +160,12 @@ class HargassnerBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self._attr_unique_id = f"{entry.entry_id}_{description.key}"
         self._attr_name = description.name
 
-        # ---- Device (gemeinsam, Name "NanoPK") ----
+        if description.entity_category:
+            self._attr_entity_category = description.entity_category
+        if description.translation_key:
+            self._attr_translation_key = description.translation_key
+
+        # Gemeinsames Gerät
         root = coordinator.data or {}
         heater = next((w for w in ((root.get("data") or [])) if w.get("widget") == "HEATER"), None)
         values = (heater or {}).get("values") or {}
@@ -201,7 +191,6 @@ class HargassnerBinarySensor(CoordinatorEntity, BinarySensorEntity):
 
     @property
     def extra_state_attributes(self) -> dict[str, Any] | None:
-        """Expose a small set of meta fields as extra attributes."""
         try:
             root = self.coordinator.data or {}
             meta = (root.get("meta") or {}).copy()

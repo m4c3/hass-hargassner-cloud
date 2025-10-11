@@ -1,25 +1,111 @@
 {
-  "title": "Hargassner Cloud",
-  "config": {
-    "step": {
-      "user": {
-        "title": "Connect to Hargassner Cloud",
-        "description": "Please enter your credentials",
-        "data": {
-          "username": "Email",
-          "password": "Password",
-          "client_secret": "Client Secret",
-          "installation": "Installation ID"
-        }
+  "state": {
+    "on": "On",
+    "off": "Off"
+  },
+  "entity": {
+    "sensor": {
+      "heater_state": {
+        "name": "Heater Status"
       },
-      "reauth_confirm": {
-        "title": "Reauthenticate",
-        "description": "Please confirm/renew your credentials"
+      "heater_program": {
+        "name": "Heating Program"
+      },
+      "heater_smoke_temp": {
+        "name": "Flue Gas Temperature"
+      },
+      "heater_temp_current": {
+        "name": "Heater Temperature"
+      },
+      "outdoor_temp": {
+        "name": "Outdoor Temperature"
+      },
+      "outdoor_temp_avg": {
+        "name": "Outdoor Temperature (avg)"
+      },
+      "heater_efficiency": {
+        "name": "Efficiency"
+      },
+      "buffer_state": {
+        "name": "Buffer Status"
+      },
+      "buffer_charge": {
+        "name": "Buffer Charge"
+      },
+      "buffer_temp_top": {
+        "name": "Buffer Temperature Top"
+      },
+      "buffer_temp_center": {
+        "name": "Buffer Temperature Middle"
+      },
+      "buffer_temp_bottom": {
+        "name": "Buffer Temperature Bottom"
+      },
+      "boiler1_temp_current": {
+        "name": "Boiler 1 Temperature"
+      },
+      "boiler1_charge": {
+        "name": "Boiler 1 Charge"
+      },
+      "hc1_flow_temp_current": {
+        "name": "HC1 Flow Temperature"
+      },
+      "hc1_flow_temp_target": {
+        "name": "HC1 Flow Target"
+      },
+      "hc1_room_temp_target": {
+        "name": "HC1 Room Target"
+      },
+      "hc1_room_temp_current": {
+        "name": "HC1 Room Temperature"
+      },
+      "hc2_flow_temp_current": {
+        "name": "HC2 Flow Temperature"
+      },
+      "hc2_flow_temp_target": {
+        "name": "HC2 Flow Target"
+      },
+      "hc2_room_temp_target": {
+        "name": "HC2 Room Target"
+      },
+      "hc2_room_temp_current": {
+        "name": "HC2 Room Temperature"
       }
     },
-    "error": {
-      "auth": "Authentication failed. Check your credentials.",
-      "unknown": "Unknown error"
+    "binary_sensor": {
+      "online": {
+        "name": "Online"
+      },
+      "heater_on": {
+        "name": "Heater On"
+      },
+      "heater_exhaust_guard": {
+        "name": "Exhaust Guard"
+      },
+      "buffer_pump_active": {
+        "name": "Buffer Pump Active"
+      },
+      "buffer_force_charging_active": {
+        "name": "Buffer Force Charging"
+      },
+      "boiler1_pump_active": {
+        "name": "Boiler 1 Pump Active"
+      },
+      "boiler1_force_charging_active": {
+        "name": "Boiler 1 Force Charging"
+      },
+      "hc1_pump_active": {
+        "name": "HC1 Pump Active"
+      },
+      "hc1_active": {
+        "name": "HC1 Active"
+      },
+      "hc2_pump_active": {
+        "name": "HC2 Pump Active"
+      },
+      "hc2_active": {
+        "name": "HC2 Active"
+      }
     }
   }
 }
