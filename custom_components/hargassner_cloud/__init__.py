@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 from datetime import timedelta
@@ -11,53 +10,62 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from .const import (
     DOMAIN, NAME, PLATFORMS,
-    CONF_USERNAME, CONF_PASSWORD, CONF_CLIENT_SECRET, CONF_INSTALLATION,
-    DEFAULT_SCAN_INTERVAL, AUTH_URL, WIDGETS_URL_TMPL
+    CONF_USERNAME, CONF_PASSWORD, CONF_CLIENT_SECRET, CONF_CLIENT_ID, CONF_INSTALLATION, CONF_BASE_URL,
+    DEFAULT_SCAN_INTERVAL, DEFAULT_BASE_URL
 )
-from .api import HargassnerClient
+from .api import HargassnerClient, HargassnerAuthError
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class HargassnerHub:
-    def __init__(self, hass: HomeAssistant, username: str, password: str, client_secret: str, installation: str):
+    def __init__(self, hass: HomeAssistant, base_url: str, username: str, password: str, client_secret: str, installation: str, client_id: str | None):
         self.hass = hass
         self.client = HargassnerClient(
             async_get_clientsession(hass),
+            base_url=base_url or DEFAULT_BASE_URL,
             username=username,
             password=password,
             client_secret=client_secret,
             installation=installation,
-            auth_url=AUTH_URL,
-            widgets_url=WIDGETS_URL_TMPL.format(installation=installation),
+            client_id=client_id,
         )
 
     async def async_fetch(self):
         return await self.client.get_widgets()
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data.setdefault(DOMAIN, {})
 
     hub = HargassnerHub(
         hass,
+        entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
         entry.data[CONF_USERNAME],
         entry.data[CONF_PASSWORD],
         entry.data[CONF_CLIENT_SECRET],
         entry.data[CONF_INSTALLATION],
+        entry.data.get(CONF_CLIENT_ID),
     )
 
     async def _async_update():
         try:
             data = await hub.async_fetch()
             return data
+        except HargassnerAuthError as err:
+            raise UpdateFailed(f"Auth: {err}") from err
         except Exception as err:
             raise UpdateFailed(str(err)) from err
+
+    # ---- Scan-Intervall aus OptionsFlow oder Default ----
+    update_seconds = entry.options.get("scan_interval_seconds", DEFAULT_SCAN_INTERVAL)
 
     coordinator = DataUpdateCoordinator(
         hass,
         _LOGGER,
         name=NAME,
         update_method=_async_update,
-        update_interval=timedelta(seconds=DEFAULT_SCAN_INTERVAL),
+        update_interval=timedelta(seconds=update_seconds),
     )
     await coordinator.async_config_entry_first_refresh()
 
@@ -68,6 +76,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
+
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
