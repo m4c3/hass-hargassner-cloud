@@ -5,6 +5,7 @@
     "@m4c3"
   ],
   "config_flow": true,
+  "dependencies": [],
   "documentation": "https://github.com/m4c3/hass-hargassner-cloud",
   "integration_type": "hub",
   "iot_class": "cloud_polling",
@@ -13,5 +14,5 @@
     "custom_components.hargassner_cloud"
   ],
   "requirements": [],
-  "version": "0.3.0"
+  "version": "0.3.1"
 }
