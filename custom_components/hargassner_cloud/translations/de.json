@@ -4,22 +4,23 @@
     "step": {
       "user": {
         "title": "Mit Hargassner Cloud verbinden",
-        "description": "Bitte Zugangsdaten eingeben",
+        "description": "Melde dich mit deinen Portal-Zugangsdaten an",
         "data": {
-          "username": "E-Mail",
+          "username": "E-Mail (Benutzername)",
           "password": "Passwort",
           "client_secret": "Client Secret",
-          "installation": "Installation-ID"
+          "client_id": "Client ID (optional)",
+          "installation": "Installations-ID",
+          "base_url": "Basis-URL (optional)",
+          "area": "Bereich (optional)"
         }
-      },
-      "reauth_confirm": {
-        "title": "Erneut anmelden",
-        "description": "Bitte Zugangsdaten best\u00e4tigen/erneuern"
       }
     },
     "error": {
-      "auth": "Anmeldung fehlgeschlagen. Pr\u00fcfe Zugangsdaten.",
-      "unknown": "Unbekannter Fehler"
+      "auth": "Anmeldung fehlgeschlagen. Prüfe Zugangsdaten, Client Secret und Basis-URL."
+    },
+    "abort": {
+      "reauth_successful": "Vorhandene Konfiguration für diese Installation wurde aktualisiert."
     }
   }
 }

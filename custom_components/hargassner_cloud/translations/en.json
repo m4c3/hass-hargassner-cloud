@@ -4,22 +4,23 @@
     "step": {
       "user": {
         "title": "Connect to Hargassner Cloud",
-        "description": "Please enter your credentials",
+        "description": "Sign in with your portal credentials",
         "data": {
-          "username": "Email",
+          "username": "E-mail (username)",
           "password": "Password",
           "client_secret": "Client Secret",
-          "installation": "Installation ID"
+          "client_id": "Client ID (optional)",
+          "installation": "Installation ID",
+          "base_url": "Base URL (optional)",
+          "area": "Area (optional)"
         }
-      },
-      "reauth_confirm": {
-        "title": "Reauthenticate",
-        "description": "Please confirm/renew your credentials"
       }
     },
     "error": {
-      "auth": "Authentication failed. Check your credentials.",
-      "unknown": "Unknown error"
+      "auth": "Authentication failed. Check credentials, client secret and base URL."
+    },
+    "abort": {
+      "reauth_successful": "Updated the existing configuration for this installation."
     }
   }
 }
