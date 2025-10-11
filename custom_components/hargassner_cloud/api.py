@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 from typing import Any, Optional
+<<<<<<< HEAD
 from aiohttp import ClientSession, ClientResponseError, ClientTimeout
 import asyncio
+=======
+from aiohttp import ClientSession, ClientResponseError
+>>>>>>> 4fb9b17b678ddc6f29db34921dc9c39f9fdeeab6
 import logging
 
 _LOGGER = logging.getLogger(__name__)

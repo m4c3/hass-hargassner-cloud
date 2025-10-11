@@ -2,8 +2,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Callable, List
+<<<<<<< HEAD
 import math
 import re
+=======
+>>>>>>> 4fb9b17b678ddc6f29db34921dc9c39f9fdeeab6
 
 from homeassistant.components.sensor import (
     SensorEntity,
@@ -31,7 +34,10 @@ from .const import (
 # -------------------------------------------------
 @dataclass
 class HargassnerSensorDescription(SensorEntityDescription):
+<<<<<<< HEAD
     # Liefert den Rohwert aus dem JSON (kann str/int/float/bool/None sein)
+=======
+>>>>>>> 4fb9b17b678ddc6f29db34921dc9c39f9fdeeab6
     value_fn: Callable[[dict[str, Any]], Any] | None = None
     suggested_unit_of_measurement: str | None = None  # wichtig für HA-Versionen, die es direkt abfragen
 
@@ -354,7 +360,20 @@ class HargassnerSensor(CoordinatorEntity, SensorEntity):
             return x
 
         try:
+<<<<<<< HEAD
             raw = self.entity_description.value_fn(data) if self.entity_description.value_fn else None
             return _parse_number(raw)
+=======
+            val = self.entity_description.value_fn(data) if self.entity_description.value_fn else None
+            if isinstance(val, (int, float)) or val is None:
+                return val
+            if isinstance(val, str):
+                v = val.replace(",", ".")
+                try:
+                    return float(v)
+                except Exception:
+                    return val
+            return val
+>>>>>>> 4fb9b17b678ddc6f29db34921dc9c39f9fdeeab6
         except Exception:
             return None
