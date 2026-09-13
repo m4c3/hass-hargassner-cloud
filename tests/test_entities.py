@@ -100,8 +100,8 @@ def test_heater_program_reads_and_normalizes_parameter_value() -> None:
     assert program.value_fn(payload) == "automatic"
 
 
-def test_neo_hv_widget_schema_is_supported() -> None:
-    """Exercise the widget shape observed in sanitized Neo-HV diagnostics."""
+def test_nanopk_widget_schema_is_supported() -> None:
+    """Exercise the widget shape observed in sanitized NanoPK diagnostics."""
     payload = {
         "data": [
             {
