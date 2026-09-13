@@ -186,4 +186,9 @@ a mapping override.
 
 ## License
 
+The source code and original project artwork are licensed under the MIT License.
 See [LICENSE](LICENSE).
+
+The artwork included in this repository is original project artwork and is not a
+copy of Hargassner's official logo. Hargassner is a trademark of its respective
+owner. This independent project is not affiliated with or endorsed by Hargassner.
