@@ -1,4 +1,54 @@
 {
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Hargassner Cloud",
+        "description": "Enter your credentials",
+        "data": {
+          "username": "Email",
+          "password": "Password",
+          "base_url": "Base URL",
+          "area": "Area"
+        }
+      },
+      "installation": {
+        "title": "Select installation",
+        "description": "Multiple installations were found.",
+        "data": {
+          "installation": "Installation"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reauthenticate",
+        "description": "Confirm or update your credentials"
+      }
+    },
+    "error": {
+      "auth": "Authentication failed. Check your credentials.",
+      "cannot_connect": "Unable to connect to Hargassner Cloud.",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This installation is already configured.",
+      "reauth_successful": "Reauthentication was successful.",
+      "cannot_connect": "No installations were found."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Hargassner Cloud options",
+        "data": {
+          "scan_interval_seconds": "Update interval in seconds",
+          "area": "Area",
+          "mapping_overrides_json": "Mapping overrides (JSON)"
+        }
+      }
+    },
+    "error": {
+      "invalid_mapping": "The mapping must be a JSON object containing an object for each entity key."
+    }
+  },
   "state": {
     "on": "On",
     "off": "Off"

@@ -14,8 +14,11 @@ CONF_BASE_URL = "base_url"
 CONF_AREA = "area"
 
 # Options keys
-DEFAULT_SCAN_INTERVAL = 30
+DEFAULT_SCAN_INTERVAL = 300
 DEFAULT_BASE_URL = "https://web.hargassner.at"
+# Public web-application credentials embedded in Hargassner's frontend bundle.
+DEFAULT_CLIENT_ID = "1"
+DEFAULT_CLIENT_SECRET = "REMOVED"
 
 # NEW: Options-Override (JSON-Text) für Mapping-Anpassungen pro Entity-Key
 # Format:

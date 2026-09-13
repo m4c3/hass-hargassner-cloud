@@ -1,4 +1,54 @@
 {
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit Hargassner Cloud verbinden",
+        "description": "Bitte Zugangsdaten eingeben",
+        "data": {
+          "username": "E-Mail",
+          "password": "Passwort",
+          "base_url": "Basis-URL",
+          "area": "Bereich"
+        }
+      },
+      "installation": {
+        "title": "Installation ausw\u00e4hlen",
+        "description": "Mehrere Installationen wurden gefunden.",
+        "data": {
+          "installation": "Installation"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Erneut anmelden",
+        "description": "Bitte Zugangsdaten best\u00e4tigen oder erneuern"
+      }
+    },
+    "error": {
+      "auth": "Anmeldung fehlgeschlagen. Pr\u00fcfe die Zugangsdaten.",
+      "cannot_connect": "Verbindung zur Hargassner Cloud fehlgeschlagen.",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "abort": {
+      "already_configured": "Diese Installation ist bereits konfiguriert.",
+      "reauth_successful": "Erneute Anmeldung erfolgreich.",
+      "cannot_connect": "Es wurden keine Installationen gefunden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Hargassner Cloud Optionen",
+        "data": {
+          "scan_interval_seconds": "Aktualisierungsintervall in Sekunden",
+          "area": "Bereich",
+          "mapping_overrides_json": "Mapping-Overrides (JSON)"
+        }
+      }
+    },
+    "error": {
+      "invalid_mapping": "Das Mapping muss ein JSON-Objekt mit Objekten je Entity-Schl\u00fcssel sein."
+    }
+  },
   "state": {
     "on": "Ein",
     "off": "Aus"
