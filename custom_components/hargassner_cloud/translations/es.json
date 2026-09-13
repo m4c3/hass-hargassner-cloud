@@ -1,1 +1,128 @@
-{"entity":{"sensor":{"heater_state":{"name":"Estado de la calefacción"},"heater_program":{"name":"Programa de calefacción","state":{"automatic":"Automático","boiler":"Acumulador","chimney_sweeper":"Deshollinador","combination_off":"Modo combinado desactivado","combination_on":"Modo combinado activado","manual":"Manual","off":"Apagado","pellets_disabled":"Pellets desactivados","stop_firing":"Detener combustión"}},"heater_smoke_temp":{"name":"Temperatura de humos"},"heater_temp_current":{"name":"Temperatura de la calefacción"},"outdoor_temp":{"name":"Temperatura exterior"},"outdoor_temp_avg":{"name":"Temperatura exterior (media)"},"heater_efficiency":{"name":"Eficiencia"},"buffer_state":{"name":"Estado del depósito de inercia"},"buffer_charge":{"name":"Carga del depósito de inercia"},"buffer_temp_top":{"name":"Temperatura superior del depósito"},"buffer_temp_center":{"name":"Temperatura central del depósito"},"buffer_temp_bottom":{"name":"Temperatura inferior del depósito"},"boiler1_temp_current":{"name":"Temperatura del acumulador 1"},"boiler1_charge":{"name":"Carga del acumulador 1"},"hc1_flow_temp_current":{"name":"Circuito 1 temperatura de impulsión"},"hc1_flow_temp_target":{"name":"Circuito 1 consigna de impulsión"},"hc1_room_temp_target":{"name":"Circuito 1 consigna ambiente"},"hc1_room_temp_current":{"name":"Circuito 1 temperatura ambiente"},"hc2_flow_temp_current":{"name":"Circuito 2 temperatura de impulsión"},"hc2_flow_temp_target":{"name":"Circuito 2 consigna de impulsión"},"hc2_room_temp_target":{"name":"Circuito 2 consigna ambiente"},"hc2_room_temp_current":{"name":"Circuito 2 temperatura ambiente"}},"binary_sensor":{"online":{"name":"En línea"},"heater_on":{"name":"Calefacción activa"},"heater_exhaust_guard":{"name":"Control de humos"},"buffer_pump_active":{"name":"Bomba del depósito activa"},"buffer_force_charging_active":{"name":"Carga forzada del depósito"},"boiler1_pump_active":{"name":"Bomba del acumulador 1 activa"},"boiler1_force_charging_active":{"name":"Carga forzada del acumulador 1"},"hc1_pump_active":{"name":"Bomba del circuito 1 activa"},"hc1_active":{"name":"Circuito 1 activo"},"hc2_pump_active":{"name":"Bomba del circuito 2 activa"},"hc2_active":{"name":"Circuito 2 activo"}}}}
+{
+    "entity": {
+        "sensor": {
+            "heater_state": {
+                "name": "Estado de la calefacción"
+            },
+            "heater_program": {
+                "name": "Programa de calefacción",
+                "state": {
+                    "automatic": "Automático",
+                    "boiler": "Acumulador",
+                    "chimney_sweeper": "Deshollinador",
+                    "combination_off": "Modo combinado desactivado",
+                    "combination_on": "Modo combinado activado",
+                    "manual": "Manual",
+                    "off": "Apagado",
+                    "pellets_disabled": "Pellets desactivados",
+                    "stop_firing": "Detener combustión"
+                }
+            },
+            "heater_smoke_temp": {
+                "name": "Temperatura de humos"
+            },
+            "heater_temp_current": {
+                "name": "Temperatura de la calefacción"
+            },
+            "outdoor_temp": {
+                "name": "Temperatura exterior"
+            },
+            "outdoor_temp_avg": {
+                "name": "Temperatura exterior (media)"
+            },
+            "heater_efficiency": {
+                "name": "Eficiencia"
+            },
+            "buffer_state": {
+                "name": "Estado del depósito de inercia"
+            },
+            "buffer_charge": {
+                "name": "Carga del depósito de inercia"
+            },
+            "buffer_temp_top": {
+                "name": "Temperatura superior del depósito"
+            },
+            "buffer_temp_center": {
+                "name": "Temperatura central del depósito"
+            },
+            "buffer_temp_bottom": {
+                "name": "Temperatura inferior del depósito"
+            },
+            "boiler1_temp_current": {
+                "name": "Temperatura del acumulador 1"
+            },
+            "boiler_temp_current": {"name": "Temperatura del acumulador {number}"},
+            "boiler_charge": {"name": "Carga del acumulador {number}"},
+            "hc_flow_temp_current": {"name": "Circuito {number} temperatura de impulsión"},
+            "hc_flow_temp_target": {"name": "Circuito {number} consigna de impulsión"},
+            "hc_room_temp_target": {"name": "Circuito {number} consigna ambiente"},
+            "hc_room_temp_current": {"name": "Circuito {number} temperatura ambiente"},
+            "boiler1_charge": {
+                "name": "Carga del acumulador 1"
+            },
+            "hc1_flow_temp_current": {
+                "name": "Circuito 1 temperatura de impulsión"
+            },
+            "hc1_flow_temp_target": {
+                "name": "Circuito 1 consigna de impulsión"
+            },
+            "hc1_room_temp_target": {
+                "name": "Circuito 1 consigna ambiente"
+            },
+            "hc1_room_temp_current": {
+                "name": "Circuito 1 temperatura ambiente"
+            },
+            "hc2_flow_temp_current": {
+                "name": "Circuito 2 temperatura de impulsión"
+            },
+            "hc2_flow_temp_target": {
+                "name": "Circuito 2 consigna de impulsión"
+            },
+            "hc2_room_temp_target": {
+                "name": "Circuito 2 consigna ambiente"
+            },
+            "hc2_room_temp_current": {
+                "name": "Circuito 2 temperatura ambiente"
+            }
+        },
+        "binary_sensor": {
+            "online": {
+                "name": "En línea"
+            },
+            "heater_on": {
+                "name": "Calefacción activa"
+            },
+            "heater_exhaust_guard": {
+                "name": "Control de humos"
+            },
+            "buffer_pump_active": {
+                "name": "Bomba del depósito activa"
+            },
+            "buffer_force_charging_active": {
+                "name": "Carga forzada del depósito"
+            },
+            "boiler1_pump_active": {
+                "name": "Bomba del acumulador 1 activa"
+            },
+            "boiler_pump_active": {"name": "Bomba del acumulador {number} activa"},
+            "boiler_force_charging_active": {"name": "Carga forzada del acumulador {number}"},
+            "hc_pump_active": {"name": "Bomba del circuito {number} activa"},
+            "hc_active": {"name": "Circuito {number} activo"},
+            "boiler1_force_charging_active": {
+                "name": "Carga forzada del acumulador 1"
+            },
+            "hc1_pump_active": {
+                "name": "Bomba del circuito 1 activa"
+            },
+            "hc1_active": {
+                "name": "Circuito 1 activo"
+            },
+            "hc2_pump_active": {
+                "name": "Bomba del circuito 2 activa"
+            },
+            "hc2_active": {
+                "name": "Circuito 2 activo"
+            }
+        }
+    }
+}

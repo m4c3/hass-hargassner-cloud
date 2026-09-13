@@ -1,1 +1,128 @@
-{"entity":{"sensor":{"heater_state":{"name":"État du chauffage"},"heater_program":{"name":"Programme de chauffage","state":{"automatic":"Automatique","boiler":"Ballon d’eau chaude","chimney_sweeper":"Ramoneur","combination_off":"Mode combiné désactivé","combination_on":"Mode combiné activé","manual":"Manuel","off":"Arrêt","pellets_disabled":"Granulés désactivés","stop_firing":"Arrêter la combustion"}},"heater_smoke_temp":{"name":"Température des fumées"},"heater_temp_current":{"name":"Température du chauffage"},"outdoor_temp":{"name":"Température extérieure"},"outdoor_temp_avg":{"name":"Température extérieure (moyenne)"},"heater_efficiency":{"name":"Rendement"},"buffer_state":{"name":"État du ballon tampon"},"buffer_charge":{"name":"Charge du ballon tampon"},"buffer_temp_top":{"name":"Température du ballon tampon en haut"},"buffer_temp_center":{"name":"Température du ballon tampon au milieu"},"buffer_temp_bottom":{"name":"Température du ballon tampon en bas"},"boiler1_temp_current":{"name":"Température du ballon 1"},"boiler1_charge":{"name":"Charge du ballon 1"},"hc1_flow_temp_current":{"name":"Circuit 1 température de départ"},"hc1_flow_temp_target":{"name":"Circuit 1 consigne de départ"},"hc1_room_temp_target":{"name":"Circuit 1 consigne ambiante"},"hc1_room_temp_current":{"name":"Circuit 1 température ambiante"},"hc2_flow_temp_current":{"name":"Circuit 2 température de départ"},"hc2_flow_temp_target":{"name":"Circuit 2 consigne de départ"},"hc2_room_temp_target":{"name":"Circuit 2 consigne ambiante"},"hc2_room_temp_current":{"name":"Circuit 2 température ambiante"}},"binary_sensor":{"online":{"name":"En ligne"},"heater_on":{"name":"Chauffage actif"},"heater_exhaust_guard":{"name":"Surveillance des fumées"},"buffer_pump_active":{"name":"Pompe du ballon tampon active"},"buffer_force_charging_active":{"name":"Charge forcée du ballon tampon"},"boiler1_pump_active":{"name":"Pompe du ballon 1 active"},"boiler1_force_charging_active":{"name":"Charge forcée du ballon 1"},"hc1_pump_active":{"name":"Pompe du circuit 1 active"},"hc1_active":{"name":"Circuit 1 actif"},"hc2_pump_active":{"name":"Pompe du circuit 2 active"},"hc2_active":{"name":"Circuit 2 actif"}}}}
+{
+    "entity": {
+        "sensor": {
+            "heater_state": {
+                "name": "État du chauffage"
+            },
+            "heater_program": {
+                "name": "Programme de chauffage",
+                "state": {
+                    "automatic": "Automatique",
+                    "boiler": "Ballon d’eau chaude",
+                    "chimney_sweeper": "Ramoneur",
+                    "combination_off": "Mode combiné désactivé",
+                    "combination_on": "Mode combiné activé",
+                    "manual": "Manuel",
+                    "off": "Arrêt",
+                    "pellets_disabled": "Granulés désactivés",
+                    "stop_firing": "Arrêter la combustion"
+                }
+            },
+            "heater_smoke_temp": {
+                "name": "Température des fumées"
+            },
+            "heater_temp_current": {
+                "name": "Température du chauffage"
+            },
+            "outdoor_temp": {
+                "name": "Température extérieure"
+            },
+            "outdoor_temp_avg": {
+                "name": "Température extérieure (moyenne)"
+            },
+            "heater_efficiency": {
+                "name": "Rendement"
+            },
+            "buffer_state": {
+                "name": "État du ballon tampon"
+            },
+            "buffer_charge": {
+                "name": "Charge du ballon tampon"
+            },
+            "buffer_temp_top": {
+                "name": "Température du ballon tampon en haut"
+            },
+            "buffer_temp_center": {
+                "name": "Température du ballon tampon au milieu"
+            },
+            "buffer_temp_bottom": {
+                "name": "Température du ballon tampon en bas"
+            },
+            "boiler1_temp_current": {
+                "name": "Température du ballon 1"
+            },
+            "boiler_temp_current": {"name": "Température du ballon {number}"},
+            "boiler_charge": {"name": "Charge du ballon {number}"},
+            "hc_flow_temp_current": {"name": "Circuit {number} température de départ"},
+            "hc_flow_temp_target": {"name": "Circuit {number} consigne de départ"},
+            "hc_room_temp_target": {"name": "Circuit {number} consigne ambiante"},
+            "hc_room_temp_current": {"name": "Circuit {number} température ambiante"},
+            "boiler1_charge": {
+                "name": "Charge du ballon 1"
+            },
+            "hc1_flow_temp_current": {
+                "name": "Circuit 1 température de départ"
+            },
+            "hc1_flow_temp_target": {
+                "name": "Circuit 1 consigne de départ"
+            },
+            "hc1_room_temp_target": {
+                "name": "Circuit 1 consigne ambiante"
+            },
+            "hc1_room_temp_current": {
+                "name": "Circuit 1 température ambiante"
+            },
+            "hc2_flow_temp_current": {
+                "name": "Circuit 2 température de départ"
+            },
+            "hc2_flow_temp_target": {
+                "name": "Circuit 2 consigne de départ"
+            },
+            "hc2_room_temp_target": {
+                "name": "Circuit 2 consigne ambiante"
+            },
+            "hc2_room_temp_current": {
+                "name": "Circuit 2 température ambiante"
+            }
+        },
+        "binary_sensor": {
+            "online": {
+                "name": "En ligne"
+            },
+            "heater_on": {
+                "name": "Chauffage actif"
+            },
+            "heater_exhaust_guard": {
+                "name": "Surveillance des fumées"
+            },
+            "buffer_pump_active": {
+                "name": "Pompe du ballon tampon active"
+            },
+            "buffer_force_charging_active": {
+                "name": "Charge forcée du ballon tampon"
+            },
+            "boiler1_pump_active": {
+                "name": "Pompe du ballon 1 active"
+            },
+            "boiler_pump_active": {"name": "Pompe du ballon {number} active"},
+            "boiler_force_charging_active": {"name": "Charge forcée du ballon {number}"},
+            "hc_pump_active": {"name": "Pompe du circuit {number} active"},
+            "hc_active": {"name": "Circuit {number} actif"},
+            "boiler1_force_charging_active": {
+                "name": "Charge forcée du ballon 1"
+            },
+            "hc1_pump_active": {
+                "name": "Pompe du circuit 1 active"
+            },
+            "hc1_active": {
+                "name": "Circuit 1 actif"
+            },
+            "hc2_pump_active": {
+                "name": "Pompe du circuit 2 active"
+            },
+            "hc2_active": {
+                "name": "Circuit 2 actif"
+            }
+        }
+    }
+}

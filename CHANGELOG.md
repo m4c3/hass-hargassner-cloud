@@ -10,6 +10,7 @@
 - Replaced raw API diagnostics and debug responses with sanitized structural data
 - Enabled localized entity names and fixed duplicated heating-circuit display numbers
 - Added French, Spanish, Norwegian Bokmål, Polish, and Czech entity translations
+- Discover any number of numbered boilers and heating circuits from API widgets
 - Added a German README
 - Removed the unnecessary integration logger declaration from the manifest
 

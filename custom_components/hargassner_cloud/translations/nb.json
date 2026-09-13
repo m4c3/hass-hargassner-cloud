@@ -1,1 +1,128 @@
-{"entity":{"sensor":{"heater_state":{"name":"Varmestatus"},"heater_program":{"name":"Varmeprogram","state":{"automatic":"Automatisk","boiler":"Varmtvannsbereder","chimney_sweeper":"Feier","combination_off":"Kombinasjonsmodus av","combination_on":"Kombinasjonsmodus på","manual":"Manuell","off":"Av","pellets_disabled":"Pellets deaktivert","stop_firing":"Stopp fyring"}},"heater_smoke_temp":{"name":"Røykgasstemperatur"},"heater_temp_current":{"name":"Kjeletemperatur"},"outdoor_temp":{"name":"Utetemperatur"},"outdoor_temp_avg":{"name":"Utetemperatur (gjennomsnitt)"},"heater_efficiency":{"name":"Virkningsgrad"},"buffer_state":{"name":"Bufferstatus"},"buffer_charge":{"name":"Bufferladning"},"buffer_temp_top":{"name":"Buffertemperatur øverst"},"buffer_temp_center":{"name":"Buffertemperatur i midten"},"buffer_temp_bottom":{"name":"Buffertemperatur nederst"},"boiler1_temp_current":{"name":"Bereder 1 temperatur"},"boiler1_charge":{"name":"Bereder 1 ladning"},"hc1_flow_temp_current":{"name":"Varmekrets 1 turtemperatur"},"hc1_flow_temp_target":{"name":"Varmekrets 1 ønsket turtemperatur"},"hc1_room_temp_target":{"name":"Varmekrets 1 ønsket romtemperatur"},"hc1_room_temp_current":{"name":"Varmekrets 1 romtemperatur"},"hc2_flow_temp_current":{"name":"Varmekrets 2 turtemperatur"},"hc2_flow_temp_target":{"name":"Varmekrets 2 ønsket turtemperatur"},"hc2_room_temp_target":{"name":"Varmekrets 2 ønsket romtemperatur"},"hc2_room_temp_current":{"name":"Varmekrets 2 romtemperatur"}},"binary_sensor":{"online":{"name":"Tilkoblet"},"heater_on":{"name":"Oppvarming på"},"heater_exhaust_guard":{"name":"Røykgassovervåking"},"buffer_pump_active":{"name":"Bufferpumpe aktiv"},"buffer_force_charging_active":{"name":"Tvungen bufferladning"},"boiler1_pump_active":{"name":"Bereder 1 pumpe aktiv"},"boiler1_force_charging_active":{"name":"Bereder 1 tvungen ladning"},"hc1_pump_active":{"name":"Varmekrets 1 pumpe aktiv"},"hc1_active":{"name":"Varmekrets 1 aktiv"},"hc2_pump_active":{"name":"Varmekrets 2 pumpe aktiv"},"hc2_active":{"name":"Varmekrets 2 aktiv"}}}}
+{
+    "entity": {
+        "sensor": {
+            "heater_state": {
+                "name": "Varmestatus"
+            },
+            "heater_program": {
+                "name": "Varmeprogram",
+                "state": {
+                    "automatic": "Automatisk",
+                    "boiler": "Varmtvannsbereder",
+                    "chimney_sweeper": "Feier",
+                    "combination_off": "Kombinasjonsmodus av",
+                    "combination_on": "Kombinasjonsmodus på",
+                    "manual": "Manuell",
+                    "off": "Av",
+                    "pellets_disabled": "Pellets deaktivert",
+                    "stop_firing": "Stopp fyring"
+                }
+            },
+            "heater_smoke_temp": {
+                "name": "Røykgasstemperatur"
+            },
+            "heater_temp_current": {
+                "name": "Kjeletemperatur"
+            },
+            "outdoor_temp": {
+                "name": "Utetemperatur"
+            },
+            "outdoor_temp_avg": {
+                "name": "Utetemperatur (gjennomsnitt)"
+            },
+            "heater_efficiency": {
+                "name": "Virkningsgrad"
+            },
+            "buffer_state": {
+                "name": "Bufferstatus"
+            },
+            "buffer_charge": {
+                "name": "Bufferladning"
+            },
+            "buffer_temp_top": {
+                "name": "Buffertemperatur øverst"
+            },
+            "buffer_temp_center": {
+                "name": "Buffertemperatur i midten"
+            },
+            "buffer_temp_bottom": {
+                "name": "Buffertemperatur nederst"
+            },
+            "boiler1_temp_current": {
+                "name": "Bereder 1 temperatur"
+            },
+            "boiler_temp_current": {"name": "Bereder {number} temperatur"},
+            "boiler_charge": {"name": "Bereder {number} ladning"},
+            "hc_flow_temp_current": {"name": "Varmekrets {number} turtemperatur"},
+            "hc_flow_temp_target": {"name": "Varmekrets {number} ønsket turtemperatur"},
+            "hc_room_temp_target": {"name": "Varmekrets {number} ønsket romtemperatur"},
+            "hc_room_temp_current": {"name": "Varmekrets {number} romtemperatur"},
+            "boiler1_charge": {
+                "name": "Bereder 1 ladning"
+            },
+            "hc1_flow_temp_current": {
+                "name": "Varmekrets 1 turtemperatur"
+            },
+            "hc1_flow_temp_target": {
+                "name": "Varmekrets 1 ønsket turtemperatur"
+            },
+            "hc1_room_temp_target": {
+                "name": "Varmekrets 1 ønsket romtemperatur"
+            },
+            "hc1_room_temp_current": {
+                "name": "Varmekrets 1 romtemperatur"
+            },
+            "hc2_flow_temp_current": {
+                "name": "Varmekrets 2 turtemperatur"
+            },
+            "hc2_flow_temp_target": {
+                "name": "Varmekrets 2 ønsket turtemperatur"
+            },
+            "hc2_room_temp_target": {
+                "name": "Varmekrets 2 ønsket romtemperatur"
+            },
+            "hc2_room_temp_current": {
+                "name": "Varmekrets 2 romtemperatur"
+            }
+        },
+        "binary_sensor": {
+            "online": {
+                "name": "Tilkoblet"
+            },
+            "heater_on": {
+                "name": "Oppvarming på"
+            },
+            "heater_exhaust_guard": {
+                "name": "Røykgassovervåking"
+            },
+            "buffer_pump_active": {
+                "name": "Bufferpumpe aktiv"
+            },
+            "buffer_force_charging_active": {
+                "name": "Tvungen bufferladning"
+            },
+            "boiler1_pump_active": {
+                "name": "Bereder 1 pumpe aktiv"
+            },
+            "boiler_pump_active": {"name": "Bereder {number} pumpe aktiv"},
+            "boiler_force_charging_active": {"name": "Bereder {number} tvungen ladning"},
+            "hc_pump_active": {"name": "Varmekrets {number} pumpe aktiv"},
+            "hc_active": {"name": "Varmekrets {number} aktiv"},
+            "boiler1_force_charging_active": {
+                "name": "Bereder 1 tvungen ladning"
+            },
+            "hc1_pump_active": {
+                "name": "Varmekrets 1 pumpe aktiv"
+            },
+            "hc1_active": {
+                "name": "Varmekrets 1 aktiv"
+            },
+            "hc2_pump_active": {
+                "name": "Varmekrets 2 pumpe aktiv"
+            },
+            "hc2_active": {
+                "name": "Varmekrets 2 aktiv"
+            }
+        }
+    }
+}

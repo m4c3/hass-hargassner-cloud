@@ -38,17 +38,20 @@ listed below will be available.
 | Heater | State, program, heater temperature, flue-gas temperature, efficiency |
 | Outdoor | Current and average outdoor temperature |
 | Buffer | State, charge, top/centre/bottom temperatures |
-| Boiler | Boiler 1 temperature and charge |
-| Heating circuit 1 | Current/target flow and room temperatures |
-| Heating circuit 2 | Current/target flow and room temperatures |
+| Boilers | Temperature and charge for every numbered boiler |
+| Heating circuits | Current/target flow and room temperatures for every numbered circuit |
 
 ### Binary sensors
 
 - Cloud connectivity
 - Heater power state and exhaust guard
 - Buffer pump and forced charging
-- Boiler 1 pump and forced charging
-- Heating circuit 1 and 2 activity and pump state
+- Pump and forced charging for every numbered boiler
+- Activity and pump state for every numbered heating circuit
+
+Numbered boilers and all `HEATING_CIRCUIT_*` widget types are discovered from
+the API without an artificial upper limit. Multiple buffer widgets are not yet
+created because their numbering scheme has not been observed.
 
 ## Installation
 

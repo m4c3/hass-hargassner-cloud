@@ -42,17 +42,21 @@ genannten Entitäten vorhanden.
 | Heizung | Status, Programm, Kesseltemperatur, Rauchgastemperatur, Effizienz |
 | Außenbereich | Aktuelle und durchschnittliche Außentemperatur |
 | Pufferspeicher | Status, Ladung, Temperatur oben/Mitte/unten |
-| Boiler | Temperatur und Ladung von Boiler 1 |
-| Heizkreis 1 | Aktuelle und gewünschte Vorlauf- und Raumtemperatur |
-| Heizkreis 2 | Aktuelle und gewünschte Vorlauf- und Raumtemperatur |
+| Boiler | Temperatur und Ladung aller nummerierten Boiler |
+| Heizkreise | Aktuelle und gewünschte Vorlauf- und Raumtemperatur aller nummerierten Heizkreise |
 
 ### Binärsensoren
 
 - Cloud-Verbindung
 - Kesselbetrieb und Abgasüberwachung
 - Pufferpumpe und Zwangsladung
-- Pumpe und Zwangsladung von Boiler 1
-- Aktivität und Pumpenstatus der Heizkreise 1 und 2
+- Pumpe und Zwangsladung aller nummerierten Boiler
+- Aktivität und Pumpenstatus aller nummerierten Heizkreise
+
+Nummerierte Boiler und alle Widget-Typen nach dem Muster
+`HEATING_CIRCUIT_*` werden ohne künstliche Obergrenze aus der API erkannt.
+Mehrere Pufferspeicher werden noch nicht erzeugt, weil ihr Nummerierungsschema
+bisher nicht beobachtet wurde.
 
 ## Installation
 

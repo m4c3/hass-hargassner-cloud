@@ -51,6 +51,12 @@
             "boiler1_temp_current": {
                 "name": "Teplota bojleru 1"
             },
+            "boiler_temp_current": {"name": "Teplota bojleru {number}"},
+            "boiler_charge": {"name": "Nabití bojleru {number}"},
+            "hc_flow_temp_current": {"name": "Okruh {number} teplota přívodu"},
+            "hc_flow_temp_target": {"name": "Okruh {number} cílová teplota přívodu"},
+            "hc_room_temp_target": {"name": "Okruh {number} cílová pokojová teplota"},
+            "hc_room_temp_current": {"name": "Okruh {number} pokojová teplota"},
             "boiler1_charge": {
                 "name": "Nabití bojleru 1"
             },
@@ -98,6 +104,10 @@
             "boiler1_pump_active": {
                 "name": "Čerpadlo bojleru 1 aktivní"
             },
+            "boiler_pump_active": {"name": "Čerpadlo bojleru {number} aktivní"},
+            "boiler_force_charging_active": {"name": "Vynucené nabíjení bojleru {number}"},
+            "hc_pump_active": {"name": "Čerpadlo okruhu {number} aktivní"},
+            "hc_active": {"name": "Okruh {number} aktivní"},
             "boiler1_force_charging_active": {
                 "name": "Vynucené nabíjení bojleru 1"
             },

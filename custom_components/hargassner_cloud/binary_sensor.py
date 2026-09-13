@@ -33,7 +33,70 @@ class HargassnerBinaryDescription(BinarySensorEntityDescription):
     value_fn: Callable[[dict[str, Any]], bool | None] | None = None
 
 
-def build_descriptions() -> list[HargassnerBinaryDescription]:
+def _positive_number(value: object, default: int | None = None) -> int | None:
+    """Normalize a positive widget number."""
+    candidate = default if value is None else value
+    if isinstance(candidate, bool) or not isinstance(candidate, (int, str)):
+        return None
+    try:
+        number = int(candidate)
+    except ValueError:
+        return None
+    return number if number > 0 else None
+
+
+def descriptions_for_boiler(num: int) -> list[HargassnerBinaryDescription]:
+    """Build binary sensor descriptions for a numbered boiler."""
+    number = str(num)
+    return [
+        HargassnerBinaryDescription(
+            key=f"boiler{num}_pump_active",
+            translation_key="boiler_pump_active",
+            translation_placeholders={"number": number},
+            device_class=BinarySensorDeviceClass.RUNNING,
+            value_fn=lambda root: as_bool(
+                value_at(root, "BOILER", "pump_active", number=number)
+            ),
+        ),
+        HargassnerBinaryDescription(
+            key=f"boiler{num}_force_charging_active",
+            translation_key="boiler_force_charging_active",
+            translation_placeholders={"number": number},
+            device_class=BinarySensorDeviceClass.RUNNING,
+            value_fn=lambda root: as_bool(
+                value_at(root, "BOILER", "force_charging_active", number=number)
+            ),
+        ),
+    ]
+
+
+def descriptions_for_hc(widget: str, num: int) -> list[HargassnerBinaryDescription]:
+    """Build binary sensor descriptions for a numbered heating circuit."""
+    number = str(num)
+    return [
+        HargassnerBinaryDescription(
+            key=f"hc{num}_pump_active",
+            translation_key="hc_pump_active",
+            translation_placeholders={"number": number},
+            device_class=BinarySensorDeviceClass.RUNNING,
+            value_fn=lambda root: as_bool(
+                value_at(root, widget, "pump_active", number=number)
+            ),
+        ),
+        HargassnerBinaryDescription(
+            key=f"hc{num}_active",
+            translation_key="hc_active",
+            translation_placeholders={"number": number},
+            device_class=BinarySensorDeviceClass.RUNNING,
+            value_fn=lambda root: as_bool(
+                value_at(root, widget, "active", number=number)
+            ),
+        ),
+    ]
+
+
+def build_descriptions(root: dict[str, Any]) -> list[HargassnerBinaryDescription]:
+    """Build descriptions from widgets actually returned by the API."""
     desc: list[HargassnerBinaryDescription] = []
 
     # Meta connectivity (Diagnose)
@@ -88,69 +151,20 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
         )
     )
 
-    # BOILER #1
-    desc.append(
-        HargassnerBinaryDescription(
-            key="boiler1_pump_active",
-            translation_key="boiler1_pump_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(
-                value_at(r, "BOILER", "pump_active", number="1")
-            ),
-        )
-    )
-    desc.append(
-        HargassnerBinaryDescription(
-            key="boiler1_force_charging_active",
-            translation_key="boiler1_force_charging_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(
-                value_at(r, "BOILER", "force_charging_active", number="1")
-            ),
-        )
-    )
-
-    # HEATING CIRCUITS
-    desc.append(
-        HargassnerBinaryDescription(
-            key="hc1_pump_active",
-            translation_key="hc1_pump_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(
-                value_at(r, "HEATING_CIRCUIT_RADIATOR", "pump_active", number="1")
-            ),
-        )
-    )
-    desc.append(
-        HargassnerBinaryDescription(
-            key="hc1_active",
-            translation_key="hc1_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(
-                value_at(r, "HEATING_CIRCUIT_RADIATOR", "active", number="1")
-            ),
-        )
-    )
-    desc.append(
-        HargassnerBinaryDescription(
-            key="hc2_pump_active",
-            translation_key="hc2_pump_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(
-                value_at(r, "HEATING_CIRCUIT_FLOOR", "pump_active", number="2")
-            ),
-        )
-    )
-    desc.append(
-        HargassnerBinaryDescription(
-            key="hc2_active",
-            translation_key="hc2_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(
-                value_at(r, "HEATING_CIRCUIT_FLOOR", "active", number="2")
-            ),
-        )
-    )
+    boiler_numbers: set[int] = set()
+    heating_circuit_numbers: set[int] = set()
+    for widget_data in root.get("data") or []:
+        widget = widget_data.get("widget")
+        if widget == "BOILER":
+            number = _positive_number(widget_data.get("number"), default=1)
+            if number is not None and number not in boiler_numbers:
+                boiler_numbers.add(number)
+                desc.extend(descriptions_for_boiler(number))
+        elif isinstance(widget, str) and widget.startswith("HEATING_CIRCUIT_"):
+            number = _positive_number(widget_data.get("number"))
+            if number is not None and number not in heating_circuit_numbers:
+                heating_circuit_numbers.add(number)
+                desc.extend(descriptions_for_hc(widget, number))
 
     return desc
 
@@ -168,7 +182,7 @@ async def async_setup_entry(
         HargassnerBinarySensor(
             coordinator, entry, description, overrides.get(description.key)
         )
-        for description in build_descriptions()
+        for description in build_descriptions(coordinator.data or {})
     ]
     async_add_entities(entities)
 

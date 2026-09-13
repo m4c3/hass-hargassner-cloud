@@ -50,6 +50,18 @@ def _program_value(root: dict[str, Any]) -> str | None:
     return normalized if normalized in HEATER_PROGRAM_OPTIONS else None
 
 
+def _positive_number(value: object, default: int | None = None) -> int | None:
+    """Normalize a positive widget number."""
+    candidate = default if value is None else value
+    if isinstance(candidate, bool) or not isinstance(candidate, (int, str)):
+        return None
+    try:
+        number = int(candidate)
+    except ValueError:
+        return None
+    return number if number > 0 else None
+
+
 # -------------------------------------------------
 # Description inkl. translation_key (Punkt 10)
 # -------------------------------------------------
@@ -214,35 +226,37 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
     ]
 
 
-def descriptions_for_boiler_1() -> list[HargassnerSensorDescription]:
+def descriptions_for_boiler(num: int) -> list[HargassnerSensorDescription]:
+    number = str(num)
     return [
         HargassnerSensorDescription(
-            key="boiler1_temp_current",
-            translation_key="boiler1_temp_current",
+            key=f"boiler{num}_temp_current",
+            translation_key="boiler_temp_current",
+            translation_placeholders={"number": number},
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
             value_fn=lambda r: as_float(
-                value_at(r, "BOILER", "boiler_temperature_current", number="1")
+                value_at(r, "BOILER", "boiler_temperature_current", number=number)
             ),
         ),
         HargassnerSensorDescription(
-            key="boiler1_charge",
-            translation_key="boiler1_charge",
+            key=f"boiler{num}_charge",
+            translation_key="boiler_charge",
+            translation_placeholders={"number": number},
             native_unit_of_measurement="%",
             state_class=SensorStateClass.MEASUREMENT,
             value_fn=lambda r: as_float(
-                value_at(r, "BOILER", "boiler_charge", number="1")
+                value_at(r, "BOILER", "boiler_charge", number=number)
             ),
         ),
     ]
 
 
-def descriptions_for_hc(
-    widget: str, num: int, prefix: str
-) -> list[HargassnerSensorDescription]:
+def descriptions_for_hc(widget: str, num: int) -> list[HargassnerSensorDescription]:
     n = str(num)
     translation_prefix = f"hc{num}"
+    legacy_prefix = f"HC{num}{num}" if num in (1, 2) else None
 
     def hc_value(field: str) -> Callable[[dict[str, Any]], float | None]:
         return lambda root: as_float(value_at(root, widget, field, number=n))
@@ -250,8 +264,11 @@ def descriptions_for_hc(
     return [
         HargassnerSensorDescription(
             key=f"{translation_prefix}_flow_temp_current",
-            translation_key=f"{translation_prefix}_flow_temp_current",
-            legacy_unique_id_key=f"{prefix}{num}_flow_temp_current",
+            translation_key="hc_flow_temp_current",
+            translation_placeholders={"number": n},
+            legacy_unique_id_key=(
+                f"{legacy_prefix}_flow_temp_current" if legacy_prefix else None
+            ),
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
@@ -259,8 +276,11 @@ def descriptions_for_hc(
         ),
         HargassnerSensorDescription(
             key=f"{translation_prefix}_flow_temp_target",
-            translation_key=f"{translation_prefix}_flow_temp_target",
-            legacy_unique_id_key=f"{prefix}{num}_flow_temp_target",
+            translation_key="hc_flow_temp_target",
+            translation_placeholders={"number": n},
+            legacy_unique_id_key=(
+                f"{legacy_prefix}_flow_temp_target" if legacy_prefix else None
+            ),
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
@@ -268,8 +288,11 @@ def descriptions_for_hc(
         ),
         HargassnerSensorDescription(
             key=f"{translation_prefix}_room_temp_target",
-            translation_key=f"{translation_prefix}_room_temp_target",
-            legacy_unique_id_key=f"{prefix}{num}_room_temp_target",
+            translation_key="hc_room_temp_target",
+            translation_placeholders={"number": n},
+            legacy_unique_id_key=(
+                f"{legacy_prefix}_room_temp_target" if legacy_prefix else None
+            ),
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
@@ -277,8 +300,11 @@ def descriptions_for_hc(
         ),
         HargassnerSensorDescription(
             key=f"{translation_prefix}_room_temp_current",
-            translation_key=f"{translation_prefix}_room_temp_current",
-            legacy_unique_id_key=f"{prefix}{num}_room_temp_current",
+            translation_key="hc_room_temp_current",
+            translation_placeholders={"number": n},
+            legacy_unique_id_key=(
+                f"{legacy_prefix}_room_temp_current" if legacy_prefix else None
+            ),
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
@@ -313,24 +339,30 @@ async def async_setup_entry(
                 HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
             )
 
-    if any(w.get("widget") == "BOILER" for w in (root.get("data") or [])):
-        for d in descriptions_for_boiler_1():
+    widgets = root.get("data") or []
+    boiler_numbers: set[int] = set()
+    for widget_data in widgets:
+        if widget_data.get("widget") != "BOILER":
+            continue
+        number = _positive_number(widget_data.get("number"), default=1)
+        if number is None or number in boiler_numbers:
+            continue
+        boiler_numbers.add(number)
+        for d in descriptions_for_boiler(number):
             entities.append(
                 HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
             )
 
-    if any(
-        w.get("widget") == "HEATING_CIRCUIT_RADIATOR" for w in (root.get("data") or [])
-    ):
-        for d in descriptions_for_hc("HEATING_CIRCUIT_RADIATOR", 1, "HC1"):
-            entities.append(
-                HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
-            )
-
-    if any(
-        w.get("widget") == "HEATING_CIRCUIT_FLOOR" for w in (root.get("data") or [])
-    ):
-        for d in descriptions_for_hc("HEATING_CIRCUIT_FLOOR", 2, "HC2"):
+    heating_circuit_numbers: set[int] = set()
+    for widget_data in widgets:
+        widget = widget_data.get("widget")
+        if not isinstance(widget, str) or not widget.startswith("HEATING_CIRCUIT_"):
+            continue
+        number = _positive_number(widget_data.get("number"))
+        if number is None or number in heating_circuit_numbers:
+            continue
+        heating_circuit_numbers.add(number)
+        for d in descriptions_for_hc(widget, number):
             entities.append(
                 HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
             )

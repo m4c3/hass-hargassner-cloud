@@ -1,1 +1,128 @@
-{"entity":{"sensor":{"heater_state":{"name":"Stan ogrzewania"},"heater_program":{"name":"Program ogrzewania","state":{"automatic":"Automatyczny","boiler":"Bojler","chimney_sweeper":"Kominiarz","combination_off":"Tryb kombinowany wyłączony","combination_on":"Tryb kombinowany włączony","manual":"Ręczny","off":"Wyłączony","pellets_disabled":"Pellet wyłączony","stop_firing":"Zatrzymaj spalanie"}},"heater_smoke_temp":{"name":"Temperatura spalin"},"heater_temp_current":{"name":"Temperatura kotła"},"outdoor_temp":{"name":"Temperatura zewnętrzna"},"outdoor_temp_avg":{"name":"Temperatura zewnętrzna (średnia)"},"heater_efficiency":{"name":"Sprawność"},"buffer_state":{"name":"Stan bufora"},"buffer_charge":{"name":"Poziom naładowania bufora"},"buffer_temp_top":{"name":"Temperatura bufora u góry"},"buffer_temp_center":{"name":"Temperatura bufora pośrodku"},"buffer_temp_bottom":{"name":"Temperatura bufora na dole"},"boiler1_temp_current":{"name":"Temperatura bojlera 1"},"boiler1_charge":{"name":"Poziom naładowania bojlera 1"},"hc1_flow_temp_current":{"name":"Obieg 1 temperatura zasilania"},"hc1_flow_temp_target":{"name":"Obieg 1 zadana temperatura zasilania"},"hc1_room_temp_target":{"name":"Obieg 1 zadana temperatura pomieszczenia"},"hc1_room_temp_current":{"name":"Obieg 1 temperatura pomieszczenia"},"hc2_flow_temp_current":{"name":"Obieg 2 temperatura zasilania"},"hc2_flow_temp_target":{"name":"Obieg 2 zadana temperatura zasilania"},"hc2_room_temp_target":{"name":"Obieg 2 zadana temperatura pomieszczenia"},"hc2_room_temp_current":{"name":"Obieg 2 temperatura pomieszczenia"}},"binary_sensor":{"online":{"name":"Połączono"},"heater_on":{"name":"Ogrzewanie włączone"},"heater_exhaust_guard":{"name":"Kontrola spalin"},"buffer_pump_active":{"name":"Pompa bufora aktywna"},"buffer_force_charging_active":{"name":"Wymuszone ładowanie bufora"},"boiler1_pump_active":{"name":"Pompa bojlera 1 aktywna"},"boiler1_force_charging_active":{"name":"Wymuszone ładowanie bojlera 1"},"hc1_pump_active":{"name":"Pompa obiegu 1 aktywna"},"hc1_active":{"name":"Obieg 1 aktywny"},"hc2_pump_active":{"name":"Pompa obiegu 2 aktywna"},"hc2_active":{"name":"Obieg 2 aktywny"}}}}
+{
+    "entity": {
+        "sensor": {
+            "heater_state": {
+                "name": "Stan ogrzewania"
+            },
+            "heater_program": {
+                "name": "Program ogrzewania",
+                "state": {
+                    "automatic": "Automatyczny",
+                    "boiler": "Bojler",
+                    "chimney_sweeper": "Kominiarz",
+                    "combination_off": "Tryb kombinowany wyłączony",
+                    "combination_on": "Tryb kombinowany włączony",
+                    "manual": "Ręczny",
+                    "off": "Wyłączony",
+                    "pellets_disabled": "Pellet wyłączony",
+                    "stop_firing": "Zatrzymaj spalanie"
+                }
+            },
+            "heater_smoke_temp": {
+                "name": "Temperatura spalin"
+            },
+            "heater_temp_current": {
+                "name": "Temperatura kotła"
+            },
+            "outdoor_temp": {
+                "name": "Temperatura zewnętrzna"
+            },
+            "outdoor_temp_avg": {
+                "name": "Temperatura zewnętrzna (średnia)"
+            },
+            "heater_efficiency": {
+                "name": "Sprawność"
+            },
+            "buffer_state": {
+                "name": "Stan bufora"
+            },
+            "buffer_charge": {
+                "name": "Poziom naładowania bufora"
+            },
+            "buffer_temp_top": {
+                "name": "Temperatura bufora u góry"
+            },
+            "buffer_temp_center": {
+                "name": "Temperatura bufora pośrodku"
+            },
+            "buffer_temp_bottom": {
+                "name": "Temperatura bufora na dole"
+            },
+            "boiler1_temp_current": {
+                "name": "Temperatura bojlera 1"
+            },
+            "boiler_temp_current": {"name": "Temperatura bojlera {number}"},
+            "boiler_charge": {"name": "Poziom naładowania bojlera {number}"},
+            "hc_flow_temp_current": {"name": "Obieg {number} temperatura zasilania"},
+            "hc_flow_temp_target": {"name": "Obieg {number} zadana temperatura zasilania"},
+            "hc_room_temp_target": {"name": "Obieg {number} zadana temperatura pomieszczenia"},
+            "hc_room_temp_current": {"name": "Obieg {number} temperatura pomieszczenia"},
+            "boiler1_charge": {
+                "name": "Poziom naładowania bojlera 1"
+            },
+            "hc1_flow_temp_current": {
+                "name": "Obieg 1 temperatura zasilania"
+            },
+            "hc1_flow_temp_target": {
+                "name": "Obieg 1 zadana temperatura zasilania"
+            },
+            "hc1_room_temp_target": {
+                "name": "Obieg 1 zadana temperatura pomieszczenia"
+            },
+            "hc1_room_temp_current": {
+                "name": "Obieg 1 temperatura pomieszczenia"
+            },
+            "hc2_flow_temp_current": {
+                "name": "Obieg 2 temperatura zasilania"
+            },
+            "hc2_flow_temp_target": {
+                "name": "Obieg 2 zadana temperatura zasilania"
+            },
+            "hc2_room_temp_target": {
+                "name": "Obieg 2 zadana temperatura pomieszczenia"
+            },
+            "hc2_room_temp_current": {
+                "name": "Obieg 2 temperatura pomieszczenia"
+            }
+        },
+        "binary_sensor": {
+            "online": {
+                "name": "Połączono"
+            },
+            "heater_on": {
+                "name": "Ogrzewanie włączone"
+            },
+            "heater_exhaust_guard": {
+                "name": "Kontrola spalin"
+            },
+            "buffer_pump_active": {
+                "name": "Pompa bufora aktywna"
+            },
+            "buffer_force_charging_active": {
+                "name": "Wymuszone ładowanie bufora"
+            },
+            "boiler1_pump_active": {
+                "name": "Pompa bojlera 1 aktywna"
+            },
+            "boiler_pump_active": {"name": "Pompa bojlera {number} aktywna"},
+            "boiler_force_charging_active": {"name": "Wymuszone ładowanie bojlera {number}"},
+            "hc_pump_active": {"name": "Pompa obiegu {number} aktywna"},
+            "hc_active": {"name": "Obieg {number} aktywny"},
+            "boiler1_force_charging_active": {
+                "name": "Wymuszone ładowanie bojlera 1"
+            },
+            "hc1_pump_active": {
+                "name": "Pompa obiegu 1 aktywna"
+            },
+            "hc1_active": {
+                "name": "Obieg 1 aktywny"
+            },
+            "hc2_pump_active": {
+                "name": "Pompa obiegu 2 aktywna"
+            },
+            "hc2_active": {
+                "name": "Obieg 2 aktywny"
+            }
+        }
+    }
+}

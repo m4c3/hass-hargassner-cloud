@@ -102,6 +102,12 @@
       "boiler1_temp_current": {
         "name": "Boiler 1 Temperature"
       },
+      "boiler_temp_current": {"name": "Boiler {number} Temperature"},
+      "boiler_charge": {"name": "Boiler {number} Charge"},
+      "hc_flow_temp_current": {"name": "HC{number} Flow Temperature"},
+      "hc_flow_temp_target": {"name": "HC{number} Flow Target"},
+      "hc_room_temp_target": {"name": "HC{number} Room Target"},
+      "hc_room_temp_current": {"name": "HC{number} Room Temperature"},
       "boiler1_charge": {
         "name": "Boiler 1 Charge"
       },
@@ -149,6 +155,10 @@
       "boiler1_pump_active": {
         "name": "Boiler 1 Pump Active"
       },
+      "boiler_pump_active": {"name": "Boiler {number} Pump Active"},
+      "boiler_force_charging_active": {"name": "Boiler {number} Force Charging"},
+      "hc_pump_active": {"name": "HC{number} Pump Active"},
+      "hc_active": {"name": "HC{number} Active"},
       "boiler1_force_charging_active": {
         "name": "Boiler 1 Force Charging"
       },
