@@ -79,7 +79,10 @@ def run(coro_factory: Callable[[], Any]) -> Any:
 
 
 def test_login_uses_access_token() -> None:
-    session = FakeSession(posts=[FakeResponse(200, {"access_token": "token"})])
+    session = FakeSession(
+        posts=[FakeResponse(200, {"access_token": "token"})],
+        gets=[FakeResponse(500)],
+    )
     client = make_client(session)
 
     run(client.login)
@@ -90,7 +93,9 @@ def test_login_uses_access_token() -> None:
 
 
 def test_login_distinguishes_connection_failure() -> None:
-    session = FakeSession(posts=[FakeResponse(500) for _ in range(4)])
+    session = FakeSession(
+        posts=[FakeResponse(500) for _ in range(4)], gets=[FakeResponse(500)]
+    )
     client = make_client(session)
 
     with pytest.raises(HargassnerConnectionError):
@@ -101,10 +106,7 @@ def test_login_rediscovers_rotated_credentials() -> None:
     html = '<script type="module" src="/build/assets/app-test.js"></script>'
     bundle = 'const aa="7",bb="rotated-secret";request({client_id:aa,client_secret:bb})'
     session = FakeSession(
-        posts=[
-            *[FakeResponse(401) for _ in range(4)],
-            FakeResponse(200, {"access_token": "new-token"}),
-        ],
+        posts=[FakeResponse(200, {"access_token": "new-token"})],
         gets=[FakeResponse(200, text=html), FakeResponse(200, text=bundle)],
     )
     client = make_client(session, secret="old-secret")

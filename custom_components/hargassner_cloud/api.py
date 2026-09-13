@@ -26,7 +26,7 @@ class HargassnerClient:
         base_url: str,
         username: str,
         password: str,
-        client_secret: str,
+        client_secret: str | None,
         installation: str,
         client_id: str | None = None,
     ):
@@ -34,19 +34,21 @@ class HargassnerClient:
         self._base = base_url.rstrip("/")
         self._username = username
         self._password = password
-        self._client_secret = client_secret
+        self._client_secret = client_secret or ""
         self._client_id = client_id
         self._installation = str(installation).strip()
         self._token: str | None = None
 
     async def login(self) -> None:
-        """Log in, refreshing public web-client credentials once if necessary."""
-        try:
+        """Discover the public web-client credentials and log in."""
+        if await self._async_refresh_client_credentials():
             await self._login_once()
-        except HargassnerAuthError:
-            if not await self._async_refresh_client_credentials():
-                raise
-            await self._login_once()
+            return
+        if not self._client_secret:
+            raise HargassnerConnectionError(
+                "Unable to discover Hargassner web-client credentials"
+            )
+        await self._login_once()
 
     async def _login_once(self) -> None:
         """Log in once with the currently configured client credentials."""

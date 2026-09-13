@@ -32,10 +32,8 @@ async def async_main() -> int:
             base_url=DEFAULT_BASE_URL,
             username=username,
             password=password,
-            # Deliberately invalid: a successful login proves that the client can
-            # discover the current public web-client credentials automatically.
-            client_id="smoke-test-invalid",
-            client_secret="smoke-test-invalid",
+            client_id=None,
+            client_secret=None,
             installation="",
         )
         try:

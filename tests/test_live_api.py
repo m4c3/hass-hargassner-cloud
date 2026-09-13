@@ -34,8 +34,8 @@ def test_live_login_installation_discovery_and_widgets() -> None:
                 base_url=DEFAULT_BASE_URL,
                 username=USERNAME,
                 password=PASSWORD,
-                client_id="live-test-invalid",
-                client_secret="live-test-invalid",
+                client_id=None,
+                client_secret=None,
                 installation="",
             )
             await discovery_client.login()
@@ -49,8 +49,8 @@ def test_live_login_installation_discovery_and_widgets() -> None:
                 base_url=DEFAULT_BASE_URL,
                 username=USERNAME,
                 password=PASSWORD,
-                client_id="live-test-invalid",
-                client_secret="live-test-invalid",
+                client_id=None,
+                client_secret=None,
                 installation=installations[0]["id"],
             )
             widgets = await widget_client.get_widgets()

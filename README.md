@@ -82,11 +82,10 @@ After login, the integration discovers installations available to your account.
 A single installation is selected automatically; when multiple installations
 are available, Home Assistant displays a selection step.
 
-The integration uses the public client credentials shipped with the Hargassner
-web application. If those credentials are rejected, it downloads the current
-login page and JavaScript bundle once, extracts the rotated values, and retries
-the login. Your Hargassner password is never sent anywhere except the configured
-Hargassner base URL.
+The integration downloads the current Hargassner login page and JavaScript
+bundle and extracts the public web-client credentials before logging in. No
+public client secret is embedded in this repository. Your Hargassner password is
+never sent anywhere except the configured Hargassner base URL.
 
 Existing entries that contain manually configured client credentials remain
 supported.

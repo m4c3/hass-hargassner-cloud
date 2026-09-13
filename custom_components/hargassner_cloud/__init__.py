@@ -18,8 +18,6 @@ from .const import (
     CONF_PASSWORD,
     CONF_USERNAME,
     DEFAULT_BASE_URL,
-    DEFAULT_CLIENT_ID,
-    DEFAULT_CLIENT_SECRET,
     DEFAULT_SCAN_INTERVAL,
     NAME,
     PLATFORMS,
@@ -38,7 +36,7 @@ class HargassnerHub:
         base_url: str,
         username: str,
         password: str,
-        client_secret: str,
+        client_secret: str | None,
         installation: str,
         client_id: str | None,
     ):
@@ -72,9 +70,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
         entry.data[CONF_USERNAME],
         entry.data[CONF_PASSWORD],
-        entry.data.get(CONF_CLIENT_SECRET, DEFAULT_CLIENT_SECRET),
+        entry.data.get(CONF_CLIENT_SECRET),
         entry.data[CONF_INSTALLATION],
-        entry.data.get(CONF_CLIENT_ID, DEFAULT_CLIENT_ID),
+        entry.data.get(CONF_CLIENT_ID),
     )
 
     async def _async_update():

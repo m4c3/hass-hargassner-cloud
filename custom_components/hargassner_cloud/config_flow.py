@@ -20,8 +20,6 @@ from .const import (
     CONF_PASSWORD,
     CONF_USERNAME,
     DEFAULT_BASE_URL,
-    DEFAULT_CLIENT_ID,
-    DEFAULT_CLIENT_SECRET,
     DOMAIN,
 )
 from .options_flow import HargassnerOptionsFlowHandler
@@ -48,9 +46,9 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             base_url=user_input.get(CONF_BASE_URL, DEFAULT_BASE_URL),
             username=user_input[CONF_USERNAME],
             password=user_input[CONF_PASSWORD],
-            client_secret=user_input.get(CONF_CLIENT_SECRET, DEFAULT_CLIENT_SECRET),
+            client_secret=user_input.get(CONF_CLIENT_SECRET),
             installation=user_input.get(CONF_INSTALLATION, ""),
-            client_id=user_input.get(CONF_CLIENT_ID, DEFAULT_CLIENT_ID),
+            client_id=user_input.get(CONF_CLIENT_ID),
         )
 
     async def _async_validate(self, user_input: dict[str, Any]) -> None:
