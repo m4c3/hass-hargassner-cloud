@@ -1,19 +1,29 @@
 from __future__ import annotations
 
-from datetime import timedelta
 import logging
+from dataclasses import dataclass
+from datetime import timedelta
 
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.config_entries import ConfigEntry, ConfigEntryAuthFailed
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
+from .api import HargassnerAuthError, HargassnerClient, HargassnerConnectionError
 from .const import (
-    DOMAIN, NAME, PLATFORMS,
-    CONF_USERNAME, CONF_PASSWORD, CONF_CLIENT_SECRET, CONF_CLIENT_ID, CONF_INSTALLATION, CONF_BASE_URL,
-    DEFAULT_SCAN_INTERVAL, DEFAULT_BASE_URL, CONF_MAPPING_OVERRIDES_JSON
+    CONF_BASE_URL,
+    CONF_CLIENT_ID,
+    CONF_CLIENT_SECRET,
+    CONF_INSTALLATION,
+    CONF_PASSWORD,
+    CONF_USERNAME,
+    DEFAULT_BASE_URL,
+    DEFAULT_CLIENT_ID,
+    DEFAULT_CLIENT_SECRET,
+    DEFAULT_SCAN_INTERVAL,
+    NAME,
+    PLATFORMS,
 )
-from .api import HargassnerClient, HargassnerAuthError
 from .utils.logfilter import RedactSecretsFilter
 
 _LOGGER = logging.getLogger(__name__)
@@ -22,7 +32,16 @@ _LOGGER.addFilter(RedactSecretsFilter())
 
 
 class HargassnerHub:
-    def __init__(self, hass: HomeAssistant, base_url: str, username: str, password: str, client_secret: str, installation: str, client_id: str | None):
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        base_url: str,
+        username: str,
+        password: str,
+        client_secret: str,
+        installation: str,
+        client_id: str | None,
+    ):
         self.hass = hass
         self.client = HargassnerClient(
             async_get_clientsession(hass),
@@ -38,34 +57,33 @@ class HargassnerHub:
         return await self.client.get_widgets()
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
-    hass.data.setdefault(DOMAIN, {})
+@dataclass
+class HargassnerRuntimeData:
+    """Runtime objects associated with a config entry."""
 
+    hub: HargassnerHub
+    coordinator: DataUpdateCoordinator
+
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
+    """Set up Hargassner Cloud from a config entry."""
     hub = HargassnerHub(
         hass,
         entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
         entry.data[CONF_USERNAME],
         entry.data[CONF_PASSWORD],
-        entry.data[CONF_CLIENT_SECRET],
+        entry.data.get(CONF_CLIENT_SECRET, DEFAULT_CLIENT_SECRET),
         entry.data[CONF_INSTALLATION],
-        entry.data.get(CONF_CLIENT_ID),
+        entry.data.get(CONF_CLIENT_ID, DEFAULT_CLIENT_ID),
     )
-
-    # Mapping-Overrides aus OptionsFlow (JSON-Text)
-    mapping_overrides_text = entry.options.get(CONF_MAPPING_OVERRIDES_JSON, "")
-    hass.data[DOMAIN][entry.entry_id] = {
-        "hub": hub,
-        "coordinator": None,  # wird gleich gesetzt
-        "mapping_overrides_json": mapping_overrides_text,
-    }
 
     async def _async_update():
         try:
             data = await hub.async_fetch()
             return data
         except HargassnerAuthError as err:
-            raise UpdateFailed(f"Auth: {err}") from err
-        except Exception as err:
+            raise ConfigEntryAuthFailed(str(err)) from err
+        except HargassnerConnectionError as err:
             raise UpdateFailed(str(err)) from err
 
     # Scan-Intervall aus Options oder Default
@@ -80,14 +98,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     )
     await coordinator.async_config_entry_first_refresh()
 
-    hass.data[DOMAIN][entry.entry_id]["coordinator"] = coordinator
+    entry.runtime_data = HargassnerRuntimeData(hub=hub, coordinator=coordinator)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
+    """Unload a Hargassner Cloud config entry."""
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-    if unload_ok:
-        hass.data[DOMAIN].pop(entry.entry_id, None)
     return unload_ok
