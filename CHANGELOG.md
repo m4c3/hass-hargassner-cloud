@@ -1,10 +1,25 @@
-
 # Changelog
 
+## 0.5.0
+
+- Modernized config and options flows for current Home Assistant releases
+- Added automatic installation discovery and selection
+- Removed manual client ID and client secret setup
+- Added automatic recovery when public web-client credentials rotate
+- Added Home Assistant reauthentication support
+- Migrated runtime state to `ConfigEntry.runtime_data`
+- Fixed same-endpoint retry after an expired token
+- Applied mapping overrides to sensors and binary sensors
+- Redacted API diagnostics and improved error visibility
+- Added automated tests, Ruff, Mypy, and Markdown validation
+- Increased the default polling interval from 30 to 300 seconds
+
 ## 0.1.1
-- HACS-Metadaten (`hacs.json`), `info.md`
-- CI-Workflows (HACS / hassfest)
-- Doku-Links in `manifest.json` ergänzt
+
+- Added HACS metadata (`hacs.json`) and `info.md`
+- Added HACS and Hassfest validation workflows
 
 ## 0.1.0
-- Erste Version: Config-Flow, DataUpdateCoordinator, 4 Sensors (Outdoor/Boiler/Smoke/Buffer Top)
+
+- Initial config flow and `DataUpdateCoordinator` implementation
+- Added outdoor, boiler, flue-gas, and buffer temperature sensors
