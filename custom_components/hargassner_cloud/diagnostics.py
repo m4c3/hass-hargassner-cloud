@@ -50,6 +50,7 @@ def _widget_structure(payload: object) -> dict[str, object]:
         return {"payload_type": _value_type(payload)}
 
     widgets: list[dict[str, object]] = []
+    device: dict[str, str] = {}
     data = payload.get("data")
     if isinstance(data, list):
         for item in data:
@@ -63,6 +64,10 @@ def _widget_structure(payload: object) -> dict[str, object]:
                 widget["number"] = str(item["number"])
             values = item.get("values")
             if isinstance(values, dict):
+                if item.get("widget") == "HEATER" and isinstance(
+                    values.get("device_type"), str
+                ):
+                    device["type"] = values["device_type"]
                 widget["value_fields"] = {
                     str(key): _value_type(value) for key, value in values.items()
                 }
@@ -77,7 +82,7 @@ def _widget_structure(payload: object) -> dict[str, object]:
         if isinstance(meta, dict)
         else {}
     )
-    return {"widgets": widgets, "meta_fields": meta_fields}
+    return {"device": device, "widgets": widgets, "meta_fields": meta_fields}
 
 
 async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigEntry):
@@ -92,7 +97,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigE
             "entry": redacted_entry,
             "coordinator_last_update_success": None,
             "api": {"phase": "setup", "outcome": "runtime_data_unavailable"},
-            "widget_structure": {"widgets": [], "meta_fields": {}},
+            "widget_structure": {"device": {}, "widgets": [], "meta_fields": {}},
         }
 
     coordinator = runtime_data.coordinator

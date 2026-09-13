@@ -15,7 +15,11 @@ def test_diagnostics_redacts_entry_and_payload() -> None:
             "data": [
                 {
                     "widget": "HEATER",
-                    "values": {"temperature": 55, "name": "Private heater"},
+                    "values": {
+                        "temperature": 55,
+                        "name": "Private heater",
+                        "device_type": "NanoPK",
+                    },
                     "parameters": {
                         "program": {
                             "resource": "/installations/12345/widgets/heater",
@@ -53,9 +57,11 @@ def test_diagnostics_redacts_entry_and_payload() -> None:
     assert "Private room" not in rendered
     assert "12345" not in rendered
     assert "PROGRAM_OFF" not in rendered
+    assert result["widget_structure"]["device"] == {"type": "NanoPK"}
     assert result["widget_structure"]["widgets"][0]["value_fields"] == {
         "temperature": "int",
         "name": "str",
+        "device_type": "str",
     }
     assert result["widget_structure"]["widgets"][0]["parameter_fields"] == ["program"]
     assert result["api"]["phase"] == "widgets"
@@ -75,3 +81,4 @@ def test_diagnostics_work_without_runtime_data() -> None:
     assert "secret" not in rendered
     assert result["coordinator_last_update_success"] is None
     assert result["api"]["outcome"] == "runtime_data_unavailable"
+    assert result["widget_structure"]["device"] == {}

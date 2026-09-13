@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added the non-sensitive heater device type to sanitized diagnostics
+
 ## 0.5.2
 
 - Distinguished Hargassner web-client changes from personal authentication errors
