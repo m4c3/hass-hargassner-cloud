@@ -2,7 +2,8 @@
     "entity": {
         "sensor": {
             "heater_state": {
-                "name": "Stav vytápění"
+                "name": "Stav vytápění",
+                "state": {"off": "Vypnuto", "on": "Zapnuto"}
             },
             "heater_program": {
                 "name": "Program vytápění",
@@ -34,7 +35,8 @@
                 "name": "Účinnost"
             },
             "buffer_state": {
-                "name": "Stav akumulační nádrže"
+                "name": "Stav akumulační nádrže",
+                "state": {"off": "Vypnuto", "on": "Zapnuto"}
             },
             "buffer_charge": {
                 "name": "Nabití akumulační nádrže"

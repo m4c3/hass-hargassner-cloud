@@ -53,7 +53,8 @@
   "entity": {
     "sensor": {
       "heater_state": {
-        "name": "Heizungsstatus"
+        "name": "Heizungsstatus",
+        "state": {"off": "Aus", "on": "An"}
       },
       "heater_program": {
         "name": "Heizprogramm",
@@ -85,7 +86,8 @@
         "name": "Effizienz"
       },
       "buffer_state": {
-        "name": "Pufferstatus"
+        "name": "Pufferstatus",
+        "state": {"off": "Aus", "on": "An"}
       },
       "buffer_charge": {
         "name": "Pufferladung"

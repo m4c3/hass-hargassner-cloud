@@ -2,7 +2,8 @@
     "entity": {
         "sensor": {
             "heater_state": {
-                "name": "État du chauffage"
+                "name": "État du chauffage",
+                "state": {"off": "Arrêt", "on": "Marche"}
             },
             "heater_program": {
                 "name": "Programme de chauffage",
@@ -34,7 +35,8 @@
                 "name": "Rendement"
             },
             "buffer_state": {
-                "name": "État du ballon tampon"
+                "name": "État du ballon tampon",
+                "state": {"off": "Arrêt", "on": "Marche"}
             },
             "buffer_charge": {
                 "name": "Charge du ballon tampon"

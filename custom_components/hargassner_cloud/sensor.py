@@ -39,6 +39,16 @@ HEATER_PROGRAM_OPTIONS = [
     "pellets_disabled",
     "stop_firing",
 ]
+HEATING_STATE_OPTIONS = ["off", "on"]
+
+
+def _state_value(value: object) -> str | None:
+    """Normalize a heater or buffer state for Home Assistant translations."""
+    state = as_str(value)
+    if not state or not state.startswith("STATE_"):
+        return None
+    normalized = state.removeprefix("STATE_").lower()
+    return normalized if normalized in HEATING_STATE_OPTIONS else None
 
 
 def _program_value(root: dict[str, Any]) -> str | None:
@@ -93,8 +103,10 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
             key="heater_state",
             icon="mdi:fire",
             translation_key="heater_state",
+            device_class=SensorDeviceClass.ENUM,
+            options=HEATING_STATE_OPTIONS,
             entity_category=EntityCategory.DIAGNOSTIC,
-            value_fn=lambda r: as_str(value_at(r, "HEATER", "state")),
+            value_fn=lambda r: _state_value(value_at(r, "HEATER", "state")),
         ),
         HargassnerSensorDescription(
             key="heater_program",
@@ -182,8 +194,10 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
             key="buffer_state",
             translation_key="buffer_state",
             icon="mdi:water-boiler",
+            device_class=SensorDeviceClass.ENUM,
+            options=HEATING_STATE_OPTIONS,
             entity_category=EntityCategory.DIAGNOSTIC,
-            value_fn=lambda r: as_str(value_at(r, "BUFFER", "state")),
+            value_fn=lambda r: _state_value(value_at(r, "BUFFER", "state")),
         ),
         HargassnerSensorDescription(
             key="buffer_charge",

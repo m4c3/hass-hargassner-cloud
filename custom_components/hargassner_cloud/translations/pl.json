@@ -2,7 +2,8 @@
     "entity": {
         "sensor": {
             "heater_state": {
-                "name": "Stan ogrzewania"
+                "name": "Stan ogrzewania",
+                "state": {"off": "Wyłączone", "on": "Włączone"}
             },
             "heater_program": {
                 "name": "Program ogrzewania",
@@ -34,7 +35,8 @@
                 "name": "Sprawność"
             },
             "buffer_state": {
-                "name": "Stan bufora"
+                "name": "Stan bufora",
+                "state": {"off": "Wyłączony", "on": "Włączony"}
             },
             "buffer_charge": {
                 "name": "Poziom naładowania bufora"

@@ -2,7 +2,8 @@
     "entity": {
         "sensor": {
             "heater_state": {
-                "name": "Varmestatus"
+                "name": "Varmestatus",
+                "state": {"off": "Av", "on": "På"}
             },
             "heater_program": {
                 "name": "Varmeprogram",
@@ -34,7 +35,8 @@
                 "name": "Virkningsgrad"
             },
             "buffer_state": {
-                "name": "Bufferstatus"
+                "name": "Bufferstatus",
+                "state": {"off": "Av", "on": "På"}
             },
             "buffer_charge": {
                 "name": "Bufferladning"

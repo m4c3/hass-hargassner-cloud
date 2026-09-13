@@ -2,7 +2,8 @@
     "entity": {
         "sensor": {
             "heater_state": {
-                "name": "Estado de la calefacción"
+                "name": "Estado de la calefacción",
+                "state": {"off": "Apagado", "on": "Encendido"}
             },
             "heater_program": {
                 "name": "Programa de calefacción",
@@ -34,7 +35,8 @@
                 "name": "Eficiencia"
             },
             "buffer_state": {
-                "name": "Estado del depósito de inercia"
+                "name": "Estado del depósito de inercia",
+                "state": {"off": "Apagado", "on": "Encendido"}
             },
             "buffer_charge": {
                 "name": "Carga del depósito de inercia"

@@ -100,6 +100,32 @@ def test_heater_program_reads_and_normalizes_parameter_value() -> None:
     assert program.value_fn(payload) == "automatic"
 
 
+def test_heater_and_buffer_states_are_normalized_for_translation() -> None:
+    heater_state = next(
+        description
+        for description in descriptions_for_heater()
+        if description.key == "heater_state"
+    )
+    buffer_state = next(
+        description
+        for description in descriptions_for_buffer()
+        if description.key == "buffer_state"
+    )
+    payload = {
+        "data": [
+            {"widget": "HEATER", "values": {"state": "STATE_OFF"}},
+            {"widget": "BUFFER", "values": {"state": "STATE_ON"}},
+        ]
+    }
+
+    assert heater_state.options == ["off", "on"]
+    assert buffer_state.options == ["off", "on"]
+    assert heater_state.value_fn is not None
+    assert buffer_state.value_fn is not None
+    assert heater_state.value_fn(payload) == "off"
+    assert buffer_state.value_fn(payload) == "on"
+
+
 def test_nanopk_widget_schema_is_supported() -> None:
     """Exercise the widget shape observed in sanitized NanoPK diagnostics."""
     payload = {
@@ -185,8 +211,10 @@ def test_nanopk_widget_schema_is_supported() -> None:
     }
 
     assert sensor_values["heater_program"] == "automatic"
+    assert sensor_values["heater_state"] == "on"
     assert sensor_values["heater_smoke_temp"] == 101.5
     assert sensor_values["buffer_charge"] == 64.0
+    assert sensor_values["buffer_state"] == "on"
     assert sensor_values["hc1_flow_temp_target"] is None
     assert sensor_values["hc2_flow_temp_current"] == 27.0
     assert sensor_values["boiler1_temp_current"] == 54.5

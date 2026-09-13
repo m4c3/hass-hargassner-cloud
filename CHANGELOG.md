@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Added the non-sensitive heater device type to sanitized diagnostics
+- Added localized on/off states for heater and buffer status sensors
 
 ## 0.5.2
 
