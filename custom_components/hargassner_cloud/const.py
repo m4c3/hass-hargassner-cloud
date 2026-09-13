@@ -15,6 +15,7 @@ CONF_AREA = "area"
 
 # Options keys
 DEFAULT_SCAN_INTERVAL = 300
+MIN_SCAN_INTERVAL = 30
 DEFAULT_BASE_URL = "https://web.hargassner.at"
 # NEW: Options-Override (JSON-Text) für Mapping-Anpassungen pro Entity-Key
 # Format:

@@ -25,6 +25,7 @@
     },
     "error": {
       "auth": "Anmeldung fehlgeschlagen. Pr\u00fcfe die Zugangsdaten.",
+      "client_credentials": "Die Anmeldedaten des Hargassner-Webclients konnten nicht ermittelt oder wurden abgelehnt. Pr\u00fcfe, ob eine neuere Version der Integration verf\u00fcgbar ist.",
       "cannot_connect": "Verbindung zur Hargassner Cloud fehlgeschlagen.",
       "unknown": "Unerwarteter Fehler"
     },
@@ -55,7 +56,18 @@
         "name": "Heizungsstatus"
       },
       "heater_program": {
-        "name": "Heizprogramm"
+        "name": "Heizprogramm",
+        "state": {
+          "automatic": "Automatik",
+          "boiler": "Boiler",
+          "chimney_sweeper": "Schornsteinfeger",
+          "combination_off": "Kombinationsbetrieb aus",
+          "combination_on": "Kombinationsbetrieb an",
+          "manual": "Manuell",
+          "off": "Aus",
+          "pellets_disabled": "Pellets deaktiviert",
+          "stop_firing": "Feuerung stoppen"
+        }
       },
       "heater_smoke_temp": {
         "name": "Rauchgastemperatur"
@@ -152,6 +164,12 @@
       "hc2_active": {
         "name": "HK2 aktiv"
       }
+    }
+  },
+  "issues": {
+    "client_credentials": {
+      "title": "Hargassner-Webclient hat sich ge\u00e4ndert",
+      "description": "Die Integration konnte die \u00f6ffentlichen Anmeldedaten des Hargassner-Webclients nicht ermitteln oder sie wurden vom Portal abgelehnt. Pr\u00fcfe, ob eine neuere Version der Integration verf\u00fcgbar ist. Falls du bereits die aktuelle Version verwendest, melde das Problem bitte im verlinkten Issue-Tracker. Deine pers\u00f6nlichen Hargassner-Zugangsdaten m\u00fcssen normalerweise nicht ge\u00e4ndert werden."
     }
   }
 }

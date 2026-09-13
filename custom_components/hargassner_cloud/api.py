@@ -19,6 +19,10 @@ class HargassnerConnectionError(Exception):
     """Raised when the cloud API cannot be reached or returns invalid data."""
 
 
+class HargassnerClientCredentialsError(Exception):
+    """Raised when public Hargassner web-client credentials are unavailable."""
+
+
 class HargassnerClient:
     def __init__(
         self,
@@ -38,27 +42,62 @@ class HargassnerClient:
         self._client_id = client_id
         self._installation = str(installation).strip()
         self._token: str | None = None
+        self._diagnostics: dict[str, str | int | None] = {
+            "phase": "not_started",
+            "outcome": None,
+            "http_status": None,
+            "credential_source": "unknown",
+            "error_type": None,
+        }
+
+    @property
+    def diagnostics(self) -> dict[str, str | int | None]:
+        """Return structured diagnostics without credentials or response values."""
+        return dict(self._diagnostics)
+
+    def _record_diagnostic(
+        self,
+        phase: str,
+        outcome: str,
+        *,
+        http_status: int | None = None,
+        error_type: str | None = None,
+    ) -> None:
+        """Record the latest API operation in a safe, bounded form."""
+        self._diagnostics.update(
+            {
+                "phase": phase,
+                "outcome": outcome,
+                "http_status": http_status,
+                "error_type": error_type,
+            }
+        )
 
     async def login(self) -> None:
         """Discover the public web-client credentials and log in."""
-        if await self._async_refresh_client_credentials():
+        credentials_discovered = await self._async_refresh_client_credentials()
+        if credentials_discovered:
+            self._diagnostics["credential_source"] = "live_bundle"
             await self._login_once()
             return
         if not self._client_secret:
-            raise HargassnerConnectionError(
+            self._diagnostics["credential_source"] = "unavailable"
+            self._record_diagnostic("client_credentials", "failed")
+            raise HargassnerClientCredentialsError(
                 "Unable to discover Hargassner web-client credentials"
             )
-        await self._login_once()
+        self._diagnostics["credential_source"] = "stored_legacy"
+        try:
+            await self._login_once()
+        except HargassnerAuthError as err:
+            raise HargassnerClientCredentialsError(
+                "Stored Hargassner web-client credentials were rejected"
+            ) from err
 
     async def _login_once(self) -> None:
         """Log in once with the currently configured client credentials."""
         url = f"{self._base}/api/auth/login"
-        _LOGGER.debug(
-            "Starting login at %s for user=%s (client_id=%s)",
-            url,
-            self._username,
-            self._client_id,
-        )
+        _LOGGER.debug("Starting Hargassner login")
 
         payload_candidates = [
             {
@@ -93,26 +132,27 @@ class HargassnerClient:
 
         last_error_txt = ""
         auth_rejected = False
-        for payload in payload_candidates:
-            safe = payload.copy()
-            safe["password"] = "***"
-            if "client_secret" in safe:
-                safe["client_secret"] = "***"
-            _LOGGER.debug("→ POST %s payload=%s", url, safe)
+        for attempt, payload in enumerate(payload_candidates, start=1):
+            _LOGGER.debug("Sending Hargassner login attempt %s", attempt)
             try:
                 async with self._session.post(
                     url, json=payload, headers={"Accept": "application/json"}
                 ) as resp:
-                    text = await resp.text()
-                    _LOGGER.debug("← Login response %s: %s", resp.status, text[:800])
+                    _LOGGER.debug("Hargassner login response status: %s", resp.status)
                     if resp.status >= 400:
-                        last_error_txt = f"{resp.status} {text[:200]}"
+                        last_error_txt = f"HTTP {resp.status}"
+                        self._record_diagnostic(
+                            "login", "failed", http_status=resp.status
+                        )
                         auth_rejected |= resp.status in (401, 403)
                         continue
                     try:
                         js = await resp.json()
                     except (ContentTypeError, TypeError, ValueError):
-                        last_error_txt = f"Non-JSON login response: {text[:200]}"
+                        last_error_txt = "Non-JSON login response"
+                        self._record_diagnostic(
+                            "login", "invalid_response", http_status=resp.status
+                        )
                         continue
                     token = (
                         js.get("access_token")
@@ -122,10 +162,16 @@ class HargassnerClient:
                     if token:
                         _LOGGER.debug("✓ Login succeeded")
                         self._token = token
+                        self._record_diagnostic(
+                            "login", "success", http_status=resp.status
+                        )
                         return
                     last_error_txt = f"Login JSON had no token: keys={list(js.keys())}"
             except (ClientError, TimeoutError) as exc:
                 last_error_txt = f"Exception: {exc}"
+                self._record_diagnostic(
+                    "login", "failed", error_type=type(exc).__name__
+                )
                 _LOGGER.debug("Login connection error: %s", last_error_txt)
 
         if auth_rejected:
@@ -140,6 +186,9 @@ class HargassnerClient:
             ) as response:
                 html = await response.text()
                 if response.status >= 400:
+                    self._record_diagnostic(
+                        "login_page", "failed", http_status=response.status
+                    )
                     return False
 
             script_match = re.search(
@@ -147,6 +196,7 @@ class HargassnerClient:
                 html,
             )
             if not script_match:
+                self._record_diagnostic("login_page", "script_not_found")
                 return False
 
             bundle_url = urljoin(f"{self._base}/", script_match.group(1))
@@ -155,10 +205,14 @@ class HargassnerClient:
             ) as response:
                 bundle = await response.text()
                 if response.status >= 400:
+                    self._record_diagnostic(
+                        "web_bundle", "failed", http_status=response.status
+                    )
                     return False
 
             anchor = re.search(r"client_id:(\w+),client_secret:(\w+)", bundle)
             if not anchor:
+                self._record_diagnostic("web_bundle", "credential_anchor_not_found")
                 return False
 
             def resolve(variable: str) -> str | None:
@@ -172,15 +226,21 @@ class HargassnerClient:
             client_id = resolve(anchor.group(1))
             client_secret = resolve(anchor.group(2))
             if not client_id or not client_secret:
+                self._record_diagnostic("web_bundle", "credential_values_not_found")
                 return False
             if client_id == self._client_id and client_secret == self._client_secret:
-                return False
+                self._record_diagnostic("web_bundle", "success")
+                return True
 
             self._client_id = client_id
             self._client_secret = client_secret
             _LOGGER.info("Updated public Hargassner web-client credentials")
+            self._record_diagnostic("web_bundle", "success")
             return True
-        except (ClientError, TimeoutError):
+        except (ClientError, TimeoutError) as err:
+            self._record_diagnostic(
+                "client_credentials", "failed", error_type=type(err).__name__
+            )
             return False
 
     async def get_widgets(self) -> dict[str, Any]:
@@ -203,17 +263,14 @@ class HargassnerClient:
             f"{self._base}/api/widgets?installationId={self._installation}",
         ]
         last_err = ""
-        for url in urls:
-            _LOGGER.debug("GET %s", url)
+        for endpoint_number, url in enumerate(urls, start=1):
+            _LOGGER.debug("Requesting widgets endpoint %s", endpoint_number)
             for attempt in range(2):
                 try:
                     async with self._session.get(
                         url, headers=headers, timeout=timeout
                     ) as resp:
-                        text = await resp.text()
-                        _LOGGER.debug(
-                            "Widgets response %s: %s", resp.status, text[:1200]
-                        )
+                        _LOGGER.debug("Widgets response status: %s", resp.status)
                         if resp.status in (401, 403):
                             if relogin_done or attempt == 1:
                                 raise HargassnerAuthError(
@@ -228,18 +285,31 @@ class HargassnerClient:
                             await asyncio.sleep(0.5)
                             continue
                         if resp.status >= 400:
-                            last_err = f"{resp.status} {text[:200]}"
+                            last_err = f"HTTP {resp.status}"
+                            self._record_diagnostic(
+                                "widgets", "failed", http_status=resp.status
+                            )
                             break
                         try:
-                            return await resp.json()
+                            result = await resp.json()
+                            self._record_diagnostic(
+                                "widgets", "success", http_status=resp.status
+                            )
+                            return result
                         except (TypeError, ValueError):
-                            last_err = f"Non-JSON widgets response: {text[:200]}"
+                            last_err = "Non-JSON widgets response"
+                            self._record_diagnostic(
+                                "widgets", "invalid_response", http_status=resp.status
+                            )
                             break
                 except HargassnerAuthError:
                     raise
                 except (ClientError, TimeoutError) as exc:
                     last_err = f"{type(exc).__name__}: {exc}"
-                    _LOGGER.debug("Widgets exception at %s: %s", url, last_err)
+                    self._record_diagnostic(
+                        "widgets", "failed", error_type=type(exc).__name__
+                    )
+                    _LOGGER.debug("Widgets request failed: %s", type(exc).__name__)
                     break
 
         raise HargassnerConnectionError(f"Widgets fetch failed. Last error: {last_err}")
@@ -260,7 +330,6 @@ class HargassnerClient:
                     async with self._session.get(
                         url, headers=headers, timeout=ClientTimeout(total=15)
                     ) as response:
-                        text = await response.text()
                         if response.status in (401, 403):
                             if attempt == 1:
                                 raise HargassnerAuthError(
@@ -272,9 +341,11 @@ class HargassnerClient:
                         if response.status == 404:
                             break
                         if response.status >= 400:
+                            self._record_diagnostic(
+                                "installations", "failed", http_status=response.status
+                            )
                             raise HargassnerConnectionError(
-                                f"Installation discovery failed: {response.status} "
-                                f"{text[:200]}"
+                                f"Installation discovery failed: HTTP {response.status}"
                             )
                         try:
                             payload = await response.json()
@@ -284,6 +355,9 @@ class HargassnerClient:
                             ) from err
                         installations = self._parse_installations(payload)
                         if installations:
+                            self._record_diagnostic(
+                                "installations", "success", http_status=response.status
+                            )
                             return installations
                         break
                 except HargassnerAuthError:
@@ -291,6 +365,9 @@ class HargassnerClient:
                 except HargassnerConnectionError:
                     raise
                 except (ClientError, TimeoutError) as err:
+                    self._record_diagnostic(
+                        "installations", "failed", error_type=type(err).__name__
+                    )
                     raise HargassnerConnectionError(
                         f"Installation discovery failed: {err}"
                     ) from err

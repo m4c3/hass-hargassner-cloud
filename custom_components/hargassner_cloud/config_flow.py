@@ -10,7 +10,12 @@ from homeassistant import config_entries
 from homeassistant.config_entries import ConfigFlowResult
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import HargassnerAuthError, HargassnerClient, HargassnerConnectionError
+from .api import (
+    HargassnerAuthError,
+    HargassnerClient,
+    HargassnerClientCredentialsError,
+    HargassnerConnectionError,
+)
 from .const import (
     CONF_AREA,
     CONF_BASE_URL,
@@ -76,6 +81,8 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 self._installations = await client.get_installations()
             except HargassnerAuthError:
                 errors["base"] = "auth"
+            except HargassnerClientCredentialsError:
+                errors["base"] = "client_credentials"
             except (HargassnerConnectionError, ClientError, TimeoutError):
                 errors["base"] = "cannot_connect"
             except Exception:
@@ -131,6 +138,8 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 await self._async_validate(updated_data)
             except HargassnerAuthError:
                 errors["base"] = "auth"
+            except HargassnerClientCredentialsError:
+                errors["base"] = "client_credentials"
             except (HargassnerConnectionError, ClientError, TimeoutError):
                 errors["base"] = "cannot_connect"
             except Exception:

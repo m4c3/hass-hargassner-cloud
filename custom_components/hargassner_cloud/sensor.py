@@ -26,7 +26,28 @@ from .const import (
     CONF_MAPPING_OVERRIDES_JSON,
     DOMAIN,
 )
-from .helpers import first_of, value_at
+from .helpers import first_of, parameter_value_at, value_at
+
+HEATER_PROGRAM_OPTIONS = [
+    "automatic",
+    "boiler",
+    "chimney_sweeper",
+    "combination_off",
+    "combination_on",
+    "manual",
+    "off",
+    "pellets_disabled",
+    "stop_firing",
+]
+
+
+def _program_value(root: dict[str, Any]) -> str | None:
+    """Normalize the current heater program for Home Assistant translations."""
+    value = as_str(parameter_value_at(root, "HEATER", "program"))
+    if not value or not value.startswith("PROGRAM_"):
+        return None
+    normalized = value.removeprefix("PROGRAM_").lower()
+    return normalized if normalized in HEATER_PROGRAM_OPTIONS else None
 
 
 # -------------------------------------------------
@@ -35,6 +56,7 @@ from .helpers import first_of, value_at
 @dataclass(frozen=True, kw_only=True)
 class HargassnerSensorDescription(SensorEntityDescription):
     value_fn: Callable[[dict[str, Any]], Any] | None = None
+    legacy_unique_id_key: str | None = None
 
 
 def _load_overrides(entry: ConfigEntry) -> dict[str, dict[str, str]]:
@@ -57,7 +79,6 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
     return [
         HargassnerSensorDescription(
             key="heater_state",
-            name="Heater State",
             icon="mdi:fire",
             translation_key="heater_state",
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -65,15 +86,15 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="heater_program",
-            name="Heater Program",
             icon="mdi:cog",
             translation_key="heater_program",
+            device_class=SensorDeviceClass.ENUM,
+            options=HEATER_PROGRAM_OPTIONS,
             entity_category=EntityCategory.DIAGNOSTIC,
-            value_fn=lambda r: as_str(value_at(r, "HEATER", "program")),
+            value_fn=_program_value,
         ),
         HargassnerSensorDescription(
             key="heater_smoke_temp",
-            name="Smoke Temperature",
             translation_key="heater_smoke_temp",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -82,7 +103,6 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="heater_temp_current",
-            name="Heater Temperature",
             translation_key="heater_temp_current",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -93,7 +113,6 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="outdoor_temp",
-            name="Outdoor Temperature",
             translation_key="outdoor_temp",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -112,7 +131,6 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="outdoor_temp_avg",
-            name="Outdoor Temperature (avg)",
             translation_key="outdoor_temp_avg",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -137,7 +155,6 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="heater_efficiency",
-            name="Efficiency",
             translation_key="heater_efficiency",
             native_unit_of_measurement="%",
             icon="mdi:percent",
@@ -151,7 +168,6 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
     return [
         HargassnerSensorDescription(
             key="buffer_state",
-            name="Buffer State",
             translation_key="buffer_state",
             icon="mdi:water-boiler",
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -159,7 +175,6 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="buffer_charge",
-            name="Buffer Charge",
             translation_key="buffer_charge",
             native_unit_of_measurement="%",
             icon="mdi:battery-heart-variant",
@@ -168,7 +183,6 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="buffer_temp_top",
-            name="Buffer Temperature Top",
             translation_key="buffer_temp_top",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -179,7 +193,6 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="buffer_temp_center",
-            name="Buffer Temperature Center",
             translation_key="buffer_temp_center",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -190,7 +203,6 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="buffer_temp_bottom",
-            name="Buffer Temperature Bottom",
             translation_key="buffer_temp_bottom",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -206,7 +218,6 @@ def descriptions_for_boiler_1() -> list[HargassnerSensorDescription]:
     return [
         HargassnerSensorDescription(
             key="boiler1_temp_current",
-            name="Boiler 1 Temperature",
             translation_key="boiler1_temp_current",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
@@ -217,7 +228,6 @@ def descriptions_for_boiler_1() -> list[HargassnerSensorDescription]:
         ),
         HargassnerSensorDescription(
             key="boiler1_charge",
-            name="Boiler 1 Charge",
             translation_key="boiler1_charge",
             native_unit_of_measurement="%",
             state_class=SensorStateClass.MEASUREMENT,
@@ -232,42 +242,43 @@ def descriptions_for_hc(
     widget: str, num: int, prefix: str
 ) -> list[HargassnerSensorDescription]:
     n = str(num)
+    translation_prefix = f"hc{num}"
 
     def hc_value(field: str) -> Callable[[dict[str, Any]], float | None]:
         return lambda root: as_float(value_at(root, widget, field, number=n))
 
     return [
         HargassnerSensorDescription(
-            key=f"{prefix}{num}_flow_temp_current",
-            name=f"{prefix}{num} Flow Temperature",
-            translation_key=f"{prefix}{num}_flow_temp_current",
+            key=f"{translation_prefix}_flow_temp_current",
+            translation_key=f"{translation_prefix}_flow_temp_current",
+            legacy_unique_id_key=f"{prefix}{num}_flow_temp_current",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
             value_fn=hc_value("flow_temperature_current"),
         ),
         HargassnerSensorDescription(
-            key=f"{prefix}{num}_flow_temp_target",
-            name=f"{prefix}{num} Flow Target",
-            translation_key=f"{prefix}{num}_flow_temp_target",
+            key=f"{translation_prefix}_flow_temp_target",
+            translation_key=f"{translation_prefix}_flow_temp_target",
+            legacy_unique_id_key=f"{prefix}{num}_flow_temp_target",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
             value_fn=hc_value("flow_temperature_target"),
         ),
         HargassnerSensorDescription(
-            key=f"{prefix}{num}_room_temp_target",
-            name=f"{prefix}{num} Room Target",
-            translation_key=f"{prefix}{num}_room_temp_target",
+            key=f"{translation_prefix}_room_temp_target",
+            translation_key=f"{translation_prefix}_room_temp_target",
+            legacy_unique_id_key=f"{prefix}{num}_room_temp_target",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
             value_fn=hc_value("room_temperature_target"),
         ),
         HargassnerSensorDescription(
-            key=f"{prefix}{num}_room_temp_current",
-            name=f"{prefix}{num} Room Temperature",
-            translation_key=f"{prefix}{num}_room_temp_current",
+            key=f"{translation_prefix}_room_temp_current",
+            translation_key=f"{translation_prefix}_room_temp_current",
+            legacy_unique_id_key=f"{prefix}{num}_room_temp_current",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
@@ -302,14 +313,12 @@ async def async_setup_entry(
                 HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
             )
 
-    # BOILER
     if any(w.get("widget") == "BOILER" for w in (root.get("data") or [])):
         for d in descriptions_for_boiler_1():
             entities.append(
                 HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
             )
 
-    # HC
     if any(
         w.get("widget") == "HEATING_CIRCUIT_RADIATOR" for w in (root.get("data") or [])
     ):
@@ -344,9 +353,8 @@ class HargassnerSensor(CoordinatorEntity, SensorEntity):
         self.entity_description = description
         self._description = description
         self._mapping_override = override
-        self._attr_unique_id = f"{entry.entry_id}_{description.key}"
-        self._attr_name = (
-            description.name if isinstance(description.name, str) else None
+        self._attr_unique_id = (
+            f"{entry.entry_id}_{description.legacy_unique_id_key or description.key}"
         )
 
         if description.native_unit_of_measurement:

@@ -40,7 +40,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="online",
-            name="Online",
             translation_key="online",
             device_class=BinarySensorDeviceClass.CONNECTIVITY,
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -52,7 +51,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="heater_on",
-            name="Heater On",
             translation_key="heater_on",
             device_class=BinarySensorDeviceClass.POWER,
             value_fn=lambda r: (
@@ -65,7 +63,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="heater_exhaust_guard",
-            name="Exhaust Guard",
             translation_key="heater_exhaust_guard",
             device_class=BinarySensorDeviceClass.SAFETY,
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -77,7 +74,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="buffer_pump_active",
-            name="Buffer Pump Active",
             translation_key="buffer_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(value_at(r, "BUFFER", "pump_active")),
@@ -86,7 +82,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="buffer_force_charging_active",
-            name="Buffer Force Charging",
             translation_key="buffer_force_charging_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(value_at(r, "BUFFER", "force_charging_active")),
@@ -97,7 +92,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="boiler1_pump_active",
-            name="Boiler 1 Pump Active",
             translation_key="boiler1_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(
@@ -108,7 +102,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="boiler1_force_charging_active",
-            name="Boiler 1 Force Charging",
             translation_key="boiler1_force_charging_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(
@@ -121,7 +114,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="hc1_pump_active",
-            name="HC1 Pump Active",
             translation_key="hc1_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(
@@ -132,7 +124,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="hc1_active",
-            name="HC1 Active",
             translation_key="hc1_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(
@@ -143,7 +134,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="hc2_pump_active",
-            name="HC2 Pump Active",
             translation_key="hc2_pump_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(
@@ -154,7 +144,6 @@ def build_descriptions() -> list[HargassnerBinaryDescription]:
     desc.append(
         HargassnerBinaryDescription(
             key="hc2_active",
-            name="HC2 Active",
             translation_key="hc2_active",
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda r: as_bool(
@@ -200,9 +189,6 @@ class HargassnerBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self._description = description
         self._mapping_override = override
         self._attr_unique_id = f"{entry.entry_id}_{description.key}"
-        self._attr_name = (
-            description.name if isinstance(description.name, str) else None
-        )
 
         if description.entity_category:
             self._attr_entity_category = description.entity_category

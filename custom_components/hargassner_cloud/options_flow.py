@@ -5,7 +5,12 @@ import json
 import voluptuous as vol
 from homeassistant.config_entries import ConfigFlowResult, OptionsFlowWithReload
 
-from .const import CONF_AREA, CONF_MAPPING_OVERRIDES_JSON, DEFAULT_SCAN_INTERVAL
+from .const import (
+    CONF_AREA,
+    CONF_MAPPING_OVERRIDES_JSON,
+    DEFAULT_SCAN_INTERVAL,
+    MIN_SCAN_INTERVAL,
+)
 
 
 class HargassnerOptionsFlowHandler(OptionsFlowWithReload):
@@ -42,7 +47,7 @@ class HargassnerOptionsFlowHandler(OptionsFlowWithReload):
             {
                 vol.Required(
                     "scan_interval_seconds", default=defaults["scan_interval_seconds"]
-                ): int,
+                ): vol.All(vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL)),
                 vol.Optional(CONF_AREA, default=defaults[CONF_AREA]): str,
                 # Freitext-JSON für Mapping-Overrides (Punkt 11)
                 vol.Optional(

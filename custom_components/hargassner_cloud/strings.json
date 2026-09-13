@@ -26,6 +26,7 @@
     },
     "error": {
       "auth": "Anmeldung fehlgeschlagen. Pr\u00fcfe Zugangsdaten.",
+      "client_credentials": "Die Anmeldedaten des Hargassner-Webclients konnten nicht ermittelt oder wurden abgelehnt. Pr\u00fcfe, ob eine neuere Version der Integration verf\u00fcgbar ist.",
       "cannot_connect": "Verbindung zur Hargassner Cloud fehlgeschlagen.",
       "unknown": "Unbekannter Fehler"
     },
@@ -48,6 +49,12 @@
     },
     "error": {
       "invalid_mapping": "Das Mapping muss ein JSON-Objekt mit Objekten je Entity-Schl\u00fcssel sein."
+    }
+  },
+  "issues": {
+    "client_credentials": {
+      "title": "Hargassner-Webclient hat sich ge\u00e4ndert",
+      "description": "Die Integration konnte die \u00f6ffentlichen Anmeldedaten des Hargassner-Webclients nicht ermitteln oder sie wurden vom Portal abgelehnt. Pr\u00fcfe, ob eine neuere Version der Integration verf\u00fcgbar ist. Falls du bereits die aktuelle Version verwendest, melde das Problem bitte im verlinkten Issue-Tracker. Deine pers\u00f6nlichen Hargassner-Zugangsdaten m\u00fcssen normalerweise nicht ge\u00e4ndert werden."
     }
   }
 }

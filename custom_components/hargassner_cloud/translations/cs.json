@@ -1,0 +1,118 @@
+{
+    "entity": {
+        "sensor": {
+            "heater_state": {
+                "name": "Stav vytápění"
+            },
+            "heater_program": {
+                "name": "Program vytápění",
+                "state": {
+                    "automatic": "Automatický",
+                    "boiler": "Bojler",
+                    "chimney_sweeper": "Kominík",
+                    "combination_off": "Kombinovaný režim vypnutý",
+                    "combination_on": "Kombinovaný režim zapnutý",
+                    "manual": "Ruční",
+                    "off": "Vypnuto",
+                    "pellets_disabled": "Pelety deaktivovány",
+                    "stop_firing": "Zastavit spalování"
+                }
+            },
+            "heater_smoke_temp": {
+                "name": "Teplota spalin"
+            },
+            "heater_temp_current": {
+                "name": "Teplota kotle"
+            },
+            "outdoor_temp": {
+                "name": "Venkovní teplota"
+            },
+            "outdoor_temp_avg": {
+                "name": "Venkovní teplota (průměr)"
+            },
+            "heater_efficiency": {
+                "name": "Účinnost"
+            },
+            "buffer_state": {
+                "name": "Stav akumulační nádrže"
+            },
+            "buffer_charge": {
+                "name": "Nabití akumulační nádrže"
+            },
+            "buffer_temp_top": {
+                "name": "Teplota nádrže nahoře"
+            },
+            "buffer_temp_center": {
+                "name": "Teplota nádrže uprostřed"
+            },
+            "buffer_temp_bottom": {
+                "name": "Teplota nádrže dole"
+            },
+            "boiler1_temp_current": {
+                "name": "Teplota bojleru 1"
+            },
+            "boiler1_charge": {
+                "name": "Nabití bojleru 1"
+            },
+            "hc1_flow_temp_current": {
+                "name": "Okruh 1 teplota přívodu"
+            },
+            "hc1_flow_temp_target": {
+                "name": "Okruh 1 cílová teplota přívodu"
+            },
+            "hc1_room_temp_target": {
+                "name": "Okruh 1 cílová pokojová teplota"
+            },
+            "hc1_room_temp_current": {
+                "name": "Okruh 1 pokojová teplota"
+            },
+            "hc2_flow_temp_current": {
+                "name": "Okruh 2 teplota přívodu"
+            },
+            "hc2_flow_temp_target": {
+                "name": "Okruh 2 cílová teplota přívodu"
+            },
+            "hc2_room_temp_target": {
+                "name": "Okruh 2 cílová pokojová teplota"
+            },
+            "hc2_room_temp_current": {
+                "name": "Okruh 2 pokojová teplota"
+            }
+        },
+        "binary_sensor": {
+            "online": {
+                "name": "Připojeno"
+            },
+            "heater_on": {
+                "name": "Vytápění zapnuto"
+            },
+            "heater_exhaust_guard": {
+                "name": "Kontrola spalin"
+            },
+            "buffer_pump_active": {
+                "name": "Čerpadlo nádrže aktivní"
+            },
+            "buffer_force_charging_active": {
+                "name": "Vynucené nabíjení nádrže"
+            },
+            "boiler1_pump_active": {
+                "name": "Čerpadlo bojleru 1 aktivní"
+            },
+            "boiler1_force_charging_active": {
+                "name": "Vynucené nabíjení bojleru 1"
+            },
+            "hc1_pump_active": {
+                "name": "Čerpadlo okruhu 1 aktivní"
+            },
+            "hc1_active": {
+                "name": "Okruh 1 aktivní"
+            },
+            "hc2_pump_active": {
+                "name": "Čerpadlo okruhu 2 aktivní"
+            },
+            "hc2_active": {
+                "name": "Okruh 2 aktivní"
+            }
+        }
+    }
+}

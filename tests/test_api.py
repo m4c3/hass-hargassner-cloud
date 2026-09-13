@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 from collections.abc import Callable
 from typing import Any, Self
 
@@ -9,6 +10,7 @@ import pytest
 from custom_components.hargassner_cloud.api import (
     HargassnerAuthError,
     HargassnerClient,
+    HargassnerClientCredentialsError,
     HargassnerConnectionError,
 )
 
@@ -78,18 +80,34 @@ def run(coro_factory: Callable[[], Any]) -> Any:
     return asyncio.run(coro_factory())
 
 
-def test_login_uses_access_token() -> None:
+def test_login_uses_access_token_without_logging_secrets(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
     session = FakeSession(
         posts=[FakeResponse(200, {"access_token": "token"})],
         gets=[FakeResponse(500)],
     )
     client = make_client(session)
 
-    run(client.login)
+    with caplog.at_level(
+        logging.DEBUG, logger="custom_components.hargassner_cloud.api"
+    ):
+        run(client.login)
 
     assert client._token == "token"
     assert session.post_calls[0][1]["client_id"] == "1"
     assert session.post_calls[0][1]["client_secret"] == "secret"
+    assert "user@example.test" not in caplog.text
+    assert "password" not in caplog.text
+    assert "secret" not in caplog.text
+    assert "token" not in caplog.text
+    assert client.diagnostics == {
+        "phase": "login",
+        "outcome": "success",
+        "http_status": 200,
+        "credential_source": "stored_legacy",
+        "error_type": None,
+    }
 
 
 def test_login_distinguishes_connection_failure() -> None:
@@ -99,6 +117,24 @@ def test_login_distinguishes_connection_failure() -> None:
     client = make_client(session)
 
     with pytest.raises(HargassnerConnectionError):
+        run(client.login)
+
+
+def test_login_reports_missing_web_client_credentials() -> None:
+    session = FakeSession(gets=[FakeResponse(500)])
+    client = make_client(session, secret="", client_id="")
+
+    with pytest.raises(HargassnerClientCredentialsError):
+        run(client.login)
+
+
+def test_login_reports_rejected_stored_web_client_credentials() -> None:
+    session = FakeSession(
+        posts=[FakeResponse(401) for _ in range(4)], gets=[FakeResponse(500)]
+    )
+    client = make_client(session)
+
+    with pytest.raises(HargassnerClientCredentialsError):
         run(client.login)
 
 

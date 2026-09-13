@@ -26,6 +26,17 @@ def value_at(root: dict[str, Any], widget: str, field: str, number: str | None =
     return (w.get("values") or {}).get(field) if w else None
 
 
+def parameter_value_at(
+    root: dict[str, Any], widget: str, field: str, number: str | None = None
+):
+    """Return the current value of a widget parameter."""
+    widget_data = find_widget(root, widget, number)
+    if not widget_data:
+        return None
+    parameter = (widget_data.get("parameters") or {}).get(field)
+    return parameter.get("value") if isinstance(parameter, dict) else None
+
+
 def first_of(*vals):
     for v in vals:
         if v is not None:

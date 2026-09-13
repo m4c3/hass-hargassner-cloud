@@ -6,10 +6,16 @@ from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry, ConfigEntryAuthFailed
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .api import HargassnerAuthError, HargassnerClient, HargassnerConnectionError
+from .api import (
+    HargassnerAuthError,
+    HargassnerClient,
+    HargassnerClientCredentialsError,
+    HargassnerConnectionError,
+)
 from .const import (
     CONF_BASE_URL,
     CONF_CLIENT_ID,
@@ -19,6 +25,7 @@ from .const import (
     CONF_USERNAME,
     DEFAULT_BASE_URL,
     DEFAULT_SCAN_INTERVAL,
+    DOMAIN,
     NAME,
     PLATFORMS,
 )
@@ -27,6 +34,8 @@ from .utils.logfilter import RedactSecretsFilter
 _LOGGER = logging.getLogger(__name__)
 # Punkt 12: Logger-Filter anschließen
 _LOGGER.addFilter(RedactSecretsFilter())
+
+CLIENT_CREDENTIALS_ISSUE_URL = "https://github.com/m4c3/hass-hargassner-cloud/issues"
 
 
 class HargassnerHub:
@@ -78,9 +87,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     async def _async_update():
         try:
             data = await hub.async_fetch()
+            ir.async_delete_issue(hass, DOMAIN, f"client_credentials_{entry.entry_id}")
             return data
         except HargassnerAuthError as err:
             raise ConfigEntryAuthFailed(str(err)) from err
+        except HargassnerClientCredentialsError as err:
+            ir.async_create_issue(
+                hass,
+                DOMAIN,
+                f"client_credentials_{entry.entry_id}",
+                is_fixable=False,
+                is_persistent=True,
+                learn_more_url=CLIENT_CREDENTIALS_ISSUE_URL,
+                severity=ir.IssueSeverity.ERROR,
+                translation_key="client_credentials",
+            )
+            raise UpdateFailed(str(err)) from err
         except HargassnerConnectionError as err:
             raise UpdateFailed(str(err)) from err
 
@@ -91,6 +113,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         hass,
         _LOGGER,
         name=NAME,
+        config_entry=entry,
         update_method=_async_update,
         update_interval=timedelta(seconds=update_seconds),
     )

@@ -5,10 +5,12 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock, PropertyMock, patch
 
 import pytest
+import voluptuous as vol
 from homeassistant.data_entry_flow import AbortFlow, FlowResultType
 
 from custom_components.hargassner_cloud.api import (
     HargassnerAuthError,
+    HargassnerClientCredentialsError,
     HargassnerConnectionError,
 )
 from custom_components.hargassner_cloud.config_flow import HargassnerConfigFlow
@@ -63,6 +65,7 @@ def test_multiple_installations_show_selection() -> None:
     ("exception", "error"),
     [
         (HargassnerAuthError("bad credentials"), "auth"),
+        (HargassnerClientCredentialsError("web client changed"), "client_credentials"),
         (HargassnerConnectionError("offline"), "cannot_connect"),
     ],
 )
@@ -132,3 +135,27 @@ def test_options_reject_invalid_mapping() -> None:
 
     assert result["type"] is FlowResultType.FORM
     assert result["errors"] == {CONF_MAPPING_OVERRIDES_JSON: "invalid_mapping"}
+
+
+def test_options_enforce_minimum_scan_interval() -> None:
+    handler = HargassnerOptionsFlowHandler()
+    handler.hass = MagicMock()
+    entry = SimpleNamespace(options={}, data={})
+
+    with patch.object(
+        HargassnerOptionsFlowHandler,
+        "config_entry",
+        new_callable=PropertyMock,
+        return_value=entry,
+    ):
+        result = asyncio.run(handler.async_step_init())
+
+    schema = result["data_schema"]
+    assert schema is not None
+    with pytest.raises(vol.Invalid):
+        schema(
+            {
+                "scan_interval_seconds": 29,
+                CONF_MAPPING_OVERRIDES_JSON: "",
+            }
+        )

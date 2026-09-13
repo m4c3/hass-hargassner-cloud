@@ -4,13 +4,18 @@ from custom_components.hargassner_cloud.helpers import (
     apply_overrides,
     find_widget,
     first_of,
+    parameter_value_at,
     value_at,
     widgets,
 )
 
 PAYLOAD = {
     "data": [
-        {"widget": "HEATER", "values": {"state": "STATE_ON"}},
+        {
+            "widget": "HEATER",
+            "values": {"state": "STATE_ON"},
+            "parameters": {"program": {"value": "PROGRAM_AUTOMATIC"}},
+        },
         {
             "widget": "BOILER",
             "number": 1,
@@ -27,6 +32,8 @@ def test_widget_lookup() -> None:
     assert value_at(PAYLOAD, "HEATER", "state") == "STATE_ON"
     assert value_at(PAYLOAD, "BOILER", "temperature", "1") == 55
     assert value_at(PAYLOAD, "BOILER", "missing", "1") is None
+    assert parameter_value_at(PAYLOAD, "HEATER", "program") == "PROGRAM_AUTOMATIC"
+    assert parameter_value_at(PAYLOAD, "HEATER", "missing") is None
 
 
 def test_first_of_keeps_falsey_values() -> None:

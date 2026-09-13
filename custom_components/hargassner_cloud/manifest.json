@@ -9,9 +9,6 @@
   "integration_type": "hub",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/m4c3/hass-hargassner-cloud/issues",
-  "loggers": [
-    "custom_components.hargassner_cloud"
-  ],
   "requirements": [],
   "version": "0.5.1"
 }

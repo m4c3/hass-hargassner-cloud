@@ -25,6 +25,7 @@
     },
     "error": {
       "auth": "Authentication failed. Check your credentials.",
+      "client_credentials": "The Hargassner web-client credentials could not be discovered or were rejected. Check whether a newer integration version is available.",
       "cannot_connect": "Unable to connect to Hargassner Cloud.",
       "unknown": "Unexpected error"
     },
@@ -55,7 +56,18 @@
         "name": "Heater Status"
       },
       "heater_program": {
-        "name": "Heating Program"
+        "name": "Heating Program",
+        "state": {
+          "automatic": "Automatic",
+          "boiler": "Boiler",
+          "chimney_sweeper": "Chimney sweeper",
+          "combination_off": "Combination mode off",
+          "combination_on": "Combination mode on",
+          "manual": "Manual",
+          "off": "Off",
+          "pellets_disabled": "Pellets disabled",
+          "stop_firing": "Stop firing"
+        }
       },
       "heater_smoke_temp": {
         "name": "Flue Gas Temperature"
@@ -152,6 +164,12 @@
       "hc2_active": {
         "name": "HC2 Active"
       }
+    }
+  },
+  "issues": {
+    "client_credentials": {
+      "title": "The Hargassner web client has changed",
+      "description": "The integration could not discover the public Hargassner web-client credentials or the portal rejected them. Check whether a newer integration version is available. If you already use the latest version, report the problem using the linked issue tracker. Your personal Hargassner credentials normally do not need to be changed."
     }
   }
 }
