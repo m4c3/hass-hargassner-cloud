@@ -100,6 +100,103 @@ def test_heater_program_reads_and_normalizes_parameter_value() -> None:
     assert program.value_fn(payload) == "automatic"
 
 
+def test_neo_hv_widget_schema_is_supported() -> None:
+    """Exercise the widget shape observed in sanitized Neo-HV diagnostics."""
+    payload = {
+        "data": [
+            {
+                "widget": "HEATER",
+                "values": {
+                    "state": "STATE_ON",
+                    "smoke_temperature": 101.5,
+                    "heater_temperature_current": 72.0,
+                    "heater_exhaust_guard": True,
+                    "outdoor_temperature": 8.5,
+                    "outdoor_temperature_average": 7.0,
+                    "efficiency": 91,
+                },
+                "parameters": {"program": {"value": "PROGRAM_AUTOMATIC"}},
+            },
+            {
+                "widget": "BUFFER",
+                "values": {
+                    "state": "STATE_ON",
+                    "buffer_charge": 64,
+                    "buffer_temperature_top": 55,
+                    "buffer_temperature_center": 48.5,
+                    "buffer_temperature_bottom": 42.0,
+                    "pump_active": True,
+                },
+            },
+            {
+                "widget": "HEATING_CIRCUIT_RADIATOR",
+                "number": "1",
+                "values": {
+                    "flow_temperature_target": None,
+                    "flow_temperature_current": 31.5,
+                    "room_temperature_target": 20,
+                    "room_temperature_current": None,
+                    "pump_active": False,
+                    "active": True,
+                },
+            },
+            {
+                "widget": "HEATING_CIRCUIT_FLOOR",
+                "number": "2",
+                "values": {
+                    "flow_temperature_target": None,
+                    "flow_temperature_current": 27.0,
+                    "room_temperature_target": 21,
+                    "room_temperature_current": None,
+                    "pump_active": True,
+                    "active": True,
+                },
+            },
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {
+                    "boiler_temperature_target": None,
+                    "boiler_temperature_current": 54.5,
+                    "boiler_charge": 82.0,
+                    "pump_active": False,
+                },
+            },
+        ],
+        "meta": {"online_state": True},
+    }
+
+    sensor_descriptions = [
+        *descriptions_for_heater(),
+        *descriptions_for_buffer(),
+        *descriptions_for_boiler(1),
+        *descriptions_for_hc("HEATING_CIRCUIT_RADIATOR", 1),
+        *descriptions_for_hc("HEATING_CIRCUIT_FLOOR", 2),
+    ]
+    sensor_values = {
+        description.key: description.value_fn(payload)
+        for description in sensor_descriptions
+        if description.value_fn is not None
+    }
+    binary_values = {
+        description.key: description.value_fn(payload)
+        for description in binary_sensor_platform.build_descriptions(payload)
+        if description.value_fn is not None
+    }
+
+    assert sensor_values["heater_program"] == "automatic"
+    assert sensor_values["heater_smoke_temp"] == 101.5
+    assert sensor_values["buffer_charge"] == 64.0
+    assert sensor_values["hc1_flow_temp_target"] is None
+    assert sensor_values["hc2_flow_temp_current"] == 27.0
+    assert sensor_values["boiler1_temp_current"] == 54.5
+    assert binary_values["online"] is True
+    assert binary_values["heater_exhaust_guard"] is True
+    assert binary_values["hc1_pump_active"] is False
+    assert binary_values["hc2_pump_active"] is True
+    assert binary_values["boiler1_pump_active"] is False
+
+
 def test_entity_translation_keys_match_for_all_languages() -> None:
     translation_dir = Path("custom_components/hargassner_cloud/translations")
     reference = json.loads((translation_dir / "en.json").read_text())["entity"]
