@@ -23,6 +23,13 @@ jobs:
           mypy==2.3.1
       - name: Compile
         run: python -m compileall custom_components tests scripts
+      - name: Validate JSON
+        run: |
+          python -m json.tool hacs.json >/dev/null
+          python -m json.tool custom_components/hargassner_cloud/manifest.json >/dev/null
+          python -m json.tool custom_components/hargassner_cloud/strings.json >/dev/null
+          python -m json.tool custom_components/hargassner_cloud/translations/de.json >/dev/null
+          python -m json.tool custom_components/hargassner_cloud/translations/en.json >/dev/null
       - name: Test
         run: pytest
       - name: Ruff format
@@ -49,6 +56,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: HACS validation
+        # Temporary workaround for https://github.com/hacs/integration/issues/5497.
+        continue-on-error: true
         uses: hacs/action@main
         with:
           category: "integration"
