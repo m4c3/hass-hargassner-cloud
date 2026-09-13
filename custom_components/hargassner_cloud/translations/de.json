@@ -49,10 +49,6 @@
       "invalid_mapping": "Das Mapping muss ein JSON-Objekt mit Objekten je Entity-Schl\u00fcssel sein."
     }
   },
-  "state": {
-    "on": "Ein",
-    "off": "Aus"
-  },
   "entity": {
     "sensor": {
       "heater_state": {
