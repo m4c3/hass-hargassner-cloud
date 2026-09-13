@@ -45,7 +45,7 @@ Thanks for contributing to **Hargassner Cloud**!
   ruff format --check custom_components tests
   ruff check custom_components tests
   mypy custom_components tests
-  mdl README.md README.de.md CHANGELOG.md CONTRIBUTING.md info.md
+  mdl README*.md CHANGELOG.md CONTRIBUTING.md info.md
   ```
 
 * Test login and sensor updates against a real installation before release.

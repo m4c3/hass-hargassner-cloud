@@ -40,7 +40,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes markdownlint
-          mdl README.md README.de.md CHANGELOG.md CONTRIBUTING.md SECURITY.md info.md AGENTS.md
+          mdl README*.md CHANGELOG.md CONTRIBUTING.md SECURITY.md info.md AGENTS.md
 
   hassfest:
     runs-on: ubuntu-latest

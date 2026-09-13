@@ -2,7 +2,7 @@
   <img src="https://github.com/m4c3/hass-hargassner-cloud/raw/main/brands_assets/logo-crop.jpg" alt="Hargassner-Cloud-Logo" width="400">
 </p>
 
-<p align="center">Deutsch | <a href="README.md">English</a></p>
+<p align="center">Deutsch | <a href="README.md">English</a> | <a href="README.fr.md">Français</a> | <a href="README.es.md">Español</a> | <a href="README.nb.md">Norsk bokmål</a> | <a href="README.pl.md">Polski</a> | <a href="README.cs.md">Čeština</a></p>
 
 # Hargassner Cloud für Home Assistant
 

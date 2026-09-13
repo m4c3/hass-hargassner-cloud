@@ -51,7 +51,7 @@ Run the complete local validation suite after substantive changes:
 .venv/bin/ruff check custom_components tests scripts
 .venv/bin/mypy custom_components tests scripts
 python -m compileall -f custom_components tests scripts
-mdl README.md README.de.md CHANGELOG.md CONTRIBUTING.md info.md AGENTS.md
+mdl README*.md CHANGELOG.md CONTRIBUTING.md info.md AGENTS.md
 git diff --check
 ```
 
@@ -74,8 +74,8 @@ Do not enable the live test in public CI.
 
 ## Documentation and metadata
 
-- Keep `README.md`, `README.de.md`, translations, `manifest.json`, `hacs.json`,
-  and `CHANGELOG.md` aligned with user-visible changes.
+- Keep all `README*.md` files, translations, `manifest.json`, `hacs.json`, and
+  `CHANGELOG.md` aligned with user-visible changes.
 - Update both English and German translations when changing flow text.
 - Keep JSON files valid and preserve the minimum supported Home Assistant version.
 - Use focused commits with concise imperative messages.
