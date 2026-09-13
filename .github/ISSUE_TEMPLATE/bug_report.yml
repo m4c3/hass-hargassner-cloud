@@ -9,6 +9,7 @@ body:
       value: |
         Thanks for taking the time to report a bug!  
         Please fill out as many details as possible so we can reproduce and fix the issue.
+        Never include passwords, access tokens, installation IDs, or unredacted diagnostics.
   - type: input
     id: version
     attributes:
@@ -36,5 +37,5 @@ body:
     id: logs
     attributes:
       label: Relevant logs or screenshots
-      description: Paste any relevant logs or attach screenshots to help us understand the issue.
+      description: Paste only redacted logs or screenshots. Remove credentials, tokens, email addresses, and installation IDs.
       render: shell
