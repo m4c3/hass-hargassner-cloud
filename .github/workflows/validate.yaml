@@ -25,8 +25,9 @@ jobs:
           python -m json.tool hacs.json >/dev/null
           python -m json.tool custom_components/hargassner_cloud/manifest.json >/dev/null
           python -m json.tool custom_components/hargassner_cloud/strings.json >/dev/null
-          python -m json.tool custom_components/hargassner_cloud/translations/de.json >/dev/null
-          python -m json.tool custom_components/hargassner_cloud/translations/en.json >/dev/null
+          for translation in custom_components/hargassner_cloud/translations/*.json; do
+            python -m json.tool "$translation" >/dev/null
+          done
       - name: Test
         run: pytest
       - name: Ruff format
@@ -39,7 +40,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes markdownlint
-          mdl README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md info.md AGENTS.md
+          mdl README.md README.de.md CHANGELOG.md CONTRIBUTING.md SECURITY.md info.md AGENTS.md
 
   hassfest:
     runs-on: ubuntu-latest

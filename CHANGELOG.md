@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+- Distinguished Hargassner web-client changes from personal authentication errors
+- Added a translated repair issue for web-client credential failures
+- Added config-entry context to the data update coordinator
+- Enforced a minimum polling interval of 30 seconds
+- Added integration system-health information
+- Replaced raw API diagnostics and debug responses with sanitized structural data
+- Enabled localized entity names and fixed duplicated heating-circuit display numbers
+- Added French, Spanish, Norwegian Bokmål, Polish, and Czech entity translations
+- Added a German README
+- Removed the unnecessary integration logger declaration from the manifest
+
 ## 0.5.1
 
 - Removed the embedded public web-client credential

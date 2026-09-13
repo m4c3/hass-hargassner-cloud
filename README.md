@@ -2,6 +2,8 @@
   <img src="https://github.com/m4c3/hass-hargassner-cloud/raw/main/brands_assets/logo-crop.jpg" alt="Hargassner Cloud logo" width="400">
 </p>
 
+<p align="center"><a href="README.de.md">Deutsch</a> | English</p>
+
 # Hargassner Cloud for Home Assistant
 
 Hargassner Cloud is a custom Home Assistant integration that reads heating data
@@ -13,7 +15,7 @@ from the Hargassner web portal and exposes it as sensors and binary sensors.
 
 ## Features
 
-- UI-based setup with your Hargassner email and password
+- UI-based setup with the email address and password of your Hargassner account
 - Automatic installation discovery and selection
 - No manual client ID or client secret lookup
 - Automatic recovery when Hargassner rotates its public web-client credentials
@@ -21,7 +23,7 @@ from the Hargassner web portal and exposes it as sensors and binary sensors.
 - Automatic reauthentication when credentials are rejected
 - Configurable polling interval, suggested area, and field mappings
 - Redacted diagnostics and log messages
-- German and English translations
+- Czech, English, French, German, Norwegian Bokmål, Polish, and Spanish entity translations
 
 ## Entities
 
@@ -99,6 +101,7 @@ Open **Settings → Devices & services → Hargassner Cloud → Configure** to c
 - Mapping overrides as JSON
 
 Saving options automatically reloads the integration.
+The minimum polling interval is 30 seconds.
 
 ### Mapping overrides
 
@@ -128,13 +131,19 @@ Overrides work for sensors and binary sensors.
 The integration obtains a bearer token from the Hargassner login endpoint. A
 rejected login or expired authorization starts Home Assistant's standard
 reauthentication flow. Temporary network and server failures are reported as
-update failures and do not ask you to re-enter your password.
+update failures and do not ask you to re-enter your password. If Hargassner
+changes its web client and the public client credentials can no longer be
+discovered, Home Assistant creates a repair issue instead of incorrectly asking
+you to change your personal password.
 
 ## Diagnostics and privacy
 
 Download diagnostics from **Settings → Devices & services → Hargassner Cloud**.
 Passwords, usernames, installation IDs, client credentials, authorization
-tokens, names, serial numbers, and common location fields are redacted.
+tokens, names, serial numbers, and common location fields are redacted. API
+widgets are reduced to field names and value types; operational values and
+resource URLs are not included. A sanitized API status identifies the latest
+request phase, outcome, HTTP status, and credential source.
 
 Before sharing diagnostics, review the generated file because the undocumented
 API may introduce new fields in the future.
