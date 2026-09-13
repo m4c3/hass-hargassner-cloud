@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.2
 
 - Distinguished Hargassner web-client changes from personal authentication errors
 - Added a translated repair issue for web-client credential failures
