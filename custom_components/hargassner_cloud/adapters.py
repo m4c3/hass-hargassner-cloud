@@ -1,11 +1,13 @@
 from __future__ import annotations
-from typing import Any
+
 import math
 import re
+from typing import Any
 
 # Zentrale Typ-Adapter (Punkt 14)
 
 _NUM_PATTERN = re.compile(r"^[-+]?\d*(?:[.,]\d+)?$")
+
 
 def _normalize_num_str(s: str) -> str:
     # "  -1.234,56  " -> "-1234.56"
@@ -13,6 +15,7 @@ def _normalize_num_str(s: str) -> str:
     # Entferne Tausenderpunkte, erlaube nur die letzte Trennstelle als Dezimalpunkt
     s = s.replace(".", "").replace(",", ".")
     return s
+
 
 def as_float(x: Any) -> float | None:
     if x is None:
@@ -31,24 +34,23 @@ def as_float(x: Any) -> float | None:
             try:
                 v = float(s2)
                 return None if (math.isnan(v) or math.isinf(v)) else v
-            except Exception:
+            except ValueError:
                 return None
         s = _normalize_num_str(x)
         try:
             v = float(s)
             return None if (math.isnan(v) or math.isinf(v)) else v
-        except Exception:
+        except ValueError:
             return None
     return None
+
 
 def as_int(x: Any) -> int | None:
     f = as_float(x)
     if f is None:
         return None
-    try:
-        return int(round(f))
-    except Exception:
-        return None
+    return round(f)
+
 
 def as_bool(x: Any) -> bool | None:
     if x is None:
@@ -64,6 +66,7 @@ def as_bool(x: Any) -> bool | None:
         if s in {"false", "off", "0", "no", "n"}:
             return False
     return None
+
 
 def as_str(x: Any) -> str | None:
     if x is None:
