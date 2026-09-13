@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.1
+
+- Removed the embedded public web-client credential
+- Discover web-client credentials before authentication
+- Added a security policy and safer public issue guidance
+- Added monthly Dependabot updates
+- Pinned GitHub Actions to immutable commit SHAs
+- Documented project artwork licensing
+
 ## 0.5.0
 
 - Modernized config and options flows for current Home Assistant releases
