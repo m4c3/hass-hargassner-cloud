@@ -21,20 +21,20 @@ jobs:
           ruff==0.16.7
           mypy==2.3.1
       - name: Compile
-        run: python -m compileall custom_components tests
+        run: python -m compileall custom_components tests scripts
       - name: Test
         run: pytest
       - name: Ruff format
-        run: ruff format --check custom_components tests
+        run: ruff format --check custom_components tests scripts
       - name: Ruff lint
-        run: ruff check custom_components tests
+        run: ruff check custom_components tests scripts
       - name: Mypy
-        run: mypy custom_components tests
+        run: mypy custom_components tests scripts
       - name: Markdown lint
         run: |
           sudo apt-get update
           sudo apt-get install --yes markdownlint
-          mdl README.md CHANGELOG.md CONTRIBUTING.md info.md
+          mdl README.md CHANGELOG.md CONTRIBUTING.md info.md AGENTS.md
 
   hassfest:
     runs-on: ubuntu-latest
