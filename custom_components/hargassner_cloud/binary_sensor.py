@@ -98,6 +98,7 @@ def descriptions_for_hc(widget: str, num: int) -> list[HargassnerBinaryDescripti
 def build_descriptions(root: dict[str, Any]) -> list[HargassnerBinaryDescription]:
     """Build descriptions from widgets actually returned by the API."""
     desc: list[HargassnerBinaryDescription] = []
+    widgets = root.get("data") or []
 
     # Meta connectivity (Diagnose)
     desc.append(
@@ -110,50 +111,54 @@ def build_descriptions(root: dict[str, Any]) -> list[HargassnerBinaryDescription
         )
     )
 
-    # HEATER
-    desc.append(
-        HargassnerBinaryDescription(
-            key="heater_on",
-            translation_key="heater_on",
-            device_class=BinarySensorDeviceClass.POWER,
-            value_fn=lambda r: (
-                None
-                if value_at(r, "HEATER", "state") is None
-                else (value_at(r, "HEATER", "state") != "STATE_OFF")
+    if any(item.get("widget") == "HEATER" for item in widgets):
+        desc.append(
+            HargassnerBinaryDescription(
+                key="heater_on",
+                translation_key="heater_on",
+                device_class=BinarySensorDeviceClass.POWER,
+                value_fn=lambda r: (
+                    None
+                    if value_at(r, "HEATER", "state") is None
+                    else (value_at(r, "HEATER", "state") != "STATE_OFF")
+                ),
             ),
         )
-    )
-    desc.append(
-        HargassnerBinaryDescription(
-            key="heater_exhaust_guard",
-            translation_key="heater_exhaust_guard",
-            device_class=BinarySensorDeviceClass.SAFETY,
-            entity_category=EntityCategory.DIAGNOSTIC,
-            value_fn=lambda r: as_bool(value_at(r, "HEATER", "heater_exhaust_guard")),
+        desc.append(
+            HargassnerBinaryDescription(
+                key="heater_exhaust_guard",
+                translation_key="heater_exhaust_guard",
+                device_class=BinarySensorDeviceClass.SAFETY,
+                entity_category=EntityCategory.DIAGNOSTIC,
+                value_fn=lambda r: as_bool(
+                    value_at(r, "HEATER", "heater_exhaust_guard")
+                ),
+            )
         )
-    )
 
-    # BUFFER
-    desc.append(
-        HargassnerBinaryDescription(
-            key="buffer_pump_active",
-            translation_key="buffer_pump_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(value_at(r, "BUFFER", "pump_active")),
+    if any(item.get("widget") == "BUFFER" for item in widgets):
+        desc.append(
+            HargassnerBinaryDescription(
+                key="buffer_pump_active",
+                translation_key="buffer_pump_active",
+                device_class=BinarySensorDeviceClass.RUNNING,
+                value_fn=lambda r: as_bool(value_at(r, "BUFFER", "pump_active")),
+            )
         )
-    )
-    desc.append(
-        HargassnerBinaryDescription(
-            key="buffer_force_charging_active",
-            translation_key="buffer_force_charging_active",
-            device_class=BinarySensorDeviceClass.RUNNING,
-            value_fn=lambda r: as_bool(value_at(r, "BUFFER", "force_charging_active")),
+        desc.append(
+            HargassnerBinaryDescription(
+                key="buffer_force_charging_active",
+                translation_key="buffer_force_charging_active",
+                device_class=BinarySensorDeviceClass.RUNNING,
+                value_fn=lambda r: as_bool(
+                    value_at(r, "BUFFER", "force_charging_active")
+                ),
+            )
         )
-    )
 
     boiler_numbers: set[int] = set()
     heating_circuit_numbers: set[int] = set()
-    for widget_data in root.get("data") or []:
+    for widget_data in widgets:
         widget = widget_data.get("widget")
         if widget == "BOILER":
             number = _positive_number(widget_data.get("number"), default=1)

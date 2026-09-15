@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Distinguished scheduled Hargassner maintenance from web-client credential changes
+- Avoided creating heater and buffer binary sensors when their widgets are absent
 
 ## 0.5.3
 

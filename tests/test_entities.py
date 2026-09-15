@@ -79,6 +79,8 @@ def test_binary_descriptions_follow_api_widgets_and_deduplicate_numbers() -> Non
     ]
     assert keys.count("boiler8_pump_active") == 1
     assert keys.count("hc11_pump_active") == 1
+    assert "heater_on" not in keys
+    assert "buffer_pump_active" not in keys
 
 
 def test_heater_program_reads_and_normalizes_parameter_value() -> None:
@@ -223,6 +225,71 @@ def test_nanopk_widget_schema_is_supported() -> None:
     assert binary_values["hc1_pump_active"] is False
     assert binary_values["hc2_pump_active"] is True
     assert binary_values["boiler1_pump_active"] is False
+
+
+def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
+    """Exercise the widget shape observed in sanitized Neo-HV diagnostics."""
+    payload = {
+        "data": [
+            {
+                "widget": "HEATING_CIRCUIT_CONTROLLER",
+                "values": {
+                    "source_temperature": 65,
+                    "request_temperature": None,
+                    "outdoor_temperature": 8.5,
+                    "outdoor_temperature_average": 7.0,
+                },
+                "parameters": {"program": {"value": "synthetic"}},
+            },
+            {
+                "widget": "HEATING_CIRCUIT_RADIATOR",
+                "number": "1",
+                "values": {
+                    "flow_temperature_target": None,
+                    "flow_temperature_current": 31,
+                    "room_temperature_target": 20,
+                    "room_temperature_current": None,
+                    "pump_active": True,
+                    "active": True,
+                },
+            },
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {
+                    "boiler_temperature_target": None,
+                    "boiler_temperature_current": 54.5,
+                    "boiler_charge": 82,
+                    "pump_active": False,
+                    "force_charging_active": False,
+                },
+            },
+        ],
+        "meta": {"online_state": True},
+    }
+
+    hc_values = {
+        description.key: description.value_fn(payload)
+        for description in descriptions_for_hc("HEATING_CIRCUIT_RADIATOR", 1)
+        if description.value_fn is not None
+    }
+    boiler_values = {
+        description.key: description.value_fn(payload)
+        for description in descriptions_for_boiler(1)
+        if description.value_fn is not None
+    }
+    binary_descriptions = binary_sensor_platform.build_descriptions(payload)
+    binary_keys = {description.key for description in binary_descriptions}
+
+    assert hc_values["hc1_flow_temp_current"] == 31.0
+    assert boiler_values["boiler1_charge"] == 82.0
+    assert binary_keys == {
+        "online",
+        "hc1_pump_active",
+        "hc1_active",
+        "boiler1_pump_active",
+        "boiler1_force_charging_active",
+    }
 
 
 def test_entity_translation_keys_match_for_all_languages() -> None:
