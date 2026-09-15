@@ -54,7 +54,7 @@ To inspect read-only device and firmware metadata without printing installation
 IDs, names, serial numbers, tokens, or full API responses, run:
 
 ```bash
-.venv/bin/python scripts/live_device_probe.py
+.venv/bin/python -m scripts.live_device_probe
 ```
 
 Review the output before sharing it publicly. The probe prints only allowlisted

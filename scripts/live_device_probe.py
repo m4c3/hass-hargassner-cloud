@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import re
 from getpass import getpass
 
@@ -79,8 +80,10 @@ def safe_version_candidates(value: object, path: str = "response") -> list[str]:
 
 async def async_main() -> int:
     """Authenticate and inspect read-only installation device metadata."""
-    username = input("Hargassner email: ").strip()
-    password = getpass("Hargassner password: ")
+    username = (
+        os.environ.get("HARGASSNER_USERNAME") or input("Hargassner email: ").strip()
+    )
+    password = os.environ.get("HARGASSNER_PASSWORD") or getpass("Hargassner password: ")
     if not username or not password:
         print("ERROR: Email and password are required.")
         return 2
