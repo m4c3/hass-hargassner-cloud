@@ -26,6 +26,7 @@ Binärsensoren bereit.
 - Automatische erneute Authentifizierung bei abgelehnten Benutzerdaten
 - Einstellbares Abfrageintervall, vorgeschlagener Bereich und Feld-Mappings
 - Bereinigte Diagnose- und Protokolldaten
+- Anzeige der Gerätesoftwareversion, wenn sie von der Cloud-API bereitgestellt wird
 - Deutsche, englische, französische, spanische, norwegische, polnische und
   tschechische Entitätsübersetzungen
 

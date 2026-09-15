@@ -70,6 +70,7 @@ class HargassnerRuntimeData:
 
     hub: HargassnerHub
     coordinator: DataUpdateCoordinator
+    device_metadata: dict[str, str]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
@@ -119,7 +120,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     )
     await coordinator.async_config_entry_first_refresh()
 
-    entry.runtime_data = HargassnerRuntimeData(hub=hub, coordinator=coordinator)
+    try:
+        device_metadata = await hub.client.get_device_metadata()
+    except HargassnerConnectionError:
+        _LOGGER.debug("Optional Hargassner device metadata is unavailable")
+        device_metadata = {}
+
+    entry.runtime_data = HargassnerRuntimeData(
+        hub=hub, coordinator=coordinator, device_metadata=device_metadata
+    )
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True

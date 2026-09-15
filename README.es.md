@@ -25,6 +25,7 @@ sensores y sensores binarios.
 - Reautenticación de Home Assistant cuando se rechazan los datos personales
 - Intervalo, área sugerida y asignaciones de campos configurables
 - Diagnósticos y registros depurados
+- Visualización de la versión de software cuando la proporciona la API de nube
 - Detección sin límite artificial de acumuladores y circuitos numerados
 
 ## Sistemas probados

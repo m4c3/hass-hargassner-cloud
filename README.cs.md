@@ -23,6 +23,7 @@ webového portálu Hargassner a zpřístupňuje je jako senzory a binární senz
 - Opětovné ověření v Home Assistantu při odmítnutí osobních údajů
 - Nastavitelný interval, navržená oblast a mapování polí
 - Redigované diagnostické údaje a protokoly
+- Zobrazení verze softwaru zařízení, pokud ji poskytuje cloudové API
 - Bez umělého omezení počtu číslovaných bojlerů a topných okruhů
 
 ## Testované systémy

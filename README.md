@@ -23,6 +23,7 @@ from the Hargassner web portal and exposes it as sensors and binary sensors.
 - Automatic reauthentication when credentials are rejected
 - Configurable polling interval, suggested area, and field mappings
 - Redacted diagnostics and log messages
+- Device software version display when provided by the cloud API
 - Czech, English, French, German, Norwegian Bokmål, Polish, and Spanish entity translations
 
 ## Tested systems

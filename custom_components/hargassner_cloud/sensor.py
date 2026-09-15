@@ -430,12 +430,14 @@ class HargassnerSensor(CoordinatorEntity, SensorEntity):
         installation_id = str(entry.data.get(CONF_INSTALLATION, "unknown"))
         base_url = entry.data.get(CONF_BASE_URL, "https://web.hargassner.at")
         suggested_area = entry.options.get(CONF_AREA, entry.data.get(CONF_AREA))
+        software_version = entry.runtime_data.device_metadata.get("software_version")
 
         self._device_info = DeviceInfo(
             identifiers={(DOMAIN, installation_id)},
             manufacturer="Hargassner",
             model=model,
             name=device_name,
+            sw_version=software_version,
             configuration_url=f"{base_url}/",
             suggested_area=suggested_area,
         )

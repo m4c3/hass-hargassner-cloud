@@ -204,6 +204,49 @@ def test_widgets_retry_same_endpoint_after_401() -> None:
     assert session.get_calls[0] == session.get_calls[1]
 
 
+def test_device_metadata_extracts_allowlisted_software_versions() -> None:
+    payload = {
+        "data": {
+            "name": "Private installation",
+            "devices": [
+                {
+                    "serial_number": "private-serial",
+                    "software": {"version_code": "V_HKR4f1"},
+                    "io_firmware_version": "IO_2.3",
+                }
+            ],
+        }
+    }
+
+    assert HargassnerClient._parse_device_metadata(payload) == {
+        "software_version": "V_HKR4f1",
+        "io_firmware_version": "IO_2.3",
+    }
+
+
+def test_device_metadata_rejects_unexpected_or_private_values() -> None:
+    payload = {
+        "data": {
+            "devices": [
+                {
+                    "software": {"version_code": "user@example.test"},
+                    "io_firmware_version": {"value": "secret"},
+                }
+            ]
+        }
+    }
+
+    assert HargassnerClient._parse_device_metadata(payload) == {}
+
+
+def test_device_metadata_endpoint_is_optional_when_forbidden() -> None:
+    session = FakeSession(gets=[FakeResponse(403)])
+    client = make_client(session)
+    client._token = "token"
+
+    assert run(client.get_device_metadata) == {}
+
+
 @pytest.mark.parametrize(
     "payload",
     [

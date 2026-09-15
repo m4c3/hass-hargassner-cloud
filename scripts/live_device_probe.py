@@ -11,15 +11,13 @@ from getpass import getpass
 from aiohttp import ClientError, ClientSession, ClientTimeout, ContentTypeError
 
 from custom_components.hargassner_cloud.api import (
+    DEVICE_METADATA_RELATIONS,
     HargassnerAuthError,
     HargassnerClient,
     HargassnerConnectionError,
 )
 from custom_components.hargassner_cloud.const import DEFAULT_BASE_URL
 
-DEVICE_RELATIONS = (
-    "devices.gateway;devices.gateway.software;devices.software;devices.software.type"
-)
 VERSION_FIELD_PATTERN = re.compile(
     r"(?:firmware|software|version|revision|build)", re.IGNORECASE
 )
@@ -118,7 +116,7 @@ async def async_main() -> int:
             try:
                 async with session.get(
                     url,
-                    params={"with": DEVICE_RELATIONS},
+                    params={"with": DEVICE_METADATA_RELATIONS},
                     headers={
                         "Authorization": f"Bearer {client._token}",
                         "Accept": "application/json",

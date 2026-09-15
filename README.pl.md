@@ -23,6 +23,7 @@ grzewcze z portalu Hargassner i udostępnia je jako sensory oraz sensory binarne
 - Ponowne uwierzytelnianie po odrzuceniu danych użytkownika
 - Konfigurowalny interwał, sugerowany obszar i mapowania pól
 - Oczyszczone diagnostyki i logi
+- Wyświetlanie wersji oprogramowania urządzenia udostępnionej przez API chmurowe
 - Brak sztucznego limitu numerowanych bojlerów i obiegów grzewczych
 
 ## Przetestowane systemy

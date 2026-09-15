@@ -25,6 +25,7 @@ de capteurs et de capteurs binaires.
 - Réauthentification Home Assistant en cas d’identifiants personnels refusés
 - Intervalle, zone suggérée et correspondances de champs configurables
 - Diagnostics et journaux expurgés
+- Affichage de la version logicielle de l’appareil lorsqu’elle est fournie par l’API cloud
 - Détection sans limite artificielle des chaudières et circuits numérotés
 
 ## Systèmes testés

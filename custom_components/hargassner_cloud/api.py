@@ -10,6 +10,11 @@ from aiohttp import ClientError, ClientSession, ClientTimeout, ContentTypeError
 
 _LOGGER = logging.getLogger(__name__)
 
+DEVICE_METADATA_RELATIONS = (
+    "devices.gateway;devices.gateway.software;devices.software;devices.software.type"
+)
+SAFE_VERSION_PATTERN = re.compile(r"[A-Za-z0-9._+ -]{1,64}")
+
 
 class HargassnerAuthError(Exception):
     """Raised when authentication credentials are rejected."""
@@ -329,6 +334,83 @@ class HargassnerClient:
                     break
 
         raise HargassnerConnectionError(f"Widgets fetch failed. Last error: {last_err}")
+
+    async def get_device_metadata(self) -> dict[str, str]:
+        """Return allowlisted device version metadata for the installation."""
+        if not self._token:
+            await self.login()
+
+        url = f"{self._base}/api/installations/{self._installation}"
+        headers = {
+            "Authorization": f"Bearer {self._token}",
+            "Accept": "application/json",
+        }
+        for attempt in range(2):
+            try:
+                async with self._session.get(
+                    url,
+                    params={"with": DEVICE_METADATA_RELATIONS},
+                    headers=headers,
+                    timeout=ClientTimeout(total=20),
+                ) as response:
+                    _LOGGER.debug(
+                        "Device metadata response status: %s", response.status
+                    )
+                    if response.status == 401:
+                        if attempt == 1:
+                            return {}
+                        await self.login()
+                        headers["Authorization"] = f"Bearer {self._token}"
+                        continue
+                    if response.status in (403, 404):
+                        return {}
+                    if response.status >= 400:
+                        raise HargassnerConnectionError(
+                            f"Device metadata request failed: HTTP {response.status}"
+                        )
+                    try:
+                        payload = await response.json()
+                    except (ContentTypeError, TypeError, ValueError) as err:
+                        raise HargassnerConnectionError(
+                            "Device metadata request returned invalid JSON"
+                        ) from err
+                    return self._parse_device_metadata(payload)
+            except HargassnerConnectionError:
+                raise
+            except (ClientError, TimeoutError) as err:
+                raise HargassnerConnectionError(
+                    "Device metadata request failed"
+                ) from err
+        return {}
+
+    @staticmethod
+    def _parse_device_metadata(payload: object) -> dict[str, str]:
+        """Extract only non-sensitive version fields from installation details."""
+        root = payload.get("data") if isinstance(payload, dict) else None
+        devices = root.get("devices") if isinstance(root, dict) else None
+        if not isinstance(devices, list):
+            return {}
+
+        for device in devices:
+            if not isinstance(device, dict):
+                continue
+            metadata: dict[str, str] = {}
+            software = device.get("software")
+            version = (
+                software.get("version_code") if isinstance(software, dict) else None
+            )
+            if isinstance(version, (int, str)) and SAFE_VERSION_PATTERN.fullmatch(
+                str(version)
+            ):
+                metadata["software_version"] = str(version)
+            io_version = device.get("io_firmware_version")
+            if isinstance(io_version, (int, str)) and SAFE_VERSION_PATTERN.fullmatch(
+                str(io_version)
+            ):
+                metadata["io_firmware_version"] = str(io_version)
+            if metadata:
+                return metadata
+        return {}
 
     async def get_installations(self) -> list[dict[str, str]]:
         """Return installations available to the authenticated account."""

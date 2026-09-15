@@ -43,7 +43,12 @@ def test_diagnostics_redacts_entry_and_payload() -> None:
         data={"username": "user@example.test", "password": "secret"},
         options={"area": "Private room"},
         runtime_data=SimpleNamespace(
-            coordinator=coordinator, hub=SimpleNamespace(client=client)
+            coordinator=coordinator,
+            hub=SimpleNamespace(client=client),
+            device_metadata={
+                "software_version": "V_HKR4f1",
+                "io_firmware_version": "IO_2.3",
+            },
         ),
     )
 
@@ -57,7 +62,11 @@ def test_diagnostics_redacts_entry_and_payload() -> None:
     assert "Private room" not in rendered
     assert "12345" not in rendered
     assert "PROGRAM_OFF" not in rendered
-    assert result["widget_structure"]["device"] == {"type": "NanoPK"}
+    assert result["widget_structure"]["device"] == {
+        "type": "NanoPK",
+        "software_version": "V_HKR4f1",
+        "io_firmware_version": "IO_2.3",
+    }
     assert result["widget_structure"]["widgets"][0]["value_fields"] == {
         "temperature": "int",
         "name": "str",

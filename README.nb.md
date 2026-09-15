@@ -24,6 +24,7 @@ varmedata fra Hargassners nettportal og viser dem som sensorer og binærsensorer
 - Home Assistant-reauthentisering når personlige opplysninger avvises
 - Konfigurerbart intervall, foreslått område og felttilordninger
 - Sladdede diagnoser og logger
+- Visning av enhetens programvareversjon når sky-API-et oppgir den
 - Ingen kunstig grense for nummererte beredere og varmekretser
 
 ## Testede systemer

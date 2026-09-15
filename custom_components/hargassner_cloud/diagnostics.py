@@ -102,6 +102,9 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigE
 
     coordinator = runtime_data.coordinator
     payload = _widget_structure(coordinator.data)
+    device = payload.get("device")
+    if isinstance(device, dict):
+        device.update(getattr(runtime_data, "device_metadata", {}))
 
     return {
         "entry": redacted_entry,
