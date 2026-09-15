@@ -50,6 +50,16 @@ Thanks for contributing to **Hargassner Cloud**!
 
 * Test login and sensor updates against a real installation before release.
 
+To inspect read-only device and firmware metadata without printing installation
+IDs, names, serial numbers, tokens, or full API responses, run:
+
+```bash
+.venv/bin/python scripts/live_device_probe.py
+```
+
+Review the output before sharing it publicly. The probe prints only allowlisted
+version-code values and the paths and types of version-related fields.
+
 ## 🐞 Issues & pull requests
 
 When submitting issues:
