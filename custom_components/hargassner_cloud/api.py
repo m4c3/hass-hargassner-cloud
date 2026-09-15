@@ -19,6 +19,10 @@ class HargassnerConnectionError(Exception):
     """Raised when the cloud API cannot be reached or returns invalid data."""
 
 
+class HargassnerMaintenanceError(HargassnerConnectionError):
+    """Raised when Hargassner explicitly reports scheduled maintenance."""
+
+
 class HargassnerClientCredentialsError(Exception):
     """Raised when public Hargassner web-client credentials are unavailable."""
 
@@ -196,6 +200,18 @@ class HargassnerClient:
                 html,
             )
             if not script_match:
+                if re.search(
+                    r"<title[^>]*>[^<]*(?:wartungsarbeiten|maintenance)[^<]*</title>",
+                    html,
+                    flags=re.IGNORECASE,
+                ):
+                    self._diagnostics["credential_source"] = "unavailable"
+                    self._record_diagnostic(
+                        "login_page", "maintenance", http_status=response.status
+                    )
+                    raise HargassnerMaintenanceError(
+                        "Hargassner Cloud is temporarily unavailable for maintenance"
+                    )
                 self._record_diagnostic("login_page", "script_not_found")
                 return False
 

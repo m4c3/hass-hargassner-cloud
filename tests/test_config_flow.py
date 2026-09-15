@@ -12,6 +12,7 @@ from custom_components.hargassner_cloud.api import (
     HargassnerAuthError,
     HargassnerClientCredentialsError,
     HargassnerConnectionError,
+    HargassnerMaintenanceError,
 )
 from custom_components.hargassner_cloud.config_flow import HargassnerConfigFlow
 from custom_components.hargassner_cloud.const import (
@@ -66,6 +67,7 @@ def test_multiple_installations_show_selection() -> None:
     [
         (HargassnerAuthError("bad credentials"), "auth"),
         (HargassnerClientCredentialsError("web client changed"), "client_credentials"),
+        (HargassnerMaintenanceError("maintenance"), "maintenance"),
         (HargassnerConnectionError("offline"), "cannot_connect"),
     ],
 )

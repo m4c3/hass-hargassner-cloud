@@ -26,6 +26,7 @@
     "error": {
       "auth": "Anmeldung fehlgeschlagen. Pr\u00fcfe die Zugangsdaten.",
       "client_credentials": "Die Anmeldedaten des Hargassner-Webclients konnten nicht ermittelt oder wurden abgelehnt. Pr\u00fcfe, ob eine neuere Version der Integration verf\u00fcgbar ist.",
+      "maintenance": "Die Hargassner Cloud ist wegen Wartungsarbeiten vor\u00fcbergehend nicht verf\u00fcgbar. Versuche es sp\u00e4ter erneut.",
       "cannot_connect": "Verbindung zur Hargassner Cloud fehlgeschlagen.",
       "unknown": "Unerwarteter Fehler"
     },

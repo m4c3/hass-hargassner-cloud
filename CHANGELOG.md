@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Distinguished scheduled Hargassner maintenance from web-client credential changes
+
 ## 0.5.3
 
 - Added the non-sensitive heater device type to sanitized diagnostics

@@ -15,6 +15,7 @@ from .api import (
     HargassnerClient,
     HargassnerClientCredentialsError,
     HargassnerConnectionError,
+    HargassnerMaintenanceError,
 )
 from .const import (
     CONF_AREA,
@@ -83,6 +84,8 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "auth"
             except HargassnerClientCredentialsError:
                 errors["base"] = "client_credentials"
+            except HargassnerMaintenanceError:
+                errors["base"] = "maintenance"
             except (HargassnerConnectionError, ClientError, TimeoutError):
                 errors["base"] = "cannot_connect"
             except Exception:
@@ -140,6 +143,8 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "auth"
             except HargassnerClientCredentialsError:
                 errors["base"] = "client_credentials"
+            except HargassnerMaintenanceError:
+                errors["base"] = "maintenance"
             except (HargassnerConnectionError, ClientError, TimeoutError):
                 errors["base"] = "cannot_connect"
             except Exception:

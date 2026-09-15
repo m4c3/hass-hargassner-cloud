@@ -12,6 +12,7 @@ from custom_components.hargassner_cloud.api import (
     HargassnerClient,
     HargassnerClientCredentialsError,
     HargassnerConnectionError,
+    HargassnerMaintenanceError,
 )
 
 
@@ -126,6 +127,24 @@ def test_login_reports_missing_web_client_credentials() -> None:
 
     with pytest.raises(HargassnerClientCredentialsError):
         run(client.login)
+
+
+def test_login_reports_official_maintenance_page() -> None:
+    html = "<html><title>Hargassner | Wartungsarbeiten</title></html>"
+    session = FakeSession(gets=[FakeResponse(200, text=html)])
+    client = make_client(session, secret="", client_id="")
+
+    with pytest.raises(HargassnerMaintenanceError, match="maintenance"):
+        run(client.login)
+
+    assert session.post_calls == []
+    assert client.diagnostics == {
+        "phase": "login_page",
+        "outcome": "maintenance",
+        "http_status": 200,
+        "credential_source": "unavailable",
+        "error_type": None,
+    }
 
 
 def test_login_reports_rejected_stored_web_client_credentials() -> None:

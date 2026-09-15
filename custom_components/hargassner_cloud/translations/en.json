@@ -26,6 +26,7 @@
     "error": {
       "auth": "Authentication failed. Check your credentials.",
       "client_credentials": "The Hargassner web-client credentials could not be discovered or were rejected. Check whether a newer integration version is available.",
+      "maintenance": "Hargassner Cloud is temporarily unavailable for maintenance. Try again later.",
       "cannot_connect": "Unable to connect to Hargassner Cloud.",
       "unknown": "Unexpected error"
     },
