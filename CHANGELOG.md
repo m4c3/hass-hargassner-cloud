@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.5
 
 - Documented validation against NanoPK and Neo-HV 20 systems
 - Added a privacy-safe live probe for device and firmware metadata
