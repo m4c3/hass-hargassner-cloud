@@ -49,11 +49,12 @@ genannten Entitäten vorhanden.
 
 | Gruppe | Werte |
 | --- | --- |
-| Heizung | Status, Programm, Kesseltemperatur, Rauchgastemperatur, Effizienz |
+| Heizung | Status, Programm, Kessel-Ist-/Solltemperatur, Rauchgastemperatur, Effizienz |
 | Außenbereich | Aktuelle und durchschnittliche Außentemperatur |
 | Pufferspeicher | Status, Ladung, Temperatur oben/Mitte/unten |
-| Boiler | Temperatur und Ladung aller nummerierten Boiler |
+| Boiler | Ist-/Solltemperatur und Ladung aller nummerierten Boiler |
 | Heizkreise | Aktuelle und gewünschte Vorlauf- und Raumtemperatur aller nummerierten Heizkreise |
+| Heizkreisregler | Wärmequellen- und Anforderungstemperatur, falls vorhanden (z. B. Neo-HV) |
 
 ### Binärsensoren
 
@@ -67,6 +68,13 @@ Nummerierte Boiler und alle Widget-Typen nach dem Muster
 `HEATING_CIRCUIT_*` werden ohne künstliche Obergrenze aus der API erkannt.
 Mehrere Pufferspeicher werden noch nicht erzeugt, weil ihr Nummerierungsschema
 bisher nicht beobachtet wurde.
+
+Reale Messdaten von NanoPK und Neo-HV zeigen außerdem optionale Kanäle für
+Sauerstoffgehalt, Rücklauftemperaturen, Wärmeanforderung, Systemdruck,
+Pellet-Lagerstand, Luftfeuchtigkeit und weitere Pufferpositionen. Diese sind
+noch keine Entitäten: Sie stehen nur über die separate Messwerthistorie zur
+Verfügung, nicht über die zuverlässigere Widget-Antwort der regulären
+Aktualisierung. Ein direkter Kanal für den Pelletverbrauch wurde nicht gefunden.
 
 ## Installation
 

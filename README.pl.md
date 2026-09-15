@@ -43,6 +43,11 @@ zewnętrznej, bufora, bojlerów i obiegów. Wykrywane są wszystkie numerowane
 widżety `BOILER` i `HEATING_CIRCUIT_*` wraz z temperaturami, pompami,
 wymuszonym ładowaniem i stanami pracy.
 
+Obsługiwane są również temperatury bieżące/docelowe ogrzewania i bojlerów oraz,
+jeśli są dostępne, temperatury źródła i zapotrzebowania regulatora Neo-HV.
+Opcjonalne kanały historii (tlen, powrót, ciśnienie, zapas pelletu i wilgotność)
+nie są jeszcze tworzone jako encje.
+
 Wiele buforów nie jest jeszcze tworzonych, ponieważ nie znamy ich schematu
 numerowania w API.
 

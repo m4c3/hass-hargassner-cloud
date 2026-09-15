@@ -43,6 +43,10 @@ akumulační nádrž, bojlery a topné okruhy. Rozpoznají se všechny číslova
 widgety `BOILER` a `HEATING_CIRCUIT_*`, včetně teplot, čerpadel, vynuceného
 nabíjení a provozních stavů.
 
+Podporovány jsou také aktuální/cílové teploty vytápění a bojlerů a případně
+teploty zdroje a požadavku regulátoru Neo-HV. Volitelné historické kanály
+(kyslík, zpátečka, tlak, zásoba pelet a vlhkost) se zatím jako entity nevytvářejí.
+
 Více akumulačních nádrží se zatím nevytváří, protože jejich způsob číslování v
 API nebyl pozorován.
 

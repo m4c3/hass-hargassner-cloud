@@ -46,6 +46,12 @@ Tous les widgets `BOILER` numérotés et tous les types
 `HEATING_CIRCUIT_*` numérotés sont détectés. Les pompes, charges forcées,
 températures et états correspondants sont créés automatiquement.
 
+Les températures actuelle/cible de la chaudière et des ballons ainsi que les
+températures de source et de demande du régulateur Neo-HV sont également prises
+en charge lorsqu’elles sont disponibles. Les canaux historiques optionnels
+(oxygène, retour, pression, stock de granulés et humidité) ne sont pas encore
+créés comme entités.
+
 Plusieurs ballons tampons ne sont pas encore pris en charge, car leur schéma de
 numérotation n’a pas encore été observé.
 

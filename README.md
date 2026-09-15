@@ -45,11 +45,12 @@ listed below will be available.
 
 | Group | Values |
 | --- | --- |
-| Heater | State, program, heater temperature, flue-gas temperature, efficiency |
+| Heater | State, program, current/target temperature, flue-gas temperature, efficiency |
 | Outdoor | Current and average outdoor temperature |
 | Buffer | State, charge, top/centre/bottom temperatures |
-| Boilers | Temperature and charge for every numbered boiler |
+| Boilers | Current/target temperature and charge for every numbered boiler |
 | Heating circuits | Current/target flow and room temperatures for every numbered circuit |
+| Heating controller | Heat-source and requested temperature, when exposed (for example Neo-HV) |
 
 ### Binary sensors
 
@@ -62,6 +63,13 @@ listed below will be available.
 Numbered boilers and all `HEATING_CIRCUIT_*` widget types are discovered from
 the API without an artificial upper limit. Multiple buffer widgets are not yet
 created because their numbering scheme has not been observed.
+
+Real NanoPK and Neo-HV measurements also showed optional cloud measurement
+channels for oxygen content, return temperatures, heat demand, system pressure,
+pellet inventory, humidity and additional buffer positions. These are not yet
+entities: they are available only through the separate measurement-history API,
+not the more reliable widget response used for regular updates. A direct pellet
+consumption channel was not observed.
 
 ## Installation
 

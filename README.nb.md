@@ -44,6 +44,11 @@ utetemperatur, buffer, beredere og varmekretser. Alle nummererte `BOILER`- og
 `HEATING_CIRCUIT_*`-widgeter oppdages, sammen med temperaturer, pumper,
 tvungen lading og driftsstatus.
 
+Nåværende temperatur og måltemperatur for varmeanlegg og beredere støttes også,
+sammen med kilde- og behovstemperatur fra Neo-HV-regulatoren når de finnes.
+Valgfrie historikkkanaler (oksygen, retur, trykk, pelletslager og luftfuktighet)
+opprettes ennå ikke som entiteter.
+
 Flere buffere opprettes ikke ennå fordi nummereringsmønsteret i API-et ikke er
 kjent.
 
