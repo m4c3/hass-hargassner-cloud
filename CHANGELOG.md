@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.6
 
 - Documented successful live API validation with a Neo-HV 20 system
 
