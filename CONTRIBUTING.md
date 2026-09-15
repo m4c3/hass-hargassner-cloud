@@ -58,7 +58,8 @@ IDs, names, serial numbers, tokens, or full API responses, run:
 ```
 
 Review the output before sharing it publicly. The probe prints only allowlisted
-version-code values and the paths and types of version-related fields.
+version-code values plus the paths and types of device fields; all other values
+are omitted.
 
 ## 🐞 Issues & pull requests
 

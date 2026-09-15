@@ -22,6 +22,7 @@ VERSION_FIELD_PATTERN = re.compile(
     r"(?:firmware|software|version|revision|build)", re.IGNORECASE
 )
 SAFE_VERSION_PATTERN = re.compile(r"[A-Za-z0-9._+ -]{1,64}")
+SAFE_FIELD_NAME_PATTERN = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 
 
 def _value_type(value: object) -> str:
@@ -55,6 +56,31 @@ def version_field_types(value: object, path: str = "response") -> list[str]:
     elif isinstance(value, list) and value:
         fields.extend(version_field_types(value[0], f"{path}[]"))
     return sorted(set(fields))
+
+
+def _field_types(value: object, path: str) -> list[str]:
+    """Return safe structural field paths below an already bounded object."""
+    fields: list[str] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if not SAFE_FIELD_NAME_PATTERN.fullmatch(str(key)):
+                continue
+            child_path = f"{path}.{key}"
+            fields.append(f"{child_path}: {_value_type(child)}")
+            fields.extend(_field_types(child, child_path))
+    elif isinstance(value, list):
+        for child in value:
+            fields.extend(_field_types(child, f"{path}[]"))
+    return fields
+
+
+def device_field_types(payload: object) -> list[str]:
+    """List all device field paths and types without exposing their values."""
+    root = payload.get("data") if isinstance(payload, dict) else None
+    devices = root.get("devices") if isinstance(root, dict) else None
+    if not isinstance(devices, list):
+        return []
+    return sorted(set(_field_types(devices, "response.data.devices")))
 
 
 def safe_version_candidates(value: object, path: str = "response") -> list[str]:
@@ -137,6 +163,7 @@ async def async_main() -> int:
 
             candidates = safe_version_candidates(payload)
             fields = version_field_types(payload)
+            device_fields = device_field_types(payload)
             print("  Safe version candidates:")
             if candidates:
                 for candidate in candidates:
@@ -146,6 +173,12 @@ async def async_main() -> int:
             print("  Version-related field paths and types:")
             if fields:
                 for field in fields:
+                    print(f"    {field}")
+            else:
+                print("    none")
+            print("  All device field paths and types (values omitted):")
+            if device_fields:
+                for field in device_fields:
                     print(f"    {field}")
             else:
                 print("    none")
