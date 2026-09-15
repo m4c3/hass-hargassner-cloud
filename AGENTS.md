@@ -29,7 +29,13 @@ custom_components/hargassner_cloud/
   expected exceptions and preserve useful error context.
 - Retry the same API endpoint after renewing authentication. Do not silently advance
   to a fallback endpoint following a 401 or 403 response.
+- Distinguish personal authentication failures, public web-client credential
+  changes, scheduled Hargassner maintenance, and general connection failures. Do
+  not create a credential repair issue for a temporary maintenance outage.
 - Keep Hargassner API behavior changes minimal and cover them with tests.
+- Do not assume that every installation exposes `HEATER` or `BUFFER`. Discover
+  optional and numbered widgets from the returned payload. Preserve compatibility
+  with the observed NanoPK and Neo-HV widget schemas using synthetic tests.
 
 ## Credentials and privacy
 
@@ -38,6 +44,11 @@ custom_components/hargassner_cloud/
 - Public OAuth web-client credentials may be discovered from the official
   Hargassner frontend. Do not log their values.
 - Redact credentials and installation-specific data from diagnostics and logs.
+- Diagnostics may expose explicitly allowlisted, non-sensitive model information,
+  such as `device_type`, but must not expose user-defined device names, serial
+  numbers, locations, measurements, operating values, or parameter values.
+- Keep locally supplied diagnostic files under `.private/`; derive only synthetic,
+  non-identifying fixtures or tests from their structure.
 - Do not add real credentials to fixtures, snapshots, `.env` files, or CI secrets.
 - Use the interactive smoke test or environment variables for live validation.
 
@@ -76,8 +87,18 @@ Do not enable the live test in public CI.
 
 - Keep all `README*.md` files, translations, `manifest.json`, `hacs.json`, and
   `CHANGELOG.md` aligned with user-visible changes.
-- Update both English and German translations when changing flow text.
+- The supported locales are English (`en`), German (`de`), French (`fr`), Spanish
+  (`es`), Norwegian Bokmål (`nb`), Polish (`pl`), and Czech (`cs`). Update the
+  relevant sections in every supported translation file when changing user-facing
+  text or entity state translations, and keep their translation keys aligned.
+- Keep `strings.json` aligned with the English and German flow text used by Home
+  Assistant.
+- Keep `README.md`, `README.de.md`, `README.fr.md`, `README.es.md`, `README.nb.md`,
+  `README.pl.md`, and `README.cs.md` aligned when documentation changes apply to all
+  users.
 - Keep JSON files valid and preserve the minimum supported Home Assistant version.
+- Add changes made after a release under an `Unreleased` changelog section until
+  the next version is prepared.
 - Use focused commits with concise imperative messages.
 
 ## Before handing off
