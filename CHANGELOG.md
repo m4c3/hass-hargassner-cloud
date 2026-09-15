@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Documented validation against NanoPK and Neo-HV 20 systems
+
 ## 0.5.4
 
 - Distinguished scheduled Hargassner maintenance from web-client credential changes

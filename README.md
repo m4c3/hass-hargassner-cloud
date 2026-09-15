@@ -25,6 +25,15 @@ from the Hargassner web portal and exposes it as sensors and binary sensors.
 - Redacted diagnostics and log messages
 - Czech, English, French, German, Norwegian Bokmål, Polish, and Spanish entity translations
 
+## Tested systems
+
+- **NanoPK:** live-tested login, installation discovery, and widget retrieval
+- **Neo-HV 20:** validated with real redacted Home Assistant diagnostics and a
+  synthetic regression test for its widget topology
+
+Other Hargassner systems may work when they expose compatible cloud widgets, but
+have not yet been verified by this project.
+
 ## Entities
 
 Entities are created according to the widget groups returned by your

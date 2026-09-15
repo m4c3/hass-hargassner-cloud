@@ -25,6 +25,16 @@ webového portálu Hargassner a zpřístupňuje je jako senzory a binární senz
 - Redigované diagnostické údaje a protokoly
 - Bez umělého omezení počtu číslovaných bojlerů a topných okruhů
 
+## Testované systémy
+
+- **NanoPK:** přihlášení, vyhledání instalací a načítání widgetů bylo otestováno
+  proti skutečné službě
+- **Neo-HV 20:** ověřeno pomocí skutečných redigovaných diagnostických dat Home
+  Assistant a syntetického regresního testu topologie widgetů
+
+Další systémy Hargassner mohou fungovat, pokud poskytují kompatibilní cloudové
+widgety, ale tento projekt je zatím neověřil.
+
 ## Entity
 
 Entity závisí na widgetech vrácených instalací: vytápění, venkovní teplota,

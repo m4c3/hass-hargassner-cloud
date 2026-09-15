@@ -29,6 +29,15 @@ Binärsensoren bereit.
 - Deutsche, englische, französische, spanische, norwegische, polnische und
   tschechische Entitätsübersetzungen
 
+## Getestete Anlagen
+
+- **NanoPK:** Anmeldung, Anlagenerkennung und Widget-Abruf wurden live getestet
+- **Neo-HV 20:** mit echten redigierten Home-Assistant-Diagnosedaten und einem
+  synthetischen Regressionstest der Widget-Topologie geprüft
+
+Weitere Hargassner-Anlagen können funktionieren, wenn sie kompatible
+Cloud-Widgets bereitstellen, wurden von diesem Projekt aber noch nicht geprüft.
+
 ## Entitäten
 
 Die Entitäten werden entsprechend den Widget-Gruppen der Anlage erstellt. Je

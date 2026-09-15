@@ -26,6 +26,16 @@ varmedata fra Hargassners nettportal og viser dem som sensorer og binærsensorer
 - Sladdede diagnoser og logger
 - Ingen kunstig grense for nummererte beredere og varmekretser
 
+## Testede systemer
+
+- **NanoPK:** innlogging, installasjonsoppdagelse og widgethenting er testet mot
+  den virkelige tjenesten
+- **Neo-HV 20:** validert med ekte, sladdet Home Assistant-diagnostikk og en
+  syntetisk regresjonstest av widgettopologien
+
+Andre Hargassner-systemer kan fungere hvis de tilbyr kompatible skywidgeter, men
+de er ennå ikke verifisert av dette prosjektet.
+
 ## Entiteter
 
 Entitetene avhenger av widgetene installasjonen returnerer: varmeanlegg,

@@ -27,6 +27,16 @@ de capteurs et de capteurs binaires.
 - Diagnostics et journaux expurgés
 - Détection sans limite artificielle des chaudières et circuits numérotés
 
+## Systèmes testés
+
+- **NanoPK :** connexion, détection des installations et récupération des widgets
+  testées en conditions réelles
+- **Neo-HV 20 :** validé avec de vraies données de diagnostic Home Assistant
+  expurgées et un test de régression synthétique de sa topologie de widgets
+
+D’autres systèmes Hargassner peuvent fonctionner s’ils exposent des widgets cloud
+compatibles, mais ils n’ont pas encore été vérifiés par ce projet.
+
 ## Entités
 
 Les entités dépendent des widgets renvoyés par l’installation : chauffage,

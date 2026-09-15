@@ -25,6 +25,16 @@ grzewcze z portalu Hargassner i udostępnia je jako sensory oraz sensory binarne
 - Oczyszczone diagnostyki i logi
 - Brak sztucznego limitu numerowanych bojlerów i obiegów grzewczych
 
+## Przetestowane systemy
+
+- **NanoPK:** logowanie, wykrywanie instalacji i pobieranie widżetów przetestowano
+  z rzeczywistą usługą
+- **Neo-HV 20:** zweryfikowano przy użyciu rzeczywistych, zredagowanych danych
+  diagnostycznych Home Assistant oraz syntetycznego testu regresji topologii widżetów
+
+Inne systemy Hargassner mogą działać, jeśli udostępniają zgodne widżety chmurowe,
+ale nie zostały jeszcze zweryfikowane przez ten projekt.
+
 ## Encje
 
 Encje zależą od widżetów zwróconych przez instalację: ogrzewania, temperatury
