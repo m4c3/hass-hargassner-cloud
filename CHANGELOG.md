@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.4
 
 - Distinguished scheduled Hargassner maintenance from web-client credential changes
 - Avoided creating heater and buffer binary sensors when their widgets are absent
