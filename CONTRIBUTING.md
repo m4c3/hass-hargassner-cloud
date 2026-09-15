@@ -61,6 +61,17 @@ Review the output before sharing it publicly. The probe prints only allowlisted
 version-code values plus the paths and types of device fields; all other values
 are omitted.
 
+To inspect the available heating measurements, their units, and their current
+values, run the separate private probe:
+
+```bash
+.venv/bin/python -m scripts.live_measurement_probe
+```
+
+Its output intentionally contains real operating values. Keep it under `.private/`
+and do not attach it to a public issue without reviewing it first. Authentication
+data and stable installation/device identifiers are automatically redacted.
+
 ## 🐞 Issues & pull requests
 
 When submitting issues:
