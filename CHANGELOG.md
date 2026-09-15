@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Documented successful live API validation with a Neo-HV 20 system
+
 ## 0.5.5
 
 - Documented validation against NanoPK and Neo-HV 20 systems

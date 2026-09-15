@@ -32,8 +32,8 @@ sensores y sensores binarios.
 
 - **NanoPK:** inicio de sesión, detección de instalaciones y obtención de widgets
   probados con el servicio real
-- **Neo-HV 20:** validado con datos de diagnóstico reales y redactados de Home
-  Assistant y una prueba de regresión sintética de su topología de widgets
+- **Neo-HV 20:** inicio de sesión, detección de instalaciones y obtención de widgets
+  probados con el servicio real; topología cubierta además por una prueba sintética
 
 Otros sistemas Hargassner pueden funcionar si ofrecen widgets de nube compatibles,
 pero este proyecto todavía no los ha verificado.

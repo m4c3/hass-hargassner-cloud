@@ -30,8 +30,8 @@ webového portálu Hargassner a zpřístupňuje je jako senzory a binární senz
 
 - **NanoPK:** přihlášení, vyhledání instalací a načítání widgetů bylo otestováno
   proti skutečné službě
-- **Neo-HV 20:** ověřeno pomocí skutečných redigovaných diagnostických dat Home
-  Assistant a syntetického regresního testu topologie widgetů
+- **Neo-HV 20:** přihlášení, vyhledání instalací a načítání widgetů bylo otestováno
+  proti skutečné službě; topologii widgetů navíc pokrývá syntetický test
 
 Další systémy Hargassner mohou fungovat, pokud poskytují kompatibilní cloudové
 widgety, ale tento projekt je zatím neověřil.

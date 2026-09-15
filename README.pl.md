@@ -30,8 +30,8 @@ grzewcze z portalu Hargassner i udostępnia je jako sensory oraz sensory binarne
 
 - **NanoPK:** logowanie, wykrywanie instalacji i pobieranie widżetów przetestowano
   z rzeczywistą usługą
-- **Neo-HV 20:** zweryfikowano przy użyciu rzeczywistych, zredagowanych danych
-  diagnostycznych Home Assistant oraz syntetycznego testu regresji topologii widżetów
+- **Neo-HV 20:** logowanie, wykrywanie instalacji i pobieranie widżetów przetestowano
+  z rzeczywistą usługą; topologię widżetów obejmuje też test syntetyczny
 
 Inne systemy Hargassner mogą działać, jeśli udostępniają zgodne widżety chmurowe,
 ale nie zostały jeszcze zweryfikowane przez ten projekt.

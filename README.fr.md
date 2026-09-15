@@ -32,8 +32,8 @@ de capteurs et de capteurs binaires.
 
 - **NanoPK :** connexion, détection des installations et récupération des widgets
   testées en conditions réelles
-- **Neo-HV 20 :** validé avec de vraies données de diagnostic Home Assistant
-  expurgées et un test de régression synthétique de sa topologie de widgets
+- **Neo-HV 20 :** connexion, détection des installations et récupération des
+  widgets testées en conditions réelles ; topologie également couverte par un test synthétique
 
 D’autres systèmes Hargassner peuvent fonctionner s’ils exposent des widgets cloud
 compatibles, mais ils n’ont pas encore été vérifiés par ce projet.

@@ -29,8 +29,8 @@ from the Hargassner web portal and exposes it as sensors and binary sensors.
 ## Tested systems
 
 - **NanoPK:** live-tested login, installation discovery, and widget retrieval
-- **Neo-HV 20:** validated with real redacted Home Assistant diagnostics and a
-  synthetic regression test for its widget topology
+- **Neo-HV 20:** live-tested login, installation discovery, and widget retrieval;
+  its widget topology is additionally covered by a synthetic regression test
 
 Other Hargassner systems may work when they expose compatible cloud widgets, but
 have not yet been verified by this project.

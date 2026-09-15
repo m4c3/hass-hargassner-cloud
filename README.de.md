@@ -33,8 +33,8 @@ Binärsensoren bereit.
 ## Getestete Anlagen
 
 - **NanoPK:** Anmeldung, Anlagenerkennung und Widget-Abruf wurden live getestet
-- **Neo-HV 20:** mit echten redigierten Home-Assistant-Diagnosedaten und einem
-  synthetischen Regressionstest der Widget-Topologie geprüft
+- **Neo-HV 20:** Anmeldung, Anlagenerkennung und Widget-Abruf wurden live getestet;
+  die Widget-Topologie ist zusätzlich durch einen synthetischen Regressionstest abgedeckt
 
 Weitere Hargassner-Anlagen können funktionieren, wenn sie kompatible
 Cloud-Widgets bereitstellen, wurden von diesem Projekt aber noch nicht geprüft.

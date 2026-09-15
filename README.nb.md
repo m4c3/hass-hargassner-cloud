@@ -31,8 +31,8 @@ varmedata fra Hargassners nettportal og viser dem som sensorer og binærsensorer
 
 - **NanoPK:** innlogging, installasjonsoppdagelse og widgethenting er testet mot
   den virkelige tjenesten
-- **Neo-HV 20:** validert med ekte, sladdet Home Assistant-diagnostikk og en
-  syntetisk regresjonstest av widgettopologien
+- **Neo-HV 20:** innlogging, installasjonsoppdagelse og widgethenting er testet mot
+  den virkelige tjenesten; widgettopologien dekkes også av en syntetisk test
 
 Andre Hargassner-systemer kan fungere hvis de tilbyr kompatible skywidgeter, men
 de er ennå ikke verifisert av dette prosjektet.
