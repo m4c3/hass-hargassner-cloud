@@ -281,7 +281,9 @@ def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
     }
     controller_values = {
         description.key: description.value_fn(payload)
-        for description in sensor_platform.descriptions_for_heating_controller()
+        for description in sensor_platform.descriptions_for_heating_controller(
+            include_outdoor=True
+        )
         if description.value_fn is not None
     }
     binary_descriptions = binary_sensor_platform.build_descriptions(payload)
@@ -293,6 +295,8 @@ def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
     assert controller_values == {
         "controller_request_temp": None,
         "controller_source_temp": 65.0,
+        "outdoor_temp": 8.5,
+        "outdoor_temp_avg": 7.0,
     }
     assert binary_keys == {
         "online",

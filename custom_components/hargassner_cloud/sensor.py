@@ -288,9 +288,11 @@ def descriptions_for_boiler(num: int) -> list[HargassnerSensorDescription]:
     ]
 
 
-def descriptions_for_heating_controller() -> list[HargassnerSensorDescription]:
+def descriptions_for_heating_controller(
+    *, include_outdoor: bool = False
+) -> list[HargassnerSensorDescription]:
     """Build sensors exposed by Neo-HV heating-circuit controllers."""
-    return [
+    descriptions = [
         HargassnerSensorDescription(
             key="controller_source_temp",
             translation_key="controller_source_temp",
@@ -312,6 +314,40 @@ def descriptions_for_heating_controller() -> list[HargassnerSensorDescription]:
             ),
         ),
     ]
+    if include_outdoor:
+        descriptions.extend(
+            [
+                HargassnerSensorDescription(
+                    key="outdoor_temp",
+                    translation_key="outdoor_temp",
+                    device_class=SensorDeviceClass.TEMPERATURE,
+                    native_unit_of_measurement="°C",
+                    state_class=SensorStateClass.MEASUREMENT,
+                    value_fn=lambda r: as_float(
+                        value_at(
+                            r,
+                            "HEATING_CIRCUIT_CONTROLLER",
+                            "outdoor_temperature",
+                        )
+                    ),
+                ),
+                HargassnerSensorDescription(
+                    key="outdoor_temp_avg",
+                    translation_key="outdoor_temp_avg",
+                    device_class=SensorDeviceClass.TEMPERATURE,
+                    native_unit_of_measurement="°C",
+                    state_class=SensorStateClass.MEASUREMENT,
+                    value_fn=lambda r: as_float(
+                        value_at(
+                            r,
+                            "HEATING_CIRCUIT_CONTROLLER",
+                            "outdoor_temperature_average",
+                        )
+                    ),
+                ),
+            ]
+        )
+    return descriptions
 
 
 def descriptions_for_hc(widget: str, num: int) -> list[HargassnerSensorDescription]:
@@ -401,8 +437,11 @@ async def async_setup_entry(
             )
 
     widgets = root.get("data") or []
+    has_heater = any(w.get("widget") == "HEATER" for w in widgets)
     if any(w.get("widget") == "HEATING_CIRCUIT_CONTROLLER" for w in widgets):
-        for description in descriptions_for_heating_controller():
+        for description in descriptions_for_heating_controller(
+            include_outdoor=not has_heater
+        ):
             entities.append(
                 HargassnerSensor(
                     coordinator,

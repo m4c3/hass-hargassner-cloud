@@ -7,6 +7,7 @@
 - Added a private live probe for discovering heating measurements and values
 - Displayed the cloud-provided device software version in Home Assistant
 - Added heater/boiler target and Neo-HV controller temperature sensors
+- Read outdoor temperatures from Neo-HV controller widgets without a heater widget
 - Documented current entities and additional observed measurement channels
 
 ## 0.5.4
