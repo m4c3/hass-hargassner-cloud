@@ -6,6 +6,7 @@
 - Added a privacy-safe live probe for device and firmware metadata
 - Added a private live probe for discovering heating measurements and values
 - Displayed the cloud-provided device software version in Home Assistant
+- Added heater/boiler target and Neo-HV controller temperature sensors
 
 ## 0.5.4
 

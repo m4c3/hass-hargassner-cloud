@@ -25,6 +25,9 @@
             "heater_temp_current": {
                 "name": "Température du chauffage"
             },
+            "heater_temp_target": {"name": "Température cible du chauffage"},
+            "controller_source_temp": {"name": "Température de la source de chaleur"},
+            "controller_request_temp": {"name": "Température demandée"},
             "outdoor_temp": {
                 "name": "Température extérieure"
             },
@@ -54,6 +57,7 @@
                 "name": "Température du ballon 1"
             },
             "boiler_temp_current": {"name": "Température du ballon {number}"},
+            "boiler_temp_target": {"name": "Température cible du ballon {number}"},
             "boiler_charge": {"name": "Charge du ballon {number}"},
             "hc_flow_temp_current": {"name": "Circuit {number} température de départ"},
             "hc_flow_temp_target": {"name": "Circuit {number} consigne de départ"},

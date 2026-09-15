@@ -126,6 +126,16 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
             value_fn=lambda r: as_float(value_at(r, "HEATER", "smoke_temperature")),
         ),
         HargassnerSensorDescription(
+            key="heater_temp_target",
+            translation_key="heater_temp_target",
+            device_class=SensorDeviceClass.TEMPERATURE,
+            native_unit_of_measurement="°C",
+            state_class=SensorStateClass.MEASUREMENT,
+            value_fn=lambda r: as_float(
+                value_at(r, "HEATER", "heater_temperature_target")
+            ),
+        ),
+        HargassnerSensorDescription(
             key="heater_temp_current",
             translation_key="heater_temp_current",
             device_class=SensorDeviceClass.TEMPERATURE,
@@ -255,6 +265,17 @@ def descriptions_for_boiler(num: int) -> list[HargassnerSensorDescription]:
             ),
         ),
         HargassnerSensorDescription(
+            key=f"boiler{num}_temp_target",
+            translation_key="boiler_temp_target",
+            translation_placeholders={"number": number},
+            device_class=SensorDeviceClass.TEMPERATURE,
+            native_unit_of_measurement="°C",
+            state_class=SensorStateClass.MEASUREMENT,
+            value_fn=lambda r: as_float(
+                value_at(r, "BOILER", "boiler_temperature_target", number=number)
+            ),
+        ),
+        HargassnerSensorDescription(
             key=f"boiler{num}_charge",
             translation_key="boiler_charge",
             translation_placeholders={"number": number},
@@ -262,6 +283,32 @@ def descriptions_for_boiler(num: int) -> list[HargassnerSensorDescription]:
             state_class=SensorStateClass.MEASUREMENT,
             value_fn=lambda r: as_float(
                 value_at(r, "BOILER", "boiler_charge", number=number)
+            ),
+        ),
+    ]
+
+
+def descriptions_for_heating_controller() -> list[HargassnerSensorDescription]:
+    """Build sensors exposed by Neo-HV heating-circuit controllers."""
+    return [
+        HargassnerSensorDescription(
+            key="controller_source_temp",
+            translation_key="controller_source_temp",
+            device_class=SensorDeviceClass.TEMPERATURE,
+            native_unit_of_measurement="°C",
+            state_class=SensorStateClass.MEASUREMENT,
+            value_fn=lambda r: as_float(
+                value_at(r, "HEATING_CIRCUIT_CONTROLLER", "source_temperature")
+            ),
+        ),
+        HargassnerSensorDescription(
+            key="controller_request_temp",
+            translation_key="controller_request_temp",
+            device_class=SensorDeviceClass.TEMPERATURE,
+            native_unit_of_measurement="°C",
+            state_class=SensorStateClass.MEASUREMENT,
+            value_fn=lambda r: as_float(
+                value_at(r, "HEATING_CIRCUIT_CONTROLLER", "request_temperature")
             ),
         ),
     ]
@@ -354,6 +401,17 @@ async def async_setup_entry(
             )
 
     widgets = root.get("data") or []
+    if any(w.get("widget") == "HEATING_CIRCUIT_CONTROLLER" for w in widgets):
+        for description in descriptions_for_heating_controller():
+            entities.append(
+                HargassnerSensor(
+                    coordinator,
+                    entry,
+                    description,
+                    overrides.get(description.key),
+                )
+            )
+
     boiler_numbers: set[int] = set()
     for widget_data in widgets:
         if widget_data.get("widget") != "BOILER":

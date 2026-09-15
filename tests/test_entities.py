@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from custom_components.hargassner_cloud import binary_sensor as binary_sensor_platform
+from custom_components.hargassner_cloud import sensor as sensor_platform
 from custom_components.hargassner_cloud.sensor import (
     descriptions_for_boiler,
     descriptions_for_buffer,
@@ -278,11 +279,21 @@ def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
         for description in descriptions_for_boiler(1)
         if description.value_fn is not None
     }
+    controller_values = {
+        description.key: description.value_fn(payload)
+        for description in sensor_platform.descriptions_for_heating_controller()
+        if description.value_fn is not None
+    }
     binary_descriptions = binary_sensor_platform.build_descriptions(payload)
     binary_keys = {description.key for description in binary_descriptions}
 
     assert hc_values["hc1_flow_temp_current"] == 31.0
     assert boiler_values["boiler1_charge"] == 82.0
+    assert boiler_values["boiler1_temp_target"] is None
+    assert controller_values == {
+        "controller_request_temp": None,
+        "controller_source_temp": 65.0,
+    }
     assert binary_keys == {
         "online",
         "hc1_pump_active",

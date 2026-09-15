@@ -25,6 +25,9 @@
             "heater_temp_current": {
                 "name": "Kjeletemperatur"
             },
+            "heater_temp_target": {"name": "Måltemperatur for varmeanlegg"},
+            "controller_source_temp": {"name": "Varmekildetemperatur"},
+            "controller_request_temp": {"name": "Forespurt temperatur"},
             "outdoor_temp": {
                 "name": "Utetemperatur"
             },
@@ -54,6 +57,7 @@
                 "name": "Bereder 1 temperatur"
             },
             "boiler_temp_current": {"name": "Bereder {number} temperatur"},
+            "boiler_temp_target": {"name": "Bereder {number} måltemperatur"},
             "boiler_charge": {"name": "Bereder {number} ladning"},
             "hc_flow_temp_current": {"name": "Varmekrets {number} turtemperatur"},
             "hc_flow_temp_target": {"name": "Varmekrets {number} ønsket turtemperatur"},

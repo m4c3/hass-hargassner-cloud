@@ -25,6 +25,9 @@
             "heater_temp_current": {
                 "name": "Teplota kotle"
             },
+            "heater_temp_target": {"name": "Cílová teplota vytápění"},
+            "controller_source_temp": {"name": "Teplota zdroje tepla"},
+            "controller_request_temp": {"name": "Požadovaná teplota"},
             "outdoor_temp": {
                 "name": "Venkovní teplota"
             },
@@ -54,6 +57,7 @@
                 "name": "Teplota bojleru 1"
             },
             "boiler_temp_current": {"name": "Teplota bojleru {number}"},
+            "boiler_temp_target": {"name": "Cílová teplota bojleru {number}"},
             "boiler_charge": {"name": "Nabití bojleru {number}"},
             "hc_flow_temp_current": {"name": "Okruh {number} teplota přívodu"},
             "hc_flow_temp_target": {"name": "Okruh {number} cílová teplota přívodu"},

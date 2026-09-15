@@ -77,6 +77,9 @@
       "heater_temp_current": {
         "name": "Heizungstemperatur"
       },
+      "heater_temp_target": {"name": "Heizungs-Solltemperatur"},
+      "controller_source_temp": {"name": "Wärmequellentemperatur"},
+      "controller_request_temp": {"name": "Anforderungstemperatur"},
       "outdoor_temp": {
         "name": "Außentemperatur"
       },
@@ -106,6 +109,7 @@
         "name": "Boiler 1 Temperatur"
       },
       "boiler_temp_current": {"name": "Boiler {number} Temperatur"},
+      "boiler_temp_target": {"name": "Boiler {number} Solltemperatur"},
       "boiler_charge": {"name": "Boiler {number} Ladung"},
       "hc_flow_temp_current": {"name": "HK{number} Vorlauf"},
       "hc_flow_temp_target": {"name": "HK{number} Soll-Vorlauf"},

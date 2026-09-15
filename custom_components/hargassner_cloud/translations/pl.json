@@ -25,6 +25,9 @@
             "heater_temp_current": {
                 "name": "Temperatura kotła"
             },
+            "heater_temp_target": {"name": "Docelowa temperatura ogrzewania"},
+            "controller_source_temp": {"name": "Temperatura źródła ciepła"},
+            "controller_request_temp": {"name": "Żądana temperatura"},
             "outdoor_temp": {
                 "name": "Temperatura zewnętrzna"
             },
@@ -54,6 +57,7 @@
                 "name": "Temperatura bojlera 1"
             },
             "boiler_temp_current": {"name": "Temperatura bojlera {number}"},
+            "boiler_temp_target": {"name": "Docelowa temperatura bojlera {number}"},
             "boiler_charge": {"name": "Poziom naładowania bojlera {number}"},
             "hc_flow_temp_current": {"name": "Obieg {number} temperatura zasilania"},
             "hc_flow_temp_target": {"name": "Obieg {number} zadana temperatura zasilania"},

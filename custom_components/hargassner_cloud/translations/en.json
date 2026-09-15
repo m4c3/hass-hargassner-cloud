@@ -77,6 +77,9 @@
       "heater_temp_current": {
         "name": "Heater Temperature"
       },
+      "heater_temp_target": {"name": "Heater Target Temperature"},
+      "controller_source_temp": {"name": "Heat Source Temperature"},
+      "controller_request_temp": {"name": "Requested Temperature"},
       "outdoor_temp": {
         "name": "Outdoor Temperature"
       },
@@ -106,6 +109,7 @@
         "name": "Boiler 1 Temperature"
       },
       "boiler_temp_current": {"name": "Boiler {number} Temperature"},
+      "boiler_temp_target": {"name": "Boiler {number} Target Temperature"},
       "boiler_charge": {"name": "Boiler {number} Charge"},
       "hc_flow_temp_current": {"name": "HC{number} Flow Temperature"},
       "hc_flow_temp_target": {"name": "HC{number} Flow Target"},

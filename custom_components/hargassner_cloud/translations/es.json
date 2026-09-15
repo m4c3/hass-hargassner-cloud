@@ -25,6 +25,9 @@
             "heater_temp_current": {
                 "name": "Temperatura de la calefacción"
             },
+            "heater_temp_target": {"name": "Temperatura objetivo de calefacción"},
+            "controller_source_temp": {"name": "Temperatura de la fuente de calor"},
+            "controller_request_temp": {"name": "Temperatura solicitada"},
             "outdoor_temp": {
                 "name": "Temperatura exterior"
             },
@@ -54,6 +57,7 @@
                 "name": "Temperatura del acumulador 1"
             },
             "boiler_temp_current": {"name": "Temperatura del acumulador {number}"},
+            "boiler_temp_target": {"name": "Temperatura objetivo del acumulador {number}"},
             "boiler_charge": {"name": "Carga del acumulador {number}"},
             "hc_flow_temp_current": {"name": "Circuito {number} temperatura de impulsión"},
             "hc_flow_temp_target": {"name": "Circuito {number} consigna de impulsión"},
