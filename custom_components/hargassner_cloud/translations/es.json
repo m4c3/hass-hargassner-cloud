@@ -44,6 +44,7 @@
             "buffer_charge": {
                 "name": "Carga del depósito de inercia"
             },
+            "buffer_capacity": {"name": "Capacidad del depósito de inercia"},
             "buffer_temp_top": {
                 "name": "Temperatura superior del depósito"
             },
@@ -57,9 +58,12 @@
                 "name": "Temperatura del acumulador 1"
             },
             "boiler_temp_current": {"name": "Temperatura del acumulador {number}"},
+            "boiler_state": {"name": "Estado del acumulador {number}", "state": {"off": "Apagado", "on": "Encendido"}},
             "boiler_temp_target": {"name": "Temperatura objetivo del acumulador {number}"},
             "boiler_charge": {"name": "Carga del acumulador {number}"},
             "hc_flow_temp_current": {"name": "Circuito {number} temperatura de impulsión"},
+            "hc_state": {"name": "Estado del circuito {number}", "state": {"off": "Apagado", "on": "Encendido"}},
+            "hc_mode": {"name": "Modo del circuito {number}"},
             "hc_flow_temp_target": {"name": "Circuito {number} consigna de impulsión"},
             "hc_room_temp_target": {"name": "Circuito {number} consigna ambiente"},
             "hc_room_temp_current": {"name": "Circuito {number} temperatura ambiente"},

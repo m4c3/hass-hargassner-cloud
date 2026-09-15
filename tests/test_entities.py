@@ -40,12 +40,12 @@ def test_heating_circuit_translation_keys_preserve_legacy_unique_ids() -> None:
     hc1 = descriptions_for_hc("HEATING_CIRCUIT_RADIATOR", 1)
     hc2 = descriptions_for_hc("HEATING_CIRCUIT_FLOOR", 2)
 
-    assert hc1[0].key == "hc1_flow_temp_current"
-    assert hc1[0].translation_key == "hc_flow_temp_current"
-    assert hc1[0].legacy_unique_id_key == "HC11_flow_temp_current"
-    assert hc2[0].key == "hc2_flow_temp_current"
-    assert hc2[0].translation_key == "hc_flow_temp_current"
-    assert hc2[0].legacy_unique_id_key == "HC22_flow_temp_current"
+    hc1_flow = next(item for item in hc1 if item.key == "hc1_flow_temp_current")
+    hc2_flow = next(item for item in hc2 if item.key == "hc2_flow_temp_current")
+    assert hc1_flow.translation_key == "hc_flow_temp_current"
+    assert hc1_flow.legacy_unique_id_key == "HC11_flow_temp_current"
+    assert hc2_flow.translation_key == "hc_flow_temp_current"
+    assert hc2_flow.legacy_unique_id_key == "HC22_flow_temp_current"
 
 
 def test_numbered_components_have_no_artificial_upper_limit() -> None:
@@ -56,9 +56,9 @@ def test_numbered_components_have_no_artificial_upper_limit() -> None:
         "HEATING_CIRCUIT_CUSTOM", 27
     )
 
-    assert boiler[0].key == "boiler12_temp_current"
+    assert boiler[0].key == "boiler12_state"
     assert boiler[0].translation_placeholders == {"number": "12"}
-    assert heating_circuit[0].key == "hc27_flow_temp_current"
+    assert heating_circuit[0].key == "hc27_state"
     assert heating_circuit[0].translation_placeholders == {"number": "27"}
     assert binary_boiler[0].key == "boiler12_pump_active"
     assert binary_heating_circuit[0].key == "hc27_pump_active"
@@ -177,9 +177,11 @@ def test_nanopk_widget_schema_is_supported() -> None:
                     "flow_temperature_current": 27.0,
                     "room_temperature_target": 21,
                     "room_temperature_current": None,
+                    "state": "STATE_ON",
                     "pump_active": True,
                     "active": True,
                 },
+                "parameters": {"mode": {"value": "MODE_AUTOMATIC"}},
             },
             {
                 "widget": "BOILER",
@@ -250,9 +252,11 @@ def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
                     "flow_temperature_current": 31,
                     "room_temperature_target": 20,
                     "room_temperature_current": None,
+                    "state": "STATE_ON",
                     "pump_active": True,
                     "active": True,
                 },
+                "parameters": {"mode": {"value": "MODE_AUTOMATIC"}},
             },
             {
                 "widget": "BOILER",
@@ -261,6 +265,7 @@ def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
                     "boiler_temperature_target": None,
                     "boiler_temperature_current": 54.5,
                     "boiler_charge": 82,
+                    "state": "STATE_ON",
                     "pump_active": False,
                     "force_charging_active": False,
                 },
@@ -290,7 +295,10 @@ def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
     binary_keys = {description.key for description in binary_descriptions}
 
     assert hc_values["hc1_flow_temp_current"] == 31.0
+    assert hc_values["hc1_state"] == "on"
+    assert hc_values["hc1_mode"] == "MODE_AUTOMATIC"
     assert boiler_values["boiler1_charge"] == 82.0
+    assert boiler_values["boiler1_state"] == "on"
     assert boiler_values["boiler1_temp_target"] is None
     assert controller_values == {
         "controller_request_temp": None,

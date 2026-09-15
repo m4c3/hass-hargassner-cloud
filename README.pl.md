@@ -47,6 +47,8 @@ Obsługiwane są również temperatury bieżące/docelowe ogrzewania i bojlerów
 jeśli są dostępne, temperatury źródła i zapotrzebowania regulatora Neo-HV.
 Opcjonalne kanały historii (tlen, powrót, ciśnienie, zapas pelletu i wilgotność)
 nie są jeszcze tworzone jako encje.
+Wyświetlane są także stan bojlera, stan i tryb obiegu oraz pojemność bufora
+(jednostka nie jest jeszcze znana).
 
 Wiele buforów nie jest jeszcze tworzonych, ponieważ nie znamy ich schematu
 numerowania w API.

@@ -218,6 +218,13 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
             value_fn=lambda r: as_float(value_at(r, "BUFFER", "buffer_charge")),
         ),
         HargassnerSensorDescription(
+            key="buffer_capacity",
+            translation_key="buffer_capacity",
+            icon="mdi:storage-tank",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            value_fn=lambda r: as_float(value_at(r, "BUFFER", "capacity")),
+        ),
+        HargassnerSensorDescription(
             key="buffer_temp_top",
             translation_key="buffer_temp_top",
             device_class=SensorDeviceClass.TEMPERATURE,
@@ -253,6 +260,18 @@ def descriptions_for_buffer() -> list[HargassnerSensorDescription]:
 def descriptions_for_boiler(num: int) -> list[HargassnerSensorDescription]:
     number = str(num)
     return [
+        HargassnerSensorDescription(
+            key=f"boiler{num}_state",
+            translation_key="boiler_state",
+            translation_placeholders={"number": number},
+            icon="mdi:water-boiler",
+            device_class=SensorDeviceClass.ENUM,
+            options=HEATING_STATE_OPTIONS,
+            entity_category=EntityCategory.DIAGNOSTIC,
+            value_fn=lambda r: _state_value(
+                value_at(r, "BOILER", "state", number=number)
+            ),
+        ),
         HargassnerSensorDescription(
             key=f"boiler{num}_temp_current",
             translation_key="boiler_temp_current",
@@ -359,6 +378,24 @@ def descriptions_for_hc(widget: str, num: int) -> list[HargassnerSensorDescripti
         return lambda root: as_float(value_at(root, widget, field, number=n))
 
     return [
+        HargassnerSensorDescription(
+            key=f"{translation_prefix}_state",
+            translation_key="hc_state",
+            translation_placeholders={"number": n},
+            icon="mdi:radiator",
+            device_class=SensorDeviceClass.ENUM,
+            options=HEATING_STATE_OPTIONS,
+            entity_category=EntityCategory.DIAGNOSTIC,
+            value_fn=lambda r: _state_value(value_at(r, widget, "state", number=n)),
+        ),
+        HargassnerSensorDescription(
+            key=f"{translation_prefix}_mode",
+            translation_key="hc_mode",
+            translation_placeholders={"number": n},
+            icon="mdi:cog",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            value_fn=lambda r: as_str(parameter_value_at(r, widget, "mode", number=n)),
+        ),
         HargassnerSensorDescription(
             key=f"{translation_prefix}_flow_temp_current",
             translation_key="hc_flow_temp_current",

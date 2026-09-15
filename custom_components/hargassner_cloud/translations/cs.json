@@ -44,6 +44,7 @@
             "buffer_charge": {
                 "name": "Nabití akumulační nádrže"
             },
+            "buffer_capacity": {"name": "Kapacita akumulační nádrže"},
             "buffer_temp_top": {
                 "name": "Teplota nádrže nahoře"
             },
@@ -57,9 +58,12 @@
                 "name": "Teplota bojleru 1"
             },
             "boiler_temp_current": {"name": "Teplota bojleru {number}"},
+            "boiler_state": {"name": "Stav bojleru {number}", "state": {"off": "Vypnuto", "on": "Zapnuto"}},
             "boiler_temp_target": {"name": "Cílová teplota bojleru {number}"},
             "boiler_charge": {"name": "Nabití bojleru {number}"},
             "hc_flow_temp_current": {"name": "Okruh {number} teplota přívodu"},
+            "hc_state": {"name": "Stav okruhu {number}", "state": {"off": "Vypnuto", "on": "Zapnuto"}},
+            "hc_mode": {"name": "Režim okruhu {number}"},
             "hc_flow_temp_target": {"name": "Okruh {number} cílová teplota přívodu"},
             "hc_room_temp_target": {"name": "Okruh {number} cílová pokojová teplota"},
             "hc_room_temp_current": {"name": "Okruh {number} pokojová teplota"},

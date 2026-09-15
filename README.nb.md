@@ -48,6 +48,8 @@ Nåværende temperatur og måltemperatur for varmeanlegg og beredere støttes og
 sammen med kilde- og behovstemperatur fra Neo-HV-regulatoren når de finnes.
 Valgfrie historikkkanaler (oksygen, retur, trykk, pelletslager og luftfuktighet)
 opprettes ennå ikke som entiteter.
+Berederstatus, varmekretsstatus og -modus samt bufferkapasitet (ukjent enhet)
+vises også.
 
 Flere buffere opprettes ikke ennå fordi nummereringsmønsteret i API-et ikke er
 kjent.

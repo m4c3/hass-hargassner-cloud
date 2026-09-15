@@ -46,6 +46,8 @@ nabíjení a provozních stavů.
 Podporovány jsou také aktuální/cílové teploty vytápění a bojlerů a případně
 teploty zdroje a požadavku regulátoru Neo-HV. Volitelné historické kanály
 (kyslík, zpátečka, tlak, zásoba pelet a vlhkost) se zatím jako entity nevytvářejí.
+Zobrazuje se také stav bojleru, stav a režim okruhu a kapacita akumulační nádrže
+(jednotka zatím není známa).
 
 Více akumulačních nádrží se zatím nevytváří, protože jejich způsob číslování v
 API nebyl pozorován.

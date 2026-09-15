@@ -51,9 +51,9 @@ genannten Entitäten vorhanden.
 | --- | --- |
 | Heizung | Status, Programm, Kessel-Ist-/Solltemperatur, Rauchgastemperatur, Effizienz |
 | Außenbereich | Aktuelle und durchschnittliche Außentemperatur |
-| Pufferspeicher | Status, Ladung, Temperatur oben/Mitte/unten |
-| Boiler | Ist-/Solltemperatur und Ladung aller nummerierten Boiler |
-| Heizkreise | Aktuelle und gewünschte Vorlauf- und Raumtemperatur aller nummerierten Heizkreise |
+| Pufferspeicher | Status, Ladung, Kapazität (Einheit unbekannt), Temperatur oben/Mitte/unten |
+| Boiler | Status, Ist-/Solltemperatur und Ladung aller nummerierten Boiler |
+| Heizkreise | Status, Modus sowie aktuelle und gewünschte Vorlauf- und Raumtemperatur |
 | Heizkreisregler | Wärmequellen- und Anforderungstemperatur, falls vorhanden (z. B. Neo-HV) |
 
 ### Binärsensoren

@@ -44,6 +44,7 @@
             "buffer_charge": {
                 "name": "Poziom naładowania bufora"
             },
+            "buffer_capacity": {"name": "Pojemność bufora"},
             "buffer_temp_top": {
                 "name": "Temperatura bufora u góry"
             },
@@ -57,9 +58,12 @@
                 "name": "Temperatura bojlera 1"
             },
             "boiler_temp_current": {"name": "Temperatura bojlera {number}"},
+            "boiler_state": {"name": "Stan bojlera {number}", "state": {"off": "Wyłączony", "on": "Włączony"}},
             "boiler_temp_target": {"name": "Docelowa temperatura bojlera {number}"},
             "boiler_charge": {"name": "Poziom naładowania bojlera {number}"},
             "hc_flow_temp_current": {"name": "Obieg {number} temperatura zasilania"},
+            "hc_state": {"name": "Stan obiegu {number}", "state": {"off": "Wyłączony", "on": "Włączony"}},
+            "hc_mode": {"name": "Tryb obiegu {number}"},
             "hc_flow_temp_target": {"name": "Obieg {number} zadana temperatura zasilania"},
             "hc_room_temp_target": {"name": "Obieg {number} zadana temperatura pomieszczenia"},
             "hc_room_temp_current": {"name": "Obieg {number} temperatura pomieszczenia"},

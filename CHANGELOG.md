@@ -8,6 +8,7 @@
 - Displayed the cloud-provided device software version in Home Assistant
 - Added heater/boiler target and Neo-HV controller temperature sensors
 - Read outdoor temperatures from Neo-HV controller widgets without a heater widget
+- Added boiler/heating-circuit status, heating-circuit mode, and buffer capacity sensors
 - Documented current entities and additional observed measurement channels
 
 ## 0.5.4

@@ -44,6 +44,7 @@
             "buffer_charge": {
                 "name": "Bufferladning"
             },
+            "buffer_capacity": {"name": "Bufferkapasitet"},
             "buffer_temp_top": {
                 "name": "Buffertemperatur øverst"
             },
@@ -57,9 +58,12 @@
                 "name": "Bereder 1 temperatur"
             },
             "boiler_temp_current": {"name": "Bereder {number} temperatur"},
+            "boiler_state": {"name": "Bereder {number} status", "state": {"off": "Av", "on": "På"}},
             "boiler_temp_target": {"name": "Bereder {number} måltemperatur"},
             "boiler_charge": {"name": "Bereder {number} ladning"},
             "hc_flow_temp_current": {"name": "Varmekrets {number} turtemperatur"},
+            "hc_state": {"name": "Varmekrets {number} status", "state": {"off": "Av", "on": "På"}},
+            "hc_mode": {"name": "Varmekrets {number} modus"},
             "hc_flow_temp_target": {"name": "Varmekrets {number} ønsket turtemperatur"},
             "hc_room_temp_target": {"name": "Varmekrets {number} ønsket romtemperatur"},
             "hc_room_temp_current": {"name": "Varmekrets {number} romtemperatur"},

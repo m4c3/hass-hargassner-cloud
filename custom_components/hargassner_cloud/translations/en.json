@@ -96,6 +96,7 @@
       "buffer_charge": {
         "name": "Buffer Charge"
       },
+      "buffer_capacity": {"name": "Buffer Capacity"},
       "buffer_temp_top": {
         "name": "Buffer Temperature Top"
       },
@@ -109,9 +110,12 @@
         "name": "Boiler 1 Temperature"
       },
       "boiler_temp_current": {"name": "Boiler {number} Temperature"},
+      "boiler_state": {"name": "Boiler {number} Status", "state": {"off": "Off", "on": "On"}},
       "boiler_temp_target": {"name": "Boiler {number} Target Temperature"},
       "boiler_charge": {"name": "Boiler {number} Charge"},
       "hc_flow_temp_current": {"name": "HC{number} Flow Temperature"},
+      "hc_state": {"name": "HC{number} Status", "state": {"off": "Off", "on": "On"}},
+      "hc_mode": {"name": "HC{number} Mode"},
       "hc_flow_temp_target": {"name": "HC{number} Flow Target"},
       "hc_room_temp_target": {"name": "HC{number} Room Target"},
       "hc_room_temp_current": {"name": "HC{number} Room Temperature"},

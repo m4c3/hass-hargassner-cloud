@@ -96,6 +96,7 @@
       "buffer_charge": {
         "name": "Pufferladung"
       },
+      "buffer_capacity": {"name": "Pufferkapazität"},
       "buffer_temp_top": {
         "name": "Puffertemperatur oben"
       },
@@ -109,9 +110,12 @@
         "name": "Boiler 1 Temperatur"
       },
       "boiler_temp_current": {"name": "Boiler {number} Temperatur"},
+      "boiler_state": {"name": "Boiler {number} Status", "state": {"off": "Aus", "on": "An"}},
       "boiler_temp_target": {"name": "Boiler {number} Solltemperatur"},
       "boiler_charge": {"name": "Boiler {number} Ladung"},
       "hc_flow_temp_current": {"name": "HK{number} Vorlauf"},
+      "hc_state": {"name": "HK{number} Status", "state": {"off": "Aus", "on": "An"}},
+      "hc_mode": {"name": "HK{number} Modus"},
       "hc_flow_temp_target": {"name": "HK{number} Soll-Vorlauf"},
       "hc_room_temp_target": {"name": "HK{number} Soll-Raum"},
       "hc_room_temp_current": {"name": "HK{number} Raumtemperatur"},

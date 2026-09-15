@@ -44,6 +44,7 @@
             "buffer_charge": {
                 "name": "Charge du ballon tampon"
             },
+            "buffer_capacity": {"name": "Capacité du ballon tampon"},
             "buffer_temp_top": {
                 "name": "Température du ballon tampon en haut"
             },
@@ -57,9 +58,12 @@
                 "name": "Température du ballon 1"
             },
             "boiler_temp_current": {"name": "Température du ballon {number}"},
+            "boiler_state": {"name": "État du ballon {number}", "state": {"off": "Arrêt", "on": "Marche"}},
             "boiler_temp_target": {"name": "Température cible du ballon {number}"},
             "boiler_charge": {"name": "Charge du ballon {number}"},
             "hc_flow_temp_current": {"name": "Circuit {number} température de départ"},
+            "hc_state": {"name": "État du circuit {number}", "state": {"off": "Arrêt", "on": "Marche"}},
+            "hc_mode": {"name": "Mode du circuit {number}"},
             "hc_flow_temp_target": {"name": "Circuit {number} consigne de départ"},
             "hc_room_temp_target": {"name": "Circuit {number} consigne ambiante"},
             "hc_room_temp_current": {"name": "Circuit {number} température ambiante"},

@@ -49,6 +49,8 @@ También se admiten las temperaturas actual/objetivo de la caldera y los
 acumuladores, además de las temperaturas de fuente y demanda del controlador
 Neo-HV cuando estén disponibles. Los canales históricos opcionales (oxígeno,
 retorno, presión, existencias de pellets y humedad) aún no se crean como entidades.
+También se muestran el estado del acumulador, el estado y modo del circuito y
+la capacidad del depósito de inercia (unidad aún desconocida).
 
 Todavía no se crean varios depósitos de inercia porque no conocemos su esquema
 de numeración en la API.
