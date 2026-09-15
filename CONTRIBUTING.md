@@ -70,7 +70,9 @@ values, run the separate private probe:
 
 Its output intentionally contains real operating values. Keep it under `.private/`
 and do not attach it to a public issue without reviewing it first. Authentication
-data and stable installation/device identifiers are automatically redacted.
+data and stable installation/device/channel identifiers are automatically redacted.
+The probe requests the active channels over the last 24 hours and prints the most
+recent available value for each channel.
 
 ## 🐞 Issues & pull requests
 

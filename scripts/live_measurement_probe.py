@@ -7,6 +7,7 @@ import asyncio
 import json
 import os
 import re
+from datetime import UTC, datetime, timedelta
 from getpass import getpass
 from typing import Any
 
@@ -31,7 +32,7 @@ PRIVATE_VALUE_PATTERN = re.compile(
     r"[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})",
     re.IGNORECASE,
 )
-DEVICE_ENDPOINTS = ("metric-fields", "fetch-metrics", "measurements")
+DEVICE_ENDPOINTS = ("metric-fields", "fetch-metrics")
 
 
 def _is_private_key(key: object) -> bool:
@@ -65,6 +66,61 @@ def sanitize_measurement_payload(value: Any) -> Any:
     if isinstance(value, str) and PRIVATE_VALUE_PATTERN.search(value):
         return REDACTED
     return value
+
+
+def active_metric_definitions(payload: Any) -> list[dict[str, Any]]:
+    """Extract active metric definitions while retaining IDs only internally."""
+    data = payload.get("data") if isinstance(payload, dict) else None
+    if not isinstance(data, list):
+        return []
+    definitions: list[dict[str, Any]] = []
+    for group in data:
+        fields = group.get("fields") if isinstance(group, dict) else None
+        if not isinstance(fields, list):
+            continue
+        for field in fields:
+            if isinstance(field, dict) and field.get("id") is not None:
+                definitions.append(
+                    {
+                        **field,
+                        "_group": group.get("text") or group.get("type"),
+                    }
+                )
+    return definitions
+
+
+def latest_measurements(
+    definitions: list[dict[str, Any]], payload: Any
+) -> list[dict[str, Any]]:
+    """Map opaque channel IDs to safe labels and their latest available values."""
+    samples = payload.get("data") if isinstance(payload, dict) else None
+    if not isinstance(samples, list):
+        return []
+    results: list[dict[str, Any]] = []
+    for definition in definitions:
+        channel_id = definition.get("id")
+        latest: Any = None
+        found = False
+        for sample in reversed(samples):
+            values = sample.get("values") if isinstance(sample, dict) else None
+            if isinstance(values, dict):
+                value_key = next(
+                    (key for key in values if str(key) == str(channel_id)), None
+                )
+                if value_key is not None:
+                    latest = values[value_key]
+                    if latest is not None:
+                        found = True
+                        break
+        results.append(
+            {
+                "group": definition.get("_group"),
+                "name": definition.get("legend") or definition.get("text"),
+                "unit": definition.get("unit") or None,
+                "value": latest if found else None,
+            }
+        )
+    return results
 
 
 async def _get_json(
@@ -154,6 +210,7 @@ async def async_main() -> int:
                     print(f"  Device {device_number}: missing internal ID")
                     continue
                 print(f"  Device {device_number}:")
+                definitions: list[dict[str, Any]] = []
                 for endpoint in DEVICE_ENDPOINTS:
                     url = f"{DEFAULT_BASE_URL}/api/devices/{device_id}/{endpoint}"
                     try:
@@ -163,6 +220,8 @@ async def async_main() -> int:
                         continue
                     print(f"    {endpoint}: HTTP {endpoint_status}")
                     if payload is not None:
+                        if endpoint == "metric-fields":
+                            definitions = active_metric_definitions(payload)
                         rendered = json.dumps(
                             sanitize_measurement_payload(payload),
                             ensure_ascii=False,
@@ -171,6 +230,35 @@ async def async_main() -> int:
                         )
                         for line in rendered.splitlines():
                             print(f"      {line}")
+                if not definitions:
+                    print("    measurements: skipped (no active channels)")
+                    continue
+                now = datetime.now(UTC)
+                params = {
+                    "channels": ";".join(str(item["id"]) for item in definitions),
+                    "from": (now - timedelta(days=1)).isoformat(),
+                    "to": (now + timedelta(minutes=5)).isoformat(),
+                }
+                measurements_url = (
+                    f"{DEFAULT_BASE_URL}/api/devices/{device_id}/measurements"
+                )
+                try:
+                    measurement_status, measurement_payload = await _get_json(
+                        session, token, measurements_url, params=params
+                    )
+                except (ClientError, TimeoutError):
+                    print("    measurements: connection failed")
+                    continue
+                print(f"    measurements: HTTP {measurement_status}")
+                if measurement_payload is not None:
+                    rendered = json.dumps(
+                        latest_measurements(definitions, measurement_payload),
+                        ensure_ascii=False,
+                        indent=2,
+                        sort_keys=True,
+                    )
+                    for line in rendered.splitlines():
+                        print(f"      {line}")
     return 0
 
 
