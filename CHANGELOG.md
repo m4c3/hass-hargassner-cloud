@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.5.7
 
 - Fixed public web-client credential discovery after a Hargassner bundle change
 - Avoided repeated login requests with obsolete payload variants
+- Verified the corrected login against the live Hargassner Cloud API
 
 ## 0.5.6
 
