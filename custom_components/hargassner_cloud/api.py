@@ -108,84 +108,51 @@ class HargassnerClient:
         url = f"{self._base}/api/auth/login"
         _LOGGER.debug("Starting Hargassner login")
 
-        payload_candidates = [
-            {
-                "email": self._username,
-                "password": self._password,
-                "client_secret": self._client_secret,
-            },
-            {
-                "username": self._username,
-                "password": self._password,
-                "client_secret": self._client_secret,
-            },
-        ]
+        payload = {
+            "email": self._username,
+            "password": self._password,
+            "client_secret": self._client_secret,
+        }
         if self._client_id:
-            payload_candidates.insert(
-                0,
-                {
-                    "email": self._username,
-                    "password": self._password,
-                    "client_id": self._client_id,
-                    "client_secret": self._client_secret,
-                },
-            )
-            payload_candidates.append(
-                {
-                    "username": self._username,
-                    "password": self._password,
-                    "client_id": self._client_id,
-                    "client_secret": self._client_secret,
-                }
-            )
+            payload["client_id"] = self._client_id
 
-        last_error_txt = ""
-        auth_rejected = False
-        for attempt, payload in enumerate(payload_candidates, start=1):
-            _LOGGER.debug("Sending Hargassner login attempt %s", attempt)
-            try:
-                async with self._session.post(
-                    url, json=payload, headers={"Accept": "application/json"}
-                ) as resp:
-                    _LOGGER.debug("Hargassner login response status: %s", resp.status)
-                    if resp.status >= 400:
-                        last_error_txt = f"HTTP {resp.status}"
-                        self._record_diagnostic(
-                            "login", "failed", http_status=resp.status
-                        )
-                        auth_rejected |= resp.status in (401, 403)
-                        continue
-                    try:
-                        js = await resp.json()
-                    except (ContentTypeError, TypeError, ValueError):
-                        last_error_txt = "Non-JSON login response"
-                        self._record_diagnostic(
-                            "login", "invalid_response", http_status=resp.status
-                        )
-                        continue
-                    token = (
-                        js.get("access_token")
-                        or (js.get("data") or {}).get("access_token")
-                        or js.get("token")
+        _LOGGER.debug("Sending Hargassner login attempt 1")
+        try:
+            async with self._session.post(
+                url, json=payload, headers={"Accept": "application/json"}
+            ) as resp:
+                _LOGGER.debug("Hargassner login response status: %s", resp.status)
+                if resp.status >= 400:
+                    self._record_diagnostic("login", "failed", http_status=resp.status)
+                    error = f"Login failed: HTTP {resp.status}"
+                    if resp.status in (401, 403):
+                        raise HargassnerAuthError(error)
+                    raise HargassnerConnectionError(error)
+                try:
+                    js = await resp.json()
+                except (ContentTypeError, TypeError, ValueError) as err:
+                    self._record_diagnostic(
+                        "login", "invalid_response", http_status=resp.status
                     )
-                    if token:
-                        _LOGGER.debug("✓ Login succeeded")
-                        self._token = token
-                        self._record_diagnostic(
-                            "login", "success", http_status=resp.status
-                        )
-                        return
-                    last_error_txt = f"Login JSON had no token: keys={list(js.keys())}"
-            except (ClientError, TimeoutError) as exc:
-                last_error_txt = f"Exception: {exc}"
-                self._record_diagnostic(
-                    "login", "failed", error_type=type(exc).__name__
-                )
-                _LOGGER.debug("Login connection error: %s", last_error_txt)
+                    raise HargassnerConnectionError(
+                        "Login returned a non-JSON response"
+                    ) from err
+        except (HargassnerAuthError, HargassnerConnectionError):
+            raise
+        except (ClientError, TimeoutError) as err:
+            self._record_diagnostic("login", "failed", error_type=type(err).__name__)
+            raise HargassnerConnectionError("Login connection failed") from err
 
-        if auth_rejected:
-            raise HargassnerAuthError(f"Login failed. Last error: {last_error_txt}")
-        raise HargassnerConnectionError(f"Login failed. Last error: {last_error_txt}")
+        token = (
+            js.get("access_token")
+            or (js.get("data") or {}).get("access_token")
+            or js.get("token")
+        )
+        if not token:
+            raise HargassnerConnectionError("Login response had no access token")
+        _LOGGER.debug("✓ Login succeeded")
+        self._token = token
+        self._record_diagnostic("login", "success", http_status=resp.status)
 
     async def _async_refresh_client_credentials(self) -> bool:
         """Extract rotated public client credentials from the live web bundle."""
@@ -231,24 +198,11 @@ class HargassnerClient:
                     )
                     return False
 
-            anchor = re.search(r"client_id:(\w+),client_secret:(\w+)", bundle)
-            if not anchor:
+            credentials = self._extract_web_client_credentials(bundle)
+            if credentials is None:
                 self._record_diagnostic("web_bundle", "credential_anchor_not_found")
                 return False
-
-            def resolve(variable: str) -> str | None:
-                match = re.search(
-                    rf"(?:^|[,;]|\b(?:const|let|var)\s+){re.escape(variable)}="
-                    r"[\"']([^\"']+)[\"']",
-                    bundle,
-                )
-                return match.group(1) if match else None
-
-            client_id = resolve(anchor.group(1))
-            client_secret = resolve(anchor.group(2))
-            if not client_id or not client_secret:
-                self._record_diagnostic("web_bundle", "credential_values_not_found")
-                return False
+            client_id, client_secret = credentials
             if client_id == self._client_id and client_secret == self._client_secret:
                 self._record_diagnostic("web_bundle", "success")
                 return True
@@ -263,6 +217,34 @@ class HargassnerClient:
                 "client_credentials", "failed", error_type=type(err).__name__
             )
             return False
+
+    @staticmethod
+    def _extract_web_client_credentials(bundle: str) -> tuple[str, str] | None:
+        """Extract credentials used by the concrete web-client login call."""
+        login_call = re.search(
+            r"static login\(\w+,\w+\)\{return \w+\.login\("
+            r"\w+,\w+,([\w$]+),([\w$]+)\)\}",
+            bundle,
+        )
+        anchor = login_call or re.search(
+            r"client_id:([\w$]+),client_secret:([\w$]+)", bundle
+        )
+        if not anchor:
+            return None
+
+        def resolve(variable: str) -> str | None:
+            match = re.search(
+                rf"(?:^|[,;]|\b(?:const|let|var)\s+){re.escape(variable)}="
+                r"[\"']([^\"']+)[\"']",
+                bundle,
+            )
+            return match.group(1) if match else None
+
+        client_id = resolve(anchor.group(1))
+        client_secret = resolve(anchor.group(2))
+        if not client_id or not client_secret:
+            return None
+        return client_id, client_secret
 
     async def get_widgets(self) -> dict[str, Any]:
         """

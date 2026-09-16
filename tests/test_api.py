@@ -112,9 +112,7 @@ def test_login_uses_access_token_without_logging_secrets(
 
 
 def test_login_distinguishes_connection_failure() -> None:
-    session = FakeSession(
-        posts=[FakeResponse(500) for _ in range(4)], gets=[FakeResponse(500)]
-    )
+    session = FakeSession(posts=[FakeResponse(500)], gets=[FakeResponse(500)])
     client = make_client(session)
 
     with pytest.raises(HargassnerConnectionError):
@@ -148,9 +146,7 @@ def test_login_reports_official_maintenance_page() -> None:
 
 
 def test_login_reports_rejected_stored_web_client_credentials() -> None:
-    session = FakeSession(
-        posts=[FakeResponse(401) for _ in range(4)], gets=[FakeResponse(500)]
-    )
+    session = FakeSession(posts=[FakeResponse(401)], gets=[FakeResponse(500)])
     client = make_client(session)
 
     with pytest.raises(HargassnerClientCredentialsError):
@@ -173,11 +169,39 @@ def test_login_rediscovers_rotated_credentials() -> None:
     assert session.post_calls[-1][1]["client_secret"] == "rotated-secret"
 
 
+def test_login_uses_concrete_callsite_in_current_minified_bundle() -> None:
+    html = '<script type="module" src="/build/assets/app-test.js"></script>'
+    bundle = (
+        'const t="wrong-id",a="wrong-secret",ra="7",ps="rotated-secret";'
+        "const api={login(i,e,t,a){return post({client_id:t,client_secret:a})}};"
+        "class auth{static login(e,t){return api.login(e,t,ra,ps)}}"
+    )
+    session = FakeSession(
+        posts=[FakeResponse(200, {"access_token": "new-token"})],
+        gets=[FakeResponse(200, text=html), FakeResponse(200, text=bundle)],
+    )
+    client = make_client(session, secret="old-secret")
+
+    run(client.login)
+
+    assert session.post_calls == [
+        (
+            "https://example.test/api/auth/login",
+            {
+                "email": "user@example.test",
+                "password": "password",
+                "client_id": "7",
+                "client_secret": "rotated-secret",
+            },
+        )
+    ]
+
+
 def test_login_rejects_bad_password_without_repeating_same_credentials() -> None:
     html = '<script type="module" src="/build/assets/app-test.js"></script>'
     bundle = 'const aa="1",bb="secret";request({client_id:aa,client_secret:bb})'
     session = FakeSession(
-        posts=[FakeResponse(401) for _ in range(4)],
+        posts=[FakeResponse(401)],
         gets=[FakeResponse(200, text=html), FakeResponse(200, text=bundle)],
     )
     client = make_client(session)
@@ -185,7 +209,7 @@ def test_login_rejects_bad_password_without_repeating_same_credentials() -> None
     with pytest.raises(HargassnerAuthError):
         run(client.login)
 
-    assert len(session.post_calls) == 4
+    assert len(session.post_calls) == 1
 
 
 def test_widgets_retry_same_endpoint_after_401() -> None:

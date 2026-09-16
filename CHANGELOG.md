@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Fixed public web-client credential discovery after a Hargassner bundle change
+- Avoided repeated login requests with obsolete payload variants
+
 ## 0.5.6
 
 - Documented successful live API validation with a Neo-HV 20 system
