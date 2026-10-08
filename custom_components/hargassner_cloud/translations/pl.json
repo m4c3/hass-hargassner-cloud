@@ -68,7 +68,10 @@
                 "name": "Temperatura bojlera 1"
             },
             "boiler_temp_current": {"name": "Temperatura bojlera {number}"},
-            "boiler_state": {"name": "Stan bojlera {number}", "state": {"off": "Wyłączony", "on": "Włączony"}},
+            "boiler_state": {
+                "name": "Stan bojlera {number}",
+                "state": {"off": "Wyłączony", "on": "Włączony", "boiler_charging": "Ładowanie", "manual": "Tryb ręczny", "overheating": "Przegrzanie", "residual_heating": "Ciepło resztkowe", "block_protection": "Ochrona przed blokadą"}
+            },
             "boiler_temp_target": {"name": "Docelowa temperatura bojlera {number}"},
             "boiler_charge": {"name": "Poziom naładowania bojlera {number}"},
             "hc_flow_temp_current": {"name": "Obieg {number} temperatura zasilania"},

@@ -151,6 +151,59 @@ def test_active_heater_states_are_normalized_for_translation() -> None:
     assert heater_state.value_fn(unknown) is None
 
 
+def test_active_boiler_states_are_normalized_for_translation() -> None:
+    boiler_state = next(
+        description
+        for description in descriptions_for_boiler(1)
+        if description.key == "boiler1_state"
+    )
+    assert boiler_state.value_fn is not None
+
+    payload = {
+        "data": [
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {"state": "STATE_BOILER_CHARGING"},
+            }
+        ]
+    }
+    assert boiler_state.value_fn(payload) == "boiler_charging"
+
+
+def test_boiler_force_charging_supports_current_action_state() -> None:
+    description = next(
+        item
+        for item in binary_sensor_platform.descriptions_for_boiler(1)
+        if item.key == "boiler1_force_charging_active"
+    )
+    assert description.value_fn is not None
+
+    current_payload = {
+        "data": [
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {},
+                "actions": {"force_charging": {"disabled": True}},
+            }
+        ]
+    }
+    legacy_payload = {
+        "data": [
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {"force_charging_active": False},
+                "actions": {"force_charging": {"disabled": True}},
+            }
+        ]
+    }
+
+    assert description.value_fn(current_payload) is True
+    assert description.value_fn(legacy_payload) is False
+
+
 def test_nanopk_widget_schema_is_supported() -> None:
     """Exercise the widget shape observed in sanitized NanoPK diagnostics."""
     payload = {

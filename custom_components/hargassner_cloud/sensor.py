@@ -62,6 +62,15 @@ HEATER_STATE_OPTIONS = [
     "burn_assistant",
     "backup_mode_logs",
 ]
+BOILER_STATE_OPTIONS = [
+    "off",
+    "on",
+    "boiler_charging",
+    "manual",
+    "overheating",
+    "residual_heating",
+    "block_protection",
+]
 
 
 def _state_value(
@@ -292,10 +301,11 @@ def descriptions_for_boiler(num: int) -> list[HargassnerSensorDescription]:
             translation_placeholders={"number": number},
             icon="mdi:water-boiler",
             device_class=SensorDeviceClass.ENUM,
-            options=HEATING_STATE_OPTIONS,
+            options=BOILER_STATE_OPTIONS,
             entity_category=EntityCategory.DIAGNOSTIC,
             value_fn=lambda r: _state_value(
-                value_at(r, "BOILER", "state", number=number)
+                value_at(r, "BOILER", "state", number=number),
+                BOILER_STATE_OPTIONS,
             ),
         ),
         HargassnerSensorDescription(

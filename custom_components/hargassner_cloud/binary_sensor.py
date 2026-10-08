@@ -25,7 +25,7 @@ from .const import (
     CONF_MAPPING_OVERRIDES_JSON,
     DOMAIN,
 )
-from .helpers import value_at
+from .helpers import find_widget, first_of, value_at
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -64,7 +64,17 @@ def descriptions_for_boiler(num: int) -> list[HargassnerBinaryDescription]:
             translation_placeholders={"number": number},
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda root: as_bool(
-                value_at(root, "BOILER", "force_charging_active", number=number)
+                first_of(
+                    value_at(root, "BOILER", "force_charging_active", number=number),
+                    (
+                        (
+                            (find_widget(root, "BOILER", number) or {}).get("actions")
+                            or {}
+                        )
+                        .get("force_charging", {})
+                        .get("disabled")
+                    ),
+                )
             ),
         ),
     ]

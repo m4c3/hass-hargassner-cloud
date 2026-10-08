@@ -68,7 +68,10 @@
                 "name": "Température du ballon 1"
             },
             "boiler_temp_current": {"name": "Température du ballon {number}"},
-            "boiler_state": {"name": "État du ballon {number}", "state": {"off": "Arrêt", "on": "Marche"}},
+            "boiler_state": {
+                "name": "État du ballon {number}",
+                "state": {"off": "Arrêt", "on": "Marche", "boiler_charging": "Chargement", "manual": "Mode manuel", "overheating": "Surchauffe", "residual_heating": "Chaleur résiduelle", "block_protection": "Protection antiblocage"}
+            },
             "boiler_temp_target": {"name": "Température cible du ballon {number}"},
             "boiler_charge": {"name": "Charge du ballon {number}"},
             "hc_flow_temp_current": {"name": "Circuit {number} température de départ"},

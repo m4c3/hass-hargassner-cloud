@@ -4,6 +4,7 @@
 
 - Added all officially supported heater states so active combustion is translated
   instead of shown as unknown
+- Added active boiler states and support for the current force-charging action flag
 
 ## 0.5.7
 

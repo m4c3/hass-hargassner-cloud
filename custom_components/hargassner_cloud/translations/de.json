@@ -120,7 +120,10 @@
         "name": "Boiler 1 Temperatur"
       },
       "boiler_temp_current": {"name": "Boiler {number} Temperatur"},
-      "boiler_state": {"name": "Boiler {number} Status", "state": {"off": "Aus", "on": "An"}},
+      "boiler_state": {
+        "name": "Boiler {number} Status",
+        "state": {"off": "Aus", "on": "An", "boiler_charging": "Laden", "manual": "Handbetrieb", "overheating": "Übertemperatur", "residual_heating": "Restwärme", "block_protection": "Blockierschutz"}
+      },
       "boiler_temp_target": {"name": "Boiler {number} Solltemperatur"},
       "boiler_charge": {"name": "Boiler {number} Ladung"},
       "hc_flow_temp_current": {"name": "HK{number} Vorlauf"},

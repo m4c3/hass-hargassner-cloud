@@ -68,7 +68,10 @@
                 "name": "Temperatura del acumulador 1"
             },
             "boiler_temp_current": {"name": "Temperatura del acumulador {number}"},
-            "boiler_state": {"name": "Estado del acumulador {number}", "state": {"off": "Apagado", "on": "Encendido"}},
+            "boiler_state": {
+                "name": "Estado del acumulador {number}",
+                "state": {"off": "Apagado", "on": "Encendido", "boiler_charging": "Cargando", "manual": "Modo manual", "overheating": "Sobretemperatura", "residual_heating": "Calor residual", "block_protection": "Protección antibloqueo"}
+            },
             "boiler_temp_target": {"name": "Temperatura objetivo del acumulador {number}"},
             "boiler_charge": {"name": "Carga del acumulador {number}"},
             "hc_flow_temp_current": {"name": "Circuito {number} temperatura de impulsión"},

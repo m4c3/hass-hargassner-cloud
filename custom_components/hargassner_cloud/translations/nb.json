@@ -68,7 +68,10 @@
                 "name": "Bereder 1 temperatur"
             },
             "boiler_temp_current": {"name": "Bereder {number} temperatur"},
-            "boiler_state": {"name": "Bereder {number} status", "state": {"off": "Av", "on": "På"}},
+            "boiler_state": {
+                "name": "Bereder {number} status",
+                "state": {"off": "Av", "on": "På", "boiler_charging": "Lading", "manual": "Manuell drift", "overheating": "Overtemperatur", "residual_heating": "Restvarme", "block_protection": "Blokkeringsvern"}
+            },
             "boiler_temp_target": {"name": "Bereder {number} måltemperatur"},
             "boiler_charge": {"name": "Bereder {number} ladning"},
             "hc_flow_temp_current": {"name": "Varmekrets {number} turtemperatur"},
