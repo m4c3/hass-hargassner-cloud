@@ -55,7 +55,17 @@
     "sensor": {
       "heater_state": {
         "name": "Heater Status",
-        "state": {"off": "Off", "on": "On"}
+        "state": {
+          "off": "Off", "on": "On", "ignition": "Ignition",
+          "ignition_wait": "Awaiting ignition", "efficiency_fire": "Full combustion",
+          "throttle_efficiency_fire": "Part load", "burn_out": "Burn out",
+          "embers_keeping": "Ember retention", "residual_heating": "Residual heating",
+          "overheating": "Overheating", "deashing": "Deashing", "filling": "Filling",
+          "overheat_protection": "Overheat protection", "manual": "Manual",
+          "door_open": "Door open", "door_closed": "Door closed",
+          "block_protection": "Blockage protection", "ash_drawer_open": "Ash drawer open",
+          "burn_assistant": "Combustion assistant", "backup_mode_logs": "Log emergency mode"
+        }
       },
       "heater_program": {
         "name": "Heating Program",

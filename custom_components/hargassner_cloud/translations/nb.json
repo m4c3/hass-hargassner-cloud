@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "Varmestatus",
-                "state": {"off": "Av", "on": "På"}
+                "state": {
+                    "off": "Av", "on": "På", "ignition": "Tenning",
+                    "ignition_wait": "Venter på tenning", "efficiency_fire": "Full forbrenning",
+                    "throttle_efficiency_fire": "Dellast", "burn_out": "Utbrenning",
+                    "embers_keeping": "Glødebevaring", "residual_heating": "Restvarme",
+                    "overheating": "Overtemperatur", "deashing": "Asketømming", "filling": "Fylling",
+                    "overheat_protection": "Overopphetingsvern", "manual": "Manuell drift",
+                    "door_open": "Dør åpen", "door_closed": "Dør lukket",
+                    "block_protection": "Blokkeringsvern", "ash_drawer_open": "Askeskuff åpen",
+                    "burn_assistant": "Forbrenningsassistent", "backup_mode_logs": "Nøddrift med ved"
+                }
             },
             "heater_program": {
                 "name": "Varmeprogram",

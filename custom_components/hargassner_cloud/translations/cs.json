@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "Stav vytápění",
-                "state": {"off": "Vypnuto", "on": "Zapnuto"}
+                "state": {
+                    "off": "Vypnuto", "on": "Zapnuto", "ignition": "Zapalování",
+                    "ignition_wait": "Čekání na zapálení", "efficiency_fire": "Plné spalování",
+                    "throttle_efficiency_fire": "Částečný výkon", "burn_out": "Dohořívání",
+                    "embers_keeping": "Udržování žáru", "residual_heating": "Zbytkové teplo",
+                    "overheating": "Přehřátí", "deashing": "Odpopelnění", "filling": "Plnění",
+                    "overheat_protection": "Ochrana proti přehřátí", "manual": "Ruční provoz",
+                    "door_open": "Dvířka otevřena", "door_closed": "Dvířka zavřena",
+                    "block_protection": "Ochrana proti zablokování", "ash_drawer_open": "Popelník otevřen",
+                    "burn_assistant": "Asistent spalování", "backup_mode_logs": "Nouzový provoz na dřevo"
+                }
             },
             "heater_program": {
                 "name": "Program vytápění",

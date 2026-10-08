@@ -55,7 +55,17 @@
     "sensor": {
       "heater_state": {
         "name": "Heizungsstatus",
-        "state": {"off": "Aus", "on": "An"}
+        "state": {
+          "off": "Aus", "on": "An", "ignition": "Zündung",
+          "ignition_wait": "Zündung warten", "efficiency_fire": "Leistungsbrand",
+          "throttle_efficiency_fire": "Teillast", "burn_out": "Ausbrand",
+          "embers_keeping": "Gluterhaltung", "residual_heating": "Restwärme",
+          "overheating": "Übertemperatur", "deashing": "Entaschung", "filling": "Füllen",
+          "overheat_protection": "Sicherheits-Temperatur-Begrenzung", "manual": "Handbetrieb",
+          "door_open": "Tür geöffnet", "door_closed": "Tür geschlossen",
+          "block_protection": "Antiblockierschutz", "ash_drawer_open": "Aschelade offen",
+          "burn_assistant": "Verbrennungsassistent", "backup_mode_logs": "Stückholz-Notbetrieb"
+        }
       },
       "heater_program": {
         "name": "Heizprogramm",

@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "État du chauffage",
-                "state": {"off": "Arrêt", "on": "Marche"}
+                "state": {
+                    "off": "Arrêt", "on": "Marche", "ignition": "Allumage",
+                    "ignition_wait": "Attente d’allumage", "efficiency_fire": "Combustion",
+                    "throttle_efficiency_fire": "Puissance réduite", "burn_out": "Extinction",
+                    "embers_keeping": "Maintien des braises", "residual_heating": "Chaleur résiduelle",
+                    "overheating": "Surchauffe", "deashing": "Décendrage", "filling": "Remplissage",
+                    "overheat_protection": "Protection contre la surchauffe", "manual": "Mode manuel",
+                    "door_open": "Porte ouverte", "door_closed": "Porte fermée",
+                    "block_protection": "Protection antiblocage", "ash_drawer_open": "Cendrier ouvert",
+                    "burn_assistant": "Assistant de combustion", "backup_mode_logs": "Mode secours bûches"
+                }
             },
             "heater_program": {
                 "name": "Programme de chauffage",

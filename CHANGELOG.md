@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added all officially supported heater states so active combustion is translated
+  instead of shown as unknown
+
 ## 0.5.7
 
 - Fixed public web-client credential discovery after a Hargassner bundle change

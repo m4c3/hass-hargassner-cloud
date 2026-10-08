@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "Estado de la calefacción",
-                "state": {"off": "Apagado", "on": "Encendido"}
+                "state": {
+                    "off": "Apagado", "on": "Encendido", "ignition": "Encendido",
+                    "ignition_wait": "Esperando encendido", "efficiency_fire": "Combustión plena",
+                    "throttle_efficiency_fire": "Carga parcial", "burn_out": "Extinción",
+                    "embers_keeping": "Mantenimiento de brasas", "residual_heating": "Calor residual",
+                    "overheating": "Sobretemperatura", "deashing": "Descarga de cenizas", "filling": "Llenado",
+                    "overheat_protection": "Protección contra sobretemperatura", "manual": "Modo manual",
+                    "door_open": "Puerta abierta", "door_closed": "Puerta cerrada",
+                    "block_protection": "Protección antibloqueo", "ash_drawer_open": "Cenicero abierto",
+                    "burn_assistant": "Asistente de combustión", "backup_mode_logs": "Emergencia con leña"
+                }
             },
             "heater_program": {
                 "name": "Programa de calefacción",

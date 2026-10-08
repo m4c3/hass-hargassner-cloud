@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "Stan ogrzewania",
-                "state": {"off": "Wyłączone", "on": "Włączone"}
+                "state": {
+                    "off": "Wyłączone", "on": "Włączone", "ignition": "Rozpalanie",
+                    "ignition_wait": "Oczekiwanie na zapłon", "efficiency_fire": "Pełne spalanie",
+                    "throttle_efficiency_fire": "Częściowe obciążenie", "burn_out": "Wygaszanie",
+                    "embers_keeping": "Podtrzymanie żaru", "residual_heating": "Ciepło resztkowe",
+                    "overheating": "Przegrzanie", "deashing": "Odpopielanie", "filling": "Napełnianie",
+                    "overheat_protection": "Ochrona przed przegrzaniem", "manual": "Tryb ręczny",
+                    "door_open": "Drzwi otwarte", "door_closed": "Drzwi zamknięte",
+                    "block_protection": "Ochrona przed blokadą", "ash_drawer_open": "Szuflada popiołu otwarta",
+                    "burn_assistant": "Asystent spalania", "backup_mode_logs": "Awaryjny tryb drewna"
+                }
             },
             "heater_program": {
                 "name": "Program ogrzewania",

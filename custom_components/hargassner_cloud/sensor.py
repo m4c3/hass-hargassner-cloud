@@ -40,15 +40,39 @@ HEATER_PROGRAM_OPTIONS = [
     "stop_firing",
 ]
 HEATING_STATE_OPTIONS = ["off", "on"]
+HEATER_STATE_OPTIONS = [
+    "off",
+    "on",
+    "ignition",
+    "ignition_wait",
+    "efficiency_fire",
+    "throttle_efficiency_fire",
+    "burn_out",
+    "embers_keeping",
+    "residual_heating",
+    "overheating",
+    "deashing",
+    "filling",
+    "overheat_protection",
+    "manual",
+    "door_open",
+    "door_closed",
+    "block_protection",
+    "ash_drawer_open",
+    "burn_assistant",
+    "backup_mode_logs",
+]
 
 
-def _state_value(value: object) -> str | None:
+def _state_value(
+    value: object, options: list[str] = HEATING_STATE_OPTIONS
+) -> str | None:
     """Normalize a heater or buffer state for Home Assistant translations."""
     state = as_str(value)
     if not state or not state.startswith("STATE_"):
         return None
     normalized = state.removeprefix("STATE_").lower()
-    return normalized if normalized in HEATING_STATE_OPTIONS else None
+    return normalized if normalized in options else None
 
 
 def _program_value(root: dict[str, Any]) -> str | None:
@@ -104,9 +128,11 @@ def descriptions_for_heater() -> list[HargassnerSensorDescription]:
             icon="mdi:fire",
             translation_key="heater_state",
             device_class=SensorDeviceClass.ENUM,
-            options=HEATING_STATE_OPTIONS,
+            options=HEATER_STATE_OPTIONS,
             entity_category=EntityCategory.DIAGNOSTIC,
-            value_fn=lambda r: _state_value(value_at(r, "HEATER", "state")),
+            value_fn=lambda r: _state_value(
+                value_at(r, "HEATER", "state"), HEATER_STATE_OPTIONS
+            ),
         ),
         HargassnerSensorDescription(
             key="heater_program",
