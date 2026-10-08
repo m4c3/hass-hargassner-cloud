@@ -50,6 +50,8 @@ Valgfrie historikkkanaler (oksygen, retur, trykk, pelletslager og luftfuktighet)
 opprettes ennå ikke som entiteter.
 Berederstatus, varmekretsstatus og -modus samt bufferkapasitet (ukjent enhet)
 vises også.
+Aktuell romtemperatur opprettes bare når en romføler er tilkoblet og API-et
+leverer en verdi.
 
 Flere buffere opprettes ikke ennå fordi nummereringsmønsteret i API-et ikke er
 kjent.

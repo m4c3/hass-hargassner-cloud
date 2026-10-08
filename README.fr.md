@@ -53,6 +53,8 @@ en charge lorsqu’elles sont disponibles. Les canaux historiques optionnels
 créés comme entités.
 L’état du ballon, l’état et le mode du circuit ainsi que la capacité du ballon
 tampon (unité inconnue) sont également exposés.
+Les températures ambiantes actuelles ne sont créées que si des sondes d’ambiance
+sont raccordées et si l’API fournit une valeur.
 
 Plusieurs ballons tampons ne sont pas encore pris en charge, car leur schéma de
 numérotation n’a pas encore été observé.

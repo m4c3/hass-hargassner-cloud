@@ -45,11 +45,11 @@ listed below will be available.
 
 | Group | Values |
 | --- | --- |
-| Heater | State, program, current/target temperature, flue-gas temperature, efficiency |
+| Heater | State, program, current/target temperature when exposed, flue-gas temperature, efficiency |
 | Outdoor | Current and average outdoor temperature |
 | Buffer | State, charge, capacity (unit unspecified), top/centre/bottom temperatures |
 | Boilers | State, current/target temperature and charge for every numbered boiler |
-| Heating circuits | State, mode, current/target flow and room temperatures for every numbered circuit |
+| Heating circuits | State, mode, current/target flow temperatures and room temperatures when sensors are connected |
 | Heating controller | Heat-source and requested temperature, when exposed (for example Neo-HV) |
 
 ### Binary sensors

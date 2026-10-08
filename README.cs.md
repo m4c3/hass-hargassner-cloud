@@ -48,6 +48,8 @@ teploty zdroje a požadavku regulátoru Neo-HV. Volitelné historické kanály
 (kyslík, zpátečka, tlak, zásoba pelet a vlhkost) se zatím jako entity nevytvářejí.
 Zobrazuje se také stav bojleru, stav a režim okruhu a kapacita akumulační nádrže
 (jednotka zatím není známa).
+Aktuální pokojová teplota se vytvoří pouze tehdy, když je připojeno pokojové
+čidlo a API poskytuje hodnotu.
 
 Více akumulačních nádrží se zatím nevytváří, protože jejich způsob číslování v
 API nebyl pozorován.

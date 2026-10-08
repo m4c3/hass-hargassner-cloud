@@ -51,6 +51,8 @@ Neo-HV cuando estén disponibles. Los canales históricos opcionales (oxígeno,
 retorno, presión, existencias de pellets y humedad) aún no se crean como entidades.
 También se muestran el estado del acumulador, el estado y modo del circuito y
 la capacidad del depósito de inercia (unidad aún desconocida).
+Las temperaturas ambiente actuales solo se crean si hay sensores de ambiente
+conectados y la API proporciona un valor.
 
 Todavía no se crean varios depósitos de inercia porque no conocemos su esquema
 de numeración en la API.

@@ -49,11 +49,11 @@ genannten Entitäten vorhanden.
 
 | Gruppe | Werte |
 | --- | --- |
-| Heizung | Status, Programm, Kessel-Ist-/Solltemperatur, Rauchgastemperatur, Effizienz |
+| Heizung | Status, Programm, Kessel-Ist-/Solltemperatur falls vorhanden, Rauchgastemperatur, Effizienz |
 | Außenbereich | Aktuelle und durchschnittliche Außentemperatur |
 | Pufferspeicher | Status, Ladung, Kapazität (Einheit unbekannt), Temperatur oben/Mitte/unten |
 | Boiler | Status, Ist-/Solltemperatur und Ladung aller nummerierten Boiler |
-| Heizkreise | Status, Modus sowie aktuelle und gewünschte Vorlauf- und Raumtemperatur |
+| Heizkreise | Status, Modus, Vorlauftemperaturen und Raumtemperaturen bei angeschlossenen Raumfühlern |
 | Heizkreisregler | Wärmequellen- und Anforderungstemperatur, falls vorhanden (z. B. Neo-HV) |
 
 ### Binärsensoren

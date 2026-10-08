@@ -165,6 +165,23 @@ class HargassnerSensorDescription(SensorEntityDescription):
     legacy_unique_id_key: str | None = None
 
 
+def _description_is_supported(
+    root: dict[str, Any],
+    description: HargassnerSensorDescription,
+    override: dict[str, str] | None = None,
+) -> bool:
+    """Skip optional sensors when the installation exposes no usable value."""
+    if override:
+        return True
+    optional_value = description.key == "heater_temp_target" or (
+        description.key.startswith("hc")
+        and description.key.endswith("_room_temp_current")
+    )
+    if not optional_value:
+        return True
+    return description.value_fn is not None and description.value_fn(root) is not None
+
+
 def _load_overrides(entry: ConfigEntry) -> dict[str, dict[str, str]]:
     try:
         txt = entry.options.get(CONF_MAPPING_OVERRIDES_JSON, "") or ""
@@ -561,9 +578,10 @@ async def async_setup_entry(
     # HEATER-Gruppe vorhanden?
     if any(w.get("widget") == "HEATER" for w in (root.get("data") or [])):
         for d in descriptions_for_heater():
-            entities.append(
-                HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
-            )
+            override = overrides.get(d.key)
+            if not _description_is_supported(root, d, override):
+                continue
+            entities.append(HargassnerSensor(coordinator, entry, d, override))
 
     # BUFFER
     if any(w.get("widget") == "BUFFER" for w in (root.get("data") or [])):
@@ -610,9 +628,10 @@ async def async_setup_entry(
             continue
         heating_circuit_numbers.add(number)
         for d in descriptions_for_hc(widget, number):
-            entities.append(
-                HargassnerSensor(coordinator, entry, d, overrides.get(d.key))
-            )
+            override = overrides.get(d.key)
+            if not _description_is_supported(root, d, override):
+                continue
+            entities.append(HargassnerSensor(coordinator, entry, d, override))
 
     async_add_entities(entities)
 

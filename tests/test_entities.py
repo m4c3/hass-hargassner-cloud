@@ -244,6 +244,57 @@ def test_boiler_target_temperature_falls_back_to_parameter() -> None:
     assert target.value_fn(payload) == 60.0
 
 
+def test_optional_temperature_sensors_require_a_current_value() -> None:
+    heater_target = next(
+        description
+        for description in descriptions_for_heater()
+        if description.key == "heater_temp_target"
+    )
+    room_temperature = next(
+        description
+        for description in descriptions_for_hc("HEATING_CIRCUIT_RADIATOR", 1)
+        if description.key == "hc1_room_temp_current"
+    )
+    missing_payload = {
+        "data": [
+            {
+                "widget": "HEATER",
+                "values": {"heater_temperature_target": None},
+            },
+            {
+                "widget": "HEATING_CIRCUIT_RADIATOR",
+                "number": "1",
+                "values": {"room_temperature_current": None},
+            },
+        ]
+    }
+    present_payload = {
+        "data": [
+            {
+                "widget": "HEATER",
+                "values": {"heater_temperature_target": 75},
+            },
+            {
+                "widget": "HEATING_CIRCUIT_RADIATOR",
+                "number": "1",
+                "values": {"room_temperature_current": 20.5},
+            },
+        ]
+    }
+
+    assert not sensor_platform._description_is_supported(missing_payload, heater_target)
+    assert not sensor_platform._description_is_supported(
+        missing_payload, room_temperature
+    )
+    assert sensor_platform._description_is_supported(present_payload, heater_target)
+    assert sensor_platform._description_is_supported(present_payload, room_temperature)
+    assert sensor_platform._description_is_supported(
+        missing_payload,
+        heater_target,
+        {"widget": "HEATER", "field": "heater_temperature_current"},
+    )
+
+
 def test_boiler_force_charging_supports_current_action_state() -> None:
     description = next(
         item

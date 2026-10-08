@@ -49,6 +49,8 @@ Opcjonalne kanały historii (tlen, powrót, ciśnienie, zapas pelletu i wilgotno
 nie są jeszcze tworzone jako encje.
 Wyświetlane są także stan bojlera, stan i tryb obiegu oraz pojemność bufora
 (jednostka nie jest jeszcze znana).
+Bieżąca temperatura pomieszczenia jest tworzona tylko wtedy, gdy podłączono
+czujnik pokojowy, a API udostępnia wartość.
 
 Wiele buforów nie jest jeszcze tworzonych, ponieważ nie znamy ich schematu
 numerowania w API.
