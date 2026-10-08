@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.9
 
 - Read boiler target temperatures from parameter data when the value field is null
 - Translate heating-circuit modes instead of exposing raw API constants
