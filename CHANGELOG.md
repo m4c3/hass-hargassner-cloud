@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.8
 
 - Added all officially supported heater states so active combustion is translated
   instead of shown as unknown
