@@ -121,12 +121,151 @@ def test_heater_and_buffer_states_are_normalized_for_translation() -> None:
         ]
     }
 
-    assert heater_state.options == ["off", "on"]
-    assert buffer_state.options == ["off", "on"]
+    assert heater_state.options == sensor_platform.HEATER_STATE_OPTIONS
+    assert buffer_state.options == sensor_platform.BUFFER_STATE_OPTIONS
     assert heater_state.value_fn is not None
     assert buffer_state.value_fn is not None
     assert heater_state.value_fn(payload) == "off"
     assert buffer_state.value_fn(payload) == "on"
+
+
+def test_active_heater_states_are_normalized_for_translation() -> None:
+    heater_state = next(
+        description
+        for description in descriptions_for_heater()
+        if description.key == "heater_state"
+    )
+    assert heater_state.value_fn is not None
+
+    for raw, expected in (
+        ("STATE_IGNITION", "ignition"),
+        ("STATE_EFFICIENCY_FIRE", "efficiency_fire"),
+        ("STATE_THROTTLE_EFFICIENCY_FIRE", "throttle_efficiency_fire"),
+        ("STATE_BURN_OUT", "burn_out"),
+        ("STATE_EMBERS_KEEPING", "embers_keeping"),
+    ):
+        payload = {"data": [{"widget": "HEATER", "values": {"state": raw}}]}
+        assert heater_state.value_fn(payload) == expected
+
+    unknown = {"data": [{"widget": "HEATER", "values": {"state": "STATE_FUTURE"}}]}
+    assert heater_state.value_fn(unknown) is None
+
+
+def test_active_boiler_states_are_normalized_for_translation() -> None:
+    boiler_state = next(
+        description
+        for description in descriptions_for_boiler(1)
+        if description.key == "boiler1_state"
+    )
+    assert boiler_state.value_fn is not None
+
+    payload = {
+        "data": [
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {"state": "STATE_BOILER_CHARGING"},
+            }
+        ]
+    }
+    assert boiler_state.value_fn(payload) == "boiler_charging"
+
+
+def test_active_buffer_and_heating_circuit_states_are_normalized() -> None:
+    buffer_state = next(
+        description
+        for description in descriptions_for_buffer()
+        if description.key == "buffer_state"
+    )
+    heating_circuit_state = next(
+        description
+        for description in descriptions_for_hc("HEATING_CIRCUIT_RADIATOR", 1)
+        if description.key == "hc1_state"
+    )
+    payload = {
+        "data": [
+            {
+                "widget": "BUFFER",
+                "values": {"state": "STATE_BOILER_CHARGING"},
+            },
+            {
+                "widget": "HEATING_CIRCUIT_RADIATOR",
+                "number": "1",
+                "values": {"state": "STATE_HEATING"},
+            },
+        ]
+    }
+
+    assert buffer_state.value_fn is not None
+    assert heating_circuit_state.value_fn is not None
+    assert buffer_state.value_fn(payload) == "boiler_charging"
+    assert heating_circuit_state.value_fn(payload) == "heating"
+
+
+def test_boiler_force_charging_supports_current_action_state() -> None:
+    description = next(
+        item
+        for item in binary_sensor_platform.descriptions_for_boiler(1)
+        if item.key == "boiler1_force_charging_active"
+    )
+    assert description.value_fn is not None
+
+    current_payload = {
+        "data": [
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {},
+                "actions": {"force_charging": {"disabled": True}},
+            }
+        ]
+    }
+    legacy_payload = {
+        "data": [
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {"force_charging_active": False},
+                "actions": {"force_charging": {"disabled": True}},
+            }
+        ]
+    }
+
+    assert description.value_fn(current_payload) is True
+    assert description.value_fn(legacy_payload) is False
+
+
+def test_buffer_force_charging_supports_current_action_state() -> None:
+    description = next(
+        item
+        for item in binary_sensor_platform.build_descriptions(
+            {"data": [{"widget": "BUFFER"}]}
+        )
+        if item.key == "buffer_force_charging_active"
+    )
+    assert description.value_fn is not None
+
+    current_payload = {
+        "data": [
+            {
+                "widget": "BUFFER",
+                "values": {},
+                "actions": {"force_charging": {"disabled": True}},
+            }
+        ]
+    }
+    legacy_payload = {
+        "data": [
+            {
+                "widget": "BUFFER",
+                "values": {"force_charging_active": False},
+                "actions": {"force_charging": {"disabled": True}},
+            }
+        ]
+    }
+
+    assert description.value_fn(current_payload) is True
+    assert description.value_fn(legacy_payload) is False
 
 
 def test_nanopk_widget_schema_is_supported() -> None:

@@ -55,7 +55,17 @@
     "sensor": {
       "heater_state": {
         "name": "Heater Status",
-        "state": {"off": "Off", "on": "On"}
+        "state": {
+          "off": "Off", "on": "On", "ignition": "Ignition",
+          "ignition_wait": "Awaiting ignition", "efficiency_fire": "Full combustion",
+          "throttle_efficiency_fire": "Part load", "burn_out": "Burn out",
+          "embers_keeping": "Ember retention", "residual_heating": "Residual heating",
+          "overheating": "Overheating", "deashing": "Deashing", "filling": "Filling",
+          "overheat_protection": "Overheat protection", "manual": "Manual",
+          "door_open": "Door open", "door_closed": "Door closed",
+          "block_protection": "Blockage protection", "ash_drawer_open": "Ash drawer open",
+          "burn_assistant": "Combustion assistant", "backup_mode_logs": "Log emergency mode"
+        }
       },
       "heater_program": {
         "name": "Heating Program",
@@ -91,7 +101,7 @@
       },
       "buffer_state": {
         "name": "Buffer Status",
-        "state": {"off": "Off", "on": "On"}
+        "state": {"off": "Off", "on": "On", "boiler_charging": "Charging", "charging": "Charging", "ignore_request": "Ignoring request", "manual": "Manual", "residual_heating": "Residual heating"}
       },
       "buffer_charge": {
         "name": "Buffer Charge"
@@ -110,11 +120,14 @@
         "name": "Boiler 1 Temperature"
       },
       "boiler_temp_current": {"name": "Boiler {number} Temperature"},
-      "boiler_state": {"name": "Boiler {number} Status", "state": {"off": "Off", "on": "On"}},
+      "boiler_state": {
+        "name": "Boiler {number} Status",
+        "state": {"off": "Off", "on": "On", "boiler_charging": "Charging", "manual": "Manual", "overheating": "Overheating", "residual_heating": "Residual heating", "block_protection": "Blockage protection"}
+      },
       "boiler_temp_target": {"name": "Boiler {number} Target Temperature"},
       "boiler_charge": {"name": "Boiler {number} Charge"},
       "hc_flow_temp_current": {"name": "HC{number} Flow Temperature"},
-      "hc_state": {"name": "HC{number} Status", "state": {"off": "Off", "on": "On"}},
+      "hc_state": {"name": "HC{number} Status", "state": {"off": "Off", "on": "On", "heating": "Heating", "cooling": "Cooling", "reduction_transition": "Transition to reduced mode", "reduction": "Reduced mode", "daily_nightly_deactivation": "Day/night shutdown", "summer_deactivation": "Summer shutdown", "freeze_protection": "Freeze protection", "screed_heating": "Screed heating", "manual": "Manual", "residual_heating": "Residual heating", "solar_heating": "Solar heating", "boiler_charging": "Boiler charging"}},
       "hc_mode": {"name": "HC{number} Mode"},
       "hc_flow_temp_target": {"name": "HC{number} Flow Target"},
       "hc_room_temp_target": {"name": "HC{number} Room Target"},
