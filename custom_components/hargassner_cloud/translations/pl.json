@@ -76,7 +76,7 @@
             "boiler_charge": {"name": "Poziom naładowania bojlera {number}"},
             "hc_flow_temp_current": {"name": "Obieg {number} temperatura zasilania"},
             "hc_state": {"name": "Stan obiegu {number}", "state": {"off": "Wyłączony", "on": "Włączony", "heating": "Ogrzewanie", "cooling": "Chłodzenie", "reduction_transition": "Przejście do trybu obniżonego", "reduction": "Tryb obniżony", "daily_nightly_deactivation": "Wyłączenie dzień/noc", "summer_deactivation": "Wyłączenie letnie", "freeze_protection": "Ochrona przed zamarzaniem", "screed_heating": "Wygrzewanie jastrychu", "manual": "Tryb ręczny", "residual_heating": "Ciepło resztkowe", "solar_heating": "Ogrzewanie słoneczne", "boiler_charging": "Ładowanie bojlera"}},
-            "hc_mode": {"name": "Tryb obiegu {number}"},
+            "hc_mode": {"name": "Tryb obiegu {number}", "state": {"automatic": "Automatyczny", "off": "Wyłączony", "heating": "Ogrzewanie", "reduction": "Tryb obniżony", "cooling": "Chłodzenie", "dry_out": "Wygrzewanie jastrychu", "bridge_heating": "Mostek ogrzewania", "bridge_reduction": "Mostek trybu obniżonego", "circulation": "Cyrkulacja", "hv": "Kocioł na drewno", "pk": "Kocioł na pellet", "hv_pk": "Kocioł na drewno/pellet", "logs": "Drewno"}},
             "hc_flow_temp_target": {"name": "Obieg {number} zadana temperatura zasilania"},
             "hc_room_temp_target": {"name": "Obieg {number} zadana temperatura pomieszczenia"},
             "hc_room_temp_current": {"name": "Obieg {number} temperatura pomieszczenia"},

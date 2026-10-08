@@ -76,7 +76,7 @@
             "boiler_charge": {"name": "Charge du ballon {number}"},
             "hc_flow_temp_current": {"name": "Circuit {number} température de départ"},
             "hc_state": {"name": "État du circuit {number}", "state": {"off": "Arrêt", "on": "Marche", "heating": "Chauffage", "cooling": "Refroidissement", "reduction_transition": "Transition vers le mode réduit", "reduction": "Mode réduit", "daily_nightly_deactivation": "Arrêt jour/nuit", "summer_deactivation": "Arrêt estival", "freeze_protection": "Protection antigel", "screed_heating": "Séchage de chape", "manual": "Mode manuel", "residual_heating": "Chaleur résiduelle", "solar_heating": "Chauffage solaire", "boiler_charging": "Chargement du ballon"}},
-            "hc_mode": {"name": "Mode du circuit {number}"},
+            "hc_mode": {"name": "Mode du circuit {number}", "state": {"automatic": "Automatique", "off": "Arrêt", "heating": "Chauffage", "reduction": "Mode réduit", "cooling": "Refroidissement", "dry_out": "Séchage de chape", "bridge_heating": "Pont chauffage", "bridge_reduction": "Pont mode réduit", "circulation": "Circulation", "hv": "Chaudière à bûches", "pk": "Chaudière à granulés", "hv_pk": "Chaudière bûches/granulés", "logs": "Bûches"}},
             "hc_flow_temp_target": {"name": "Circuit {number} consigne de départ"},
             "hc_room_temp_target": {"name": "Circuit {number} consigne ambiante"},
             "hc_room_temp_current": {"name": "Circuit {number} température ambiante"},

@@ -128,7 +128,7 @@
       "boiler_charge": {"name": "Boiler {number} Charge"},
       "hc_flow_temp_current": {"name": "HC{number} Flow Temperature"},
       "hc_state": {"name": "HC{number} Status", "state": {"off": "Off", "on": "On", "heating": "Heating", "cooling": "Cooling", "reduction_transition": "Transition to reduced mode", "reduction": "Reduced mode", "daily_nightly_deactivation": "Day/night shutdown", "summer_deactivation": "Summer shutdown", "freeze_protection": "Freeze protection", "screed_heating": "Screed heating", "manual": "Manual", "residual_heating": "Residual heating", "solar_heating": "Solar heating", "boiler_charging": "Boiler charging"}},
-      "hc_mode": {"name": "HC{number} Mode"},
+      "hc_mode": {"name": "HC{number} Mode", "state": {"automatic": "Automatic", "off": "Off", "heating": "Heating", "reduction": "Reduced mode", "cooling": "Cooling", "dry_out": "Screed drying", "bridge_heating": "Bridge heating", "bridge_reduction": "Bridge reduced mode", "circulation": "Circulation", "hv": "Log boiler", "pk": "Pellet boiler", "hv_pk": "Log/pellet boiler", "logs": "Logs"}},
       "hc_flow_temp_target": {"name": "HC{number} Flow Target"},
       "hc_room_temp_target": {"name": "HC{number} Room Target"},
       "hc_room_temp_current": {"name": "HC{number} Room Temperature"},

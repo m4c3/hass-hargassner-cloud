@@ -128,7 +128,7 @@
       "boiler_charge": {"name": "Boiler {number} Ladung"},
       "hc_flow_temp_current": {"name": "HK{number} Vorlauf"},
       "hc_state": {"name": "HK{number} Status", "state": {"off": "Aus", "on": "An", "heating": "Heizen", "cooling": "Kühlen", "reduction_transition": "Übergang Absenkbetrieb", "reduction": "Absenkbetrieb", "daily_nightly_deactivation": "Tag-/Nachtabschaltung", "summer_deactivation": "Sommerabschaltung", "freeze_protection": "Frostschutz", "screed_heating": "Estrichheizen", "manual": "Handbetrieb", "residual_heating": "Restwärme", "solar_heating": "Solarheizen", "boiler_charging": "Boilerladung"}},
-      "hc_mode": {"name": "HK{number} Modus"},
+      "hc_mode": {"name": "HK{number} Modus", "state": {"automatic": "Automatik", "off": "Aus", "heating": "Heizen", "reduction": "Absenkbetrieb", "cooling": "Kühlen", "dry_out": "Estrichtrocknung", "bridge_heating": "Brücke Heizen", "bridge_reduction": "Brücke Absenken", "circulation": "Zirkulation", "hv": "Stückholzkessel", "pk": "Pelletkessel", "hv_pk": "Stückholz-/Pelletkessel", "logs": "Scheitholz"}},
       "hc_flow_temp_target": {"name": "HK{number} Soll-Vorlauf"},
       "hc_room_temp_target": {"name": "HK{number} Soll-Raum"},
       "hc_room_temp_current": {"name": "HK{number} Raumtemperatur"},

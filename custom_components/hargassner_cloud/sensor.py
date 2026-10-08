@@ -65,6 +65,21 @@ HEATING_CIRCUIT_STATE_OPTIONS = [
     "solar_heating",
     "boiler_charging",
 ]
+HEATING_CIRCUIT_MODE_OPTIONS = [
+    "automatic",
+    "off",
+    "heating",
+    "reduction",
+    "cooling",
+    "dry_out",
+    "bridge_heating",
+    "bridge_reduction",
+    "circulation",
+    "hv",
+    "pk",
+    "hv_pk",
+    "logs",
+]
 HEATER_STATE_OPTIONS = [
     "off",
     "on",
@@ -116,6 +131,17 @@ def _program_value(root: dict[str, Any]) -> str | None:
         return None
     normalized = value.removeprefix("PROGRAM_").lower()
     return normalized if normalized in HEATER_PROGRAM_OPTIONS else None
+
+
+def _heating_circuit_mode_value(
+    root: dict[str, Any], widget: str, number: str
+) -> str | None:
+    """Normalize a heating-circuit mode for Home Assistant translations."""
+    value = as_str(parameter_value_at(root, widget, "mode", number=number))
+    if not value or not value.startswith("MODE_"):
+        return None
+    normalized = value.removeprefix("MODE_").lower()
+    return normalized if normalized in HEATING_CIRCUIT_MODE_OPTIONS else None
 
 
 def _positive_number(value: object, default: int | None = None) -> int | None:
@@ -354,7 +380,12 @@ def descriptions_for_boiler(num: int) -> list[HargassnerSensorDescription]:
             native_unit_of_measurement="°C",
             state_class=SensorStateClass.MEASUREMENT,
             value_fn=lambda r: as_float(
-                value_at(r, "BOILER", "boiler_temperature_target", number=number)
+                first_of(
+                    value_at(r, "BOILER", "boiler_temperature_target", number=number),
+                    parameter_value_at(
+                        r, "BOILER", "boiler_temperature_target", number=number
+                    ),
+                )
             ),
         ),
         HargassnerSensorDescription(
@@ -459,8 +490,10 @@ def descriptions_for_hc(widget: str, num: int) -> list[HargassnerSensorDescripti
             translation_key="hc_mode",
             translation_placeholders={"number": n},
             icon="mdi:cog",
+            device_class=SensorDeviceClass.ENUM,
+            options=HEATING_CIRCUIT_MODE_OPTIONS,
             entity_category=EntityCategory.DIAGNOSTIC,
-            value_fn=lambda r: as_str(parameter_value_at(r, widget, "mode", number=n)),
+            value_fn=lambda r: _heating_circuit_mode_value(r, widget, n),
         ),
         HargassnerSensorDescription(
             key=f"{translation_prefix}_flow_temp_current",

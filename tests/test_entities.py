@@ -202,6 +202,48 @@ def test_active_buffer_and_heating_circuit_states_are_normalized() -> None:
     assert heating_circuit_state.value_fn(payload) == "heating"
 
 
+def test_heating_circuit_mode_is_normalized_for_translation() -> None:
+    mode = next(
+        description
+        for description in descriptions_for_hc("HEATING_CIRCUIT_RADIATOR", 1)
+        if description.key == "hc1_mode"
+    )
+    payload = {
+        "data": [
+            {
+                "widget": "HEATING_CIRCUIT_RADIATOR",
+                "number": "1",
+                "parameters": {"mode": {"value": "MODE_AUTOMATIC"}},
+            }
+        ]
+    }
+
+    assert mode.options == sensor_platform.HEATING_CIRCUIT_MODE_OPTIONS
+    assert mode.value_fn is not None
+    assert mode.value_fn(payload) == "automatic"
+
+
+def test_boiler_target_temperature_falls_back_to_parameter() -> None:
+    target = next(
+        description
+        for description in descriptions_for_boiler(1)
+        if description.key == "boiler1_temp_target"
+    )
+    payload = {
+        "data": [
+            {
+                "widget": "BOILER",
+                "number": "1",
+                "values": {"boiler_temperature_target": None},
+                "parameters": {"boiler_temperature_target": {"value": 60}},
+            }
+        ]
+    }
+
+    assert target.value_fn is not None
+    assert target.value_fn(payload) == 60.0
+
+
 def test_boiler_force_charging_supports_current_action_state() -> None:
     description = next(
         item
@@ -435,7 +477,7 @@ def test_neo_hv_widget_schema_is_supported_without_phantom_components() -> None:
 
     assert hc_values["hc1_flow_temp_current"] == 31.0
     assert hc_values["hc1_state"] == "on"
-    assert hc_values["hc1_mode"] == "MODE_AUTOMATIC"
+    assert hc_values["hc1_mode"] == "automatic"
     assert boiler_values["boiler1_charge"] == 82.0
     assert boiler_values["boiler1_state"] == "on"
     assert boiler_values["boiler1_temp_target"] is None

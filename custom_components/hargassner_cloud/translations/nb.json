@@ -76,7 +76,7 @@
             "boiler_charge": {"name": "Bereder {number} ladning"},
             "hc_flow_temp_current": {"name": "Varmekrets {number} turtemperatur"},
             "hc_state": {"name": "Varmekrets {number} status", "state": {"off": "Av", "on": "På", "heating": "Oppvarming", "cooling": "Kjøling", "reduction_transition": "Overgang til senket drift", "reduction": "Senket drift", "daily_nightly_deactivation": "Dag-/nattutkobling", "summer_deactivation": "Sommerutkobling", "freeze_protection": "Frostbeskyttelse", "screed_heating": "Gulvtørking", "manual": "Manuell drift", "residual_heating": "Restvarme", "solar_heating": "Soloppvarming", "boiler_charging": "Berederlading"}},
-            "hc_mode": {"name": "Varmekrets {number} modus"},
+            "hc_mode": {"name": "Varmekrets {number} modus", "state": {"automatic": "Automatisk", "off": "Av", "heating": "Oppvarming", "reduction": "Senket drift", "cooling": "Kjøling", "dry_out": "Gulvtørking", "bridge_heating": "Bro oppvarming", "bridge_reduction": "Bro senket drift", "circulation": "Sirkulasjon", "hv": "Vedkjele", "pk": "Pelletskjele", "hv_pk": "Ved-/pelletskjele", "logs": "Ved"}},
             "hc_flow_temp_target": {"name": "Varmekrets {number} ønsket turtemperatur"},
             "hc_room_temp_target": {"name": "Varmekrets {number} ønsket romtemperatur"},
             "hc_room_temp_current": {"name": "Varmekrets {number} romtemperatur"},

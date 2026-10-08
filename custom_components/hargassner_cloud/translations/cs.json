@@ -76,7 +76,7 @@
             "boiler_charge": {"name": "Nabití bojleru {number}"},
             "hc_flow_temp_current": {"name": "Okruh {number} teplota přívodu"},
             "hc_state": {"name": "Stav okruhu {number}", "state": {"off": "Vypnuto", "on": "Zapnuto", "heating": "Vytápění", "cooling": "Chlazení", "reduction_transition": "Přechod do útlumu", "reduction": "Útlum", "daily_nightly_deactivation": "Denní/noční vypnutí", "summer_deactivation": "Letní vypnutí", "freeze_protection": "Ochrana proti mrazu", "screed_heating": "Vysoušení potěru", "manual": "Ruční provoz", "residual_heating": "Zbytkové teplo", "solar_heating": "Solární vytápění", "boiler_charging": "Nabíjení bojleru"}},
-            "hc_mode": {"name": "Režim okruhu {number}"},
+            "hc_mode": {"name": "Režim okruhu {number}", "state": {"automatic": "Automatický", "off": "Vypnuto", "heating": "Vytápění", "reduction": "Útlum", "cooling": "Chlazení", "dry_out": "Vysoušení potěru", "bridge_heating": "Můstkové vytápění", "bridge_reduction": "Můstkový útlum", "circulation": "Cirkulace", "hv": "Kotel na dřevo", "pk": "Kotel na pelety", "hv_pk": "Kotel na dřevo/pelety", "logs": "Dřevo"}},
             "hc_flow_temp_target": {"name": "Okruh {number} cílová teplota přívodu"},
             "hc_room_temp_target": {"name": "Okruh {number} cílová pokojová teplota"},
             "hc_room_temp_current": {"name": "Okruh {number} pokojová teplota"},

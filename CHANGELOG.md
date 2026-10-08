@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Read boiler target temperatures from parameter data when the value field is null
+- Translate heating-circuit modes instead of exposing raw API constants
+
 ## 0.5.8
 
 - Added all officially supported heater states so active combustion is translated
