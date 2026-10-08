@@ -225,6 +225,11 @@ Die Integration erstellt nur Sensorgruppen, die in der API-Antwort vorhanden
 sind. Verwendet der Kessel andere Widget- oder Feldnamen, können Diagnosedaten
 heruntergeladen und Mapping-Overrides eingerichtet werden.
 
+Wird ein nicht unterstützter Sensor nach einem Update nicht mehr angelegt, kann
+sein alter Eintrag als nicht verfügbar erhalten bleiben. Nachdem geprüft wurde,
+dass keine Automation darauf verweist, kann er einmalig unter **Einstellungen →
+Geräte & Dienste → Entitäten** gelöscht werden.
+
 ## Lizenz
 
 Quellcode und originale Projektgrafiken stehen unter der MIT-Lizenz. Siehe

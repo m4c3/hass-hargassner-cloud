@@ -213,6 +213,10 @@ The integration only creates sensor groups present in the API response. If your
 boiler uses different widget or field names, download diagnostics and configure
 a mapping override.
 
+After an update stops creating an unsupported sensor, its old registry entry may
+remain unavailable. After checking that no automation references it, delete that
+entry once under **Settings → Devices & services → Entities**.
+
 ## License
 
 The source code and original project artwork are licensed under the MIT License.

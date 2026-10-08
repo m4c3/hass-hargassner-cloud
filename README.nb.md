@@ -105,6 +105,9 @@ er fjernet. Kontroller likevel filen før publisering.
 - **Ingen forbindelse:** kontroller HTTPS-tilgang og mulig portalvedlikehold.
 - **Manglende entiteter:** last ned diagnosen og kontroller widget- og feltnavn;
   en JSON-tilordning kan tilpasse dem.
+- Etter en oppdatering kan en gammel, ikke støttet entitet bli stående som
+  utilgjengelig. Kontroller først at ingen automasjoner bruker den, og slett den
+  deretter én gang under **Innstillinger → Enheter og tjenester → Entiteter**.
 
 ## Lisens
 

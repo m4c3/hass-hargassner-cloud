@@ -101,6 +101,9 @@ są usuwane. Mimo to sprawdź plik przed publikacją.
 - **Brak połączenia:** sprawdź HTTPS i ewentualną konserwację portalu.
 - **Brakujące encje:** pobierz diagnostykę i sprawdź nazwy widżetów oraz pól;
   mapowanie JSON może je dostosować.
+- Po aktualizacji stara, nieobsługiwana encja może pozostać niedostępna. Po
+  sprawdzeniu, że nie używa jej żadna automatyzacja, usuń ją jednorazowo w
+  **Ustawienia → Urządzenia i usługi → Encje**.
 
 ## Licencja
 

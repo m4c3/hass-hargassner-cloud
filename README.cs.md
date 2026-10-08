@@ -102,6 +102,9 @@ odstraněny. Přesto soubor před zveřejněním zkontrolujte.
 - **Nelze se připojit:** zkontrolujte HTTPS a případnou údržbu portálu.
 - **Chybějící entity:** stáhněte diagnostiku a zkontrolujte názvy widgetů a polí;
   mapování JSON je může přizpůsobit.
+- Po aktualizaci může stará nepodporovaná entita zůstat nedostupná. Nejprve
+  ověřte, že ji nepoužívá žádná automatizace, a poté ji jednorázově odstraňte v
+  **Nastavení → Zařízení a služby → Entity**.
 
 ## Licence
 

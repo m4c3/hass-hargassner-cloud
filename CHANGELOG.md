@@ -7,6 +7,9 @@
 - Added a privacy-aware live widget probe for seasonal API troubleshooting
 - Avoid creating heater target and room-temperature sensors when the installation
   supplies no value for them
+- Existing unknown entities for these unsupported measurements are not removed
+  automatically; after updating, users may delete them once from Home Assistant's
+  entity registry after checking that no automation references them
 
 ## 0.5.8
 

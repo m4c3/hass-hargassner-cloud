@@ -112,6 +112,9 @@ Vérifiez néanmoins le fichier avant de le publier.
   du portail.
 - **Entités manquantes :** télécharger les diagnostics et vérifier les noms de
   widgets et de champs; une correspondance JSON peut les adapter.
+- Après une mise à jour, une ancienne entité non prise en charge peut rester
+  indisponible. Après avoir vérifié qu’aucune automatisation ne l’utilise, la
+  supprimer une fois dans **Paramètres → Appareils et services → Entités**.
 
 ## Licence
 

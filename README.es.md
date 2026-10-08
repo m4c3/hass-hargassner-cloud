@@ -108,6 +108,9 @@ publicarlo.
 - **Sin conexión:** comprobar el acceso HTTPS y posibles mantenimientos.
 - **Entidades ausentes:** descargar los diagnósticos y comprobar widgets y
   campos; una asignación JSON puede adaptarlos.
+- Tras una actualización, una entidad antigua no compatible puede permanecer no
+  disponible. Después de comprobar que ninguna automatización la utiliza,
+  eliminarla una vez en **Ajustes → Dispositivos y servicios → Entidades**.
 
 ## Licencia
 
