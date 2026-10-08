@@ -101,6 +101,54 @@ Do not enable the live test in public CI.
   the next version is prepared.
 - Use focused commits with concise imperative messages.
 
+## Dependency pull requests
+
+- Review Dependabot pull requests individually; do not merge them solely because
+  their existing checks are green.
+- Confirm the changed dependency names and versions, inspect upstream release notes
+  for compatibility or security concerns, and ensure the pull request is current
+  with `main` before merging.
+- Run or verify the complete validation suite on the final merge commit. Dependency
+  updates normally do not require an integration release unless they affect shipped
+  code, compatibility, or users.
+- Do not merge, close, rebase, or otherwise modify a pull request without explicit
+  user authorization.
+
+## Release process
+
+Only push commits, create tags, or publish a GitHub release when the user explicitly
+requests it. Use the following sequence for a release:
+
+1. Confirm that `main` contains only the intended changes and that no relevant open
+   pull request should be included first.
+1. Select the next semantic version. Move the current `Unreleased` changelog notes
+   to a heading for that version and update `version` in
+   `custom_components/hargassner_cloud/manifest.json`.
+1. Run the complete local validation suite documented above. The opt-in live API
+   test is required only when the release changes authentication or cloud API
+   behavior and credentials are available; state clearly when it was not run.
+1. Commit the metadata as `Prepare release X.Y.Z` and create an annotated
+   `vX.Y.Z` tag on that exact commit.
+1. Build the HACS/manual-installation archive from the tagged integration tree, not
+   from uncommitted files:
+
+   ```bash
+   git archive --format=zip \
+     --prefix=hargassner_cloud/ \
+     --output=.dist/hargassner_cloud-X.Y.Z.zip \
+     vX.Y.Z:custom_components/hargassner_cloud
+   ```
+
+1. Test the ZIP with `unzip -t`, read its embedded `manifest.json` to confirm the
+   version, and calculate its SHA-256 checksum.
+1. Push `main` and the release tag. Wait for the `tests`, `hassfest`, and `hacs`
+   GitHub Actions jobs for the tagged commit to succeed.
+1. Publish a non-draft, non-prerelease GitHub release for the tag. Use concise notes
+   derived from the changelog and attach the verified ZIP.
+1. Verify the published tag, release metadata, downloadable asset, and clean local
+   branch. Report the release URL, commit, asset name, checksum, and CI result.
+1. Add a new `Unreleased` section when the first subsequent change is made.
+
 ## Before handing off
 
 Confirm that no merge-conflict markers remain, the complete validation suite passes,

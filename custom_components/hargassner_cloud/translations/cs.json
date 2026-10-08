@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "Stav vytápění",
-                "state": {"off": "Vypnuto", "on": "Zapnuto"}
+                "state": {
+                    "off": "Vypnuto", "on": "Zapnuto", "ignition": "Zapalování",
+                    "ignition_wait": "Čekání na zapálení", "efficiency_fire": "Plné spalování",
+                    "throttle_efficiency_fire": "Částečný výkon", "burn_out": "Dohořívání",
+                    "embers_keeping": "Udržování žáru", "residual_heating": "Zbytkové teplo",
+                    "overheating": "Přehřátí", "deashing": "Odpopelnění", "filling": "Plnění",
+                    "overheat_protection": "Ochrana proti přehřátí", "manual": "Ruční provoz",
+                    "door_open": "Dvířka otevřena", "door_closed": "Dvířka zavřena",
+                    "block_protection": "Ochrana proti zablokování", "ash_drawer_open": "Popelník otevřen",
+                    "burn_assistant": "Asistent spalování", "backup_mode_logs": "Nouzový provoz na dřevo"
+                }
             },
             "heater_program": {
                 "name": "Program vytápění",
@@ -39,7 +49,7 @@
             },
             "buffer_state": {
                 "name": "Stav akumulační nádrže",
-                "state": {"off": "Vypnuto", "on": "Zapnuto"}
+                "state": {"off": "Vypnuto", "on": "Zapnuto", "boiler_charging": "Nabíjení", "charging": "Nabíjení", "ignore_request": "Ignorování požadavku", "manual": "Ruční provoz", "residual_heating": "Zbytkové teplo"}
             },
             "buffer_charge": {
                 "name": "Nabití akumulační nádrže"
@@ -58,11 +68,14 @@
                 "name": "Teplota bojleru 1"
             },
             "boiler_temp_current": {"name": "Teplota bojleru {number}"},
-            "boiler_state": {"name": "Stav bojleru {number}", "state": {"off": "Vypnuto", "on": "Zapnuto"}},
+            "boiler_state": {
+                "name": "Stav bojleru {number}",
+                "state": {"off": "Vypnuto", "on": "Zapnuto", "boiler_charging": "Nabíjení", "manual": "Ruční provoz", "overheating": "Přehřátí", "residual_heating": "Zbytkové teplo", "block_protection": "Ochrana proti zablokování"}
+            },
             "boiler_temp_target": {"name": "Cílová teplota bojleru {number}"},
             "boiler_charge": {"name": "Nabití bojleru {number}"},
             "hc_flow_temp_current": {"name": "Okruh {number} teplota přívodu"},
-            "hc_state": {"name": "Stav okruhu {number}", "state": {"off": "Vypnuto", "on": "Zapnuto"}},
+            "hc_state": {"name": "Stav okruhu {number}", "state": {"off": "Vypnuto", "on": "Zapnuto", "heating": "Vytápění", "cooling": "Chlazení", "reduction_transition": "Přechod do útlumu", "reduction": "Útlum", "daily_nightly_deactivation": "Denní/noční vypnutí", "summer_deactivation": "Letní vypnutí", "freeze_protection": "Ochrana proti mrazu", "screed_heating": "Vysoušení potěru", "manual": "Ruční provoz", "residual_heating": "Zbytkové teplo", "solar_heating": "Solární vytápění", "boiler_charging": "Nabíjení bojleru"}},
             "hc_mode": {"name": "Režim okruhu {number}"},
             "hc_flow_temp_target": {"name": "Okruh {number} cílová teplota přívodu"},
             "hc_room_temp_target": {"name": "Okruh {number} cílová pokojová teplota"},

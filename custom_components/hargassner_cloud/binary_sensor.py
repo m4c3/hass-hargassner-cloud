@@ -25,12 +25,22 @@ from .const import (
     CONF_MAPPING_OVERRIDES_JSON,
     DOMAIN,
 )
-from .helpers import value_at
+from .helpers import find_widget, first_of, value_at
 
 
 @dataclass(frozen=True, kw_only=True)
 class HargassnerBinaryDescription(BinarySensorEntityDescription):
     value_fn: Callable[[dict[str, Any]], bool | None] | None = None
+
+
+def _action_disabled(
+    root: dict[str, Any], widget: str, action: str, number: str | None = None
+) -> object:
+    """Return the current web API's action-state flag."""
+    widget_data = find_widget(root, widget, number)
+    actions = widget_data.get("actions") if widget_data else None
+    action_data = actions.get(action) if isinstance(actions, dict) else None
+    return action_data.get("disabled") if isinstance(action_data, dict) else None
 
 
 def _positive_number(value: object, default: int | None = None) -> int | None:
@@ -64,7 +74,10 @@ def descriptions_for_boiler(num: int) -> list[HargassnerBinaryDescription]:
             translation_placeholders={"number": number},
             device_class=BinarySensorDeviceClass.RUNNING,
             value_fn=lambda root: as_bool(
-                value_at(root, "BOILER", "force_charging_active", number=number)
+                first_of(
+                    value_at(root, "BOILER", "force_charging_active", number=number),
+                    _action_disabled(root, "BOILER", "force_charging", number),
+                )
             ),
         ),
     ]
@@ -151,7 +164,10 @@ def build_descriptions(root: dict[str, Any]) -> list[HargassnerBinaryDescription
                 translation_key="buffer_force_charging_active",
                 device_class=BinarySensorDeviceClass.RUNNING,
                 value_fn=lambda r: as_bool(
-                    value_at(r, "BUFFER", "force_charging_active")
+                    first_of(
+                        value_at(r, "BUFFER", "force_charging_active"),
+                        _action_disabled(r, "BUFFER", "force_charging"),
+                    )
                 ),
             )
         )

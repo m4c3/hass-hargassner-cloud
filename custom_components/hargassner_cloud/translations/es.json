@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "Estado de la calefacción",
-                "state": {"off": "Apagado", "on": "Encendido"}
+                "state": {
+                    "off": "Apagado", "on": "Encendido", "ignition": "Encendido",
+                    "ignition_wait": "Esperando encendido", "efficiency_fire": "Combustión plena",
+                    "throttle_efficiency_fire": "Carga parcial", "burn_out": "Extinción",
+                    "embers_keeping": "Mantenimiento de brasas", "residual_heating": "Calor residual",
+                    "overheating": "Sobretemperatura", "deashing": "Descarga de cenizas", "filling": "Llenado",
+                    "overheat_protection": "Protección contra sobretemperatura", "manual": "Modo manual",
+                    "door_open": "Puerta abierta", "door_closed": "Puerta cerrada",
+                    "block_protection": "Protección antibloqueo", "ash_drawer_open": "Cenicero abierto",
+                    "burn_assistant": "Asistente de combustión", "backup_mode_logs": "Emergencia con leña"
+                }
             },
             "heater_program": {
                 "name": "Programa de calefacción",
@@ -39,7 +49,7 @@
             },
             "buffer_state": {
                 "name": "Estado del depósito de inercia",
-                "state": {"off": "Apagado", "on": "Encendido"}
+                "state": {"off": "Apagado", "on": "Encendido", "boiler_charging": "Cargando", "charging": "Cargando", "ignore_request": "Solicitud ignorada", "manual": "Modo manual", "residual_heating": "Calor residual"}
             },
             "buffer_charge": {
                 "name": "Carga del depósito de inercia"
@@ -58,11 +68,14 @@
                 "name": "Temperatura del acumulador 1"
             },
             "boiler_temp_current": {"name": "Temperatura del acumulador {number}"},
-            "boiler_state": {"name": "Estado del acumulador {number}", "state": {"off": "Apagado", "on": "Encendido"}},
+            "boiler_state": {
+                "name": "Estado del acumulador {number}",
+                "state": {"off": "Apagado", "on": "Encendido", "boiler_charging": "Cargando", "manual": "Modo manual", "overheating": "Sobretemperatura", "residual_heating": "Calor residual", "block_protection": "Protección antibloqueo"}
+            },
             "boiler_temp_target": {"name": "Temperatura objetivo del acumulador {number}"},
             "boiler_charge": {"name": "Carga del acumulador {number}"},
             "hc_flow_temp_current": {"name": "Circuito {number} temperatura de impulsión"},
-            "hc_state": {"name": "Estado del circuito {number}", "state": {"off": "Apagado", "on": "Encendido"}},
+            "hc_state": {"name": "Estado del circuito {number}", "state": {"off": "Apagado", "on": "Encendido", "heating": "Calentando", "cooling": "Enfriando", "reduction_transition": "Transición a modo reducido", "reduction": "Modo reducido", "daily_nightly_deactivation": "Desconexión día/noche", "summer_deactivation": "Desconexión de verano", "freeze_protection": "Protección contra heladas", "screed_heating": "Secado de solera", "manual": "Modo manual", "residual_heating": "Calor residual", "solar_heating": "Calefacción solar", "boiler_charging": "Carga del acumulador"}},
             "hc_mode": {"name": "Modo del circuito {number}"},
             "hc_flow_temp_target": {"name": "Circuito {number} consigna de impulsión"},
             "hc_room_temp_target": {"name": "Circuito {number} consigna ambiente"},

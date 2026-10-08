@@ -3,7 +3,17 @@
         "sensor": {
             "heater_state": {
                 "name": "Stan ogrzewania",
-                "state": {"off": "Wyłączone", "on": "Włączone"}
+                "state": {
+                    "off": "Wyłączone", "on": "Włączone", "ignition": "Rozpalanie",
+                    "ignition_wait": "Oczekiwanie na zapłon", "efficiency_fire": "Pełne spalanie",
+                    "throttle_efficiency_fire": "Częściowe obciążenie", "burn_out": "Wygaszanie",
+                    "embers_keeping": "Podtrzymanie żaru", "residual_heating": "Ciepło resztkowe",
+                    "overheating": "Przegrzanie", "deashing": "Odpopielanie", "filling": "Napełnianie",
+                    "overheat_protection": "Ochrona przed przegrzaniem", "manual": "Tryb ręczny",
+                    "door_open": "Drzwi otwarte", "door_closed": "Drzwi zamknięte",
+                    "block_protection": "Ochrona przed blokadą", "ash_drawer_open": "Szuflada popiołu otwarta",
+                    "burn_assistant": "Asystent spalania", "backup_mode_logs": "Awaryjny tryb drewna"
+                }
             },
             "heater_program": {
                 "name": "Program ogrzewania",
@@ -39,7 +49,7 @@
             },
             "buffer_state": {
                 "name": "Stan bufora",
-                "state": {"off": "Wyłączony", "on": "Włączony"}
+                "state": {"off": "Wyłączony", "on": "Włączony", "boiler_charging": "Ładowanie", "charging": "Ładowanie", "ignore_request": "Ignorowanie żądania", "manual": "Tryb ręczny", "residual_heating": "Ciepło resztkowe"}
             },
             "buffer_charge": {
                 "name": "Poziom naładowania bufora"
@@ -58,11 +68,14 @@
                 "name": "Temperatura bojlera 1"
             },
             "boiler_temp_current": {"name": "Temperatura bojlera {number}"},
-            "boiler_state": {"name": "Stan bojlera {number}", "state": {"off": "Wyłączony", "on": "Włączony"}},
+            "boiler_state": {
+                "name": "Stan bojlera {number}",
+                "state": {"off": "Wyłączony", "on": "Włączony", "boiler_charging": "Ładowanie", "manual": "Tryb ręczny", "overheating": "Przegrzanie", "residual_heating": "Ciepło resztkowe", "block_protection": "Ochrona przed blokadą"}
+            },
             "boiler_temp_target": {"name": "Docelowa temperatura bojlera {number}"},
             "boiler_charge": {"name": "Poziom naładowania bojlera {number}"},
             "hc_flow_temp_current": {"name": "Obieg {number} temperatura zasilania"},
-            "hc_state": {"name": "Stan obiegu {number}", "state": {"off": "Wyłączony", "on": "Włączony"}},
+            "hc_state": {"name": "Stan obiegu {number}", "state": {"off": "Wyłączony", "on": "Włączony", "heating": "Ogrzewanie", "cooling": "Chłodzenie", "reduction_transition": "Przejście do trybu obniżonego", "reduction": "Tryb obniżony", "daily_nightly_deactivation": "Wyłączenie dzień/noc", "summer_deactivation": "Wyłączenie letnie", "freeze_protection": "Ochrona przed zamarzaniem", "screed_heating": "Wygrzewanie jastrychu", "manual": "Tryb ręczny", "residual_heating": "Ciepło resztkowe", "solar_heating": "Ogrzewanie słoneczne", "boiler_charging": "Ładowanie bojlera"}},
             "hc_mode": {"name": "Tryb obiegu {number}"},
             "hc_flow_temp_target": {"name": "Obieg {number} zadana temperatura zasilania"},
             "hc_room_temp_target": {"name": "Obieg {number} zadana temperatura pomieszczenia"},

@@ -55,7 +55,17 @@
     "sensor": {
       "heater_state": {
         "name": "Heizungsstatus",
-        "state": {"off": "Aus", "on": "An"}
+        "state": {
+          "off": "Aus", "on": "An", "ignition": "Zündung",
+          "ignition_wait": "Zündung warten", "efficiency_fire": "Leistungsbrand",
+          "throttle_efficiency_fire": "Teillast", "burn_out": "Ausbrand",
+          "embers_keeping": "Gluterhaltung", "residual_heating": "Restwärme",
+          "overheating": "Übertemperatur", "deashing": "Entaschung", "filling": "Füllen",
+          "overheat_protection": "Sicherheits-Temperatur-Begrenzung", "manual": "Handbetrieb",
+          "door_open": "Tür geöffnet", "door_closed": "Tür geschlossen",
+          "block_protection": "Antiblockierschutz", "ash_drawer_open": "Aschelade offen",
+          "burn_assistant": "Verbrennungsassistent", "backup_mode_logs": "Stückholz-Notbetrieb"
+        }
       },
       "heater_program": {
         "name": "Heizprogramm",
@@ -91,7 +101,7 @@
       },
       "buffer_state": {
         "name": "Pufferstatus",
-        "state": {"off": "Aus", "on": "An"}
+        "state": {"off": "Aus", "on": "An", "boiler_charging": "Laden", "charging": "Laden", "ignore_request": "Anforderung ignorieren", "manual": "Handbetrieb", "residual_heating": "Restwärme"}
       },
       "buffer_charge": {
         "name": "Pufferladung"
@@ -110,11 +120,14 @@
         "name": "Boiler 1 Temperatur"
       },
       "boiler_temp_current": {"name": "Boiler {number} Temperatur"},
-      "boiler_state": {"name": "Boiler {number} Status", "state": {"off": "Aus", "on": "An"}},
+      "boiler_state": {
+        "name": "Boiler {number} Status",
+        "state": {"off": "Aus", "on": "An", "boiler_charging": "Laden", "manual": "Handbetrieb", "overheating": "Übertemperatur", "residual_heating": "Restwärme", "block_protection": "Blockierschutz"}
+      },
       "boiler_temp_target": {"name": "Boiler {number} Solltemperatur"},
       "boiler_charge": {"name": "Boiler {number} Ladung"},
       "hc_flow_temp_current": {"name": "HK{number} Vorlauf"},
-      "hc_state": {"name": "HK{number} Status", "state": {"off": "Aus", "on": "An"}},
+      "hc_state": {"name": "HK{number} Status", "state": {"off": "Aus", "on": "An", "heating": "Heizen", "cooling": "Kühlen", "reduction_transition": "Übergang Absenkbetrieb", "reduction": "Absenkbetrieb", "daily_nightly_deactivation": "Tag-/Nachtabschaltung", "summer_deactivation": "Sommerabschaltung", "freeze_protection": "Frostschutz", "screed_heating": "Estrichheizen", "manual": "Handbetrieb", "residual_heating": "Restwärme", "solar_heating": "Solarheizen", "boiler_charging": "Boilerladung"}},
       "hc_mode": {"name": "HK{number} Modus"},
       "hc_flow_temp_target": {"name": "HK{number} Soll-Vorlauf"},
       "hc_room_temp_target": {"name": "HK{number} Soll-Raum"},
