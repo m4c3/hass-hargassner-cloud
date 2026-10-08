@@ -49,7 +49,7 @@
             },
             "buffer_state": {
                 "name": "État du ballon tampon",
-                "state": {"off": "Arrêt", "on": "Marche"}
+                "state": {"off": "Arrêt", "on": "Marche", "boiler_charging": "Chargement", "charging": "Chargement", "ignore_request": "Demande ignorée", "manual": "Mode manuel", "residual_heating": "Chaleur résiduelle"}
             },
             "buffer_charge": {
                 "name": "Charge du ballon tampon"
@@ -75,7 +75,7 @@
             "boiler_temp_target": {"name": "Température cible du ballon {number}"},
             "boiler_charge": {"name": "Charge du ballon {number}"},
             "hc_flow_temp_current": {"name": "Circuit {number} température de départ"},
-            "hc_state": {"name": "État du circuit {number}", "state": {"off": "Arrêt", "on": "Marche"}},
+            "hc_state": {"name": "État du circuit {number}", "state": {"off": "Arrêt", "on": "Marche", "heating": "Chauffage", "cooling": "Refroidissement", "reduction_transition": "Transition vers le mode réduit", "reduction": "Mode réduit", "daily_nightly_deactivation": "Arrêt jour/nuit", "summer_deactivation": "Arrêt estival", "freeze_protection": "Protection antigel", "screed_heating": "Séchage de chape", "manual": "Mode manuel", "residual_heating": "Chaleur résiduelle", "solar_heating": "Chauffage solaire", "boiler_charging": "Chargement du ballon"}},
             "hc_mode": {"name": "Mode du circuit {number}"},
             "hc_flow_temp_target": {"name": "Circuit {number} consigne de départ"},
             "hc_room_temp_target": {"name": "Circuit {number} consigne ambiante"},

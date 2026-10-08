@@ -49,7 +49,7 @@
             },
             "buffer_state": {
                 "name": "Bufferstatus",
-                "state": {"off": "Av", "on": "På"}
+                "state": {"off": "Av", "on": "På", "boiler_charging": "Lading", "charging": "Lading", "ignore_request": "Ignorerer forespørsel", "manual": "Manuell drift", "residual_heating": "Restvarme"}
             },
             "buffer_charge": {
                 "name": "Bufferladning"
@@ -75,7 +75,7 @@
             "boiler_temp_target": {"name": "Bereder {number} måltemperatur"},
             "boiler_charge": {"name": "Bereder {number} ladning"},
             "hc_flow_temp_current": {"name": "Varmekrets {number} turtemperatur"},
-            "hc_state": {"name": "Varmekrets {number} status", "state": {"off": "Av", "on": "På"}},
+            "hc_state": {"name": "Varmekrets {number} status", "state": {"off": "Av", "on": "På", "heating": "Oppvarming", "cooling": "Kjøling", "reduction_transition": "Overgang til senket drift", "reduction": "Senket drift", "daily_nightly_deactivation": "Dag-/nattutkobling", "summer_deactivation": "Sommerutkobling", "freeze_protection": "Frostbeskyttelse", "screed_heating": "Gulvtørking", "manual": "Manuell drift", "residual_heating": "Restvarme", "solar_heating": "Soloppvarming", "boiler_charging": "Berederlading"}},
             "hc_mode": {"name": "Varmekrets {number} modus"},
             "hc_flow_temp_target": {"name": "Varmekrets {number} ønsket turtemperatur"},
             "hc_room_temp_target": {"name": "Varmekrets {number} ønsket romtemperatur"},

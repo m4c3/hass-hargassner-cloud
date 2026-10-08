@@ -101,7 +101,7 @@
       },
       "buffer_state": {
         "name": "Pufferstatus",
-        "state": {"off": "Aus", "on": "An"}
+        "state": {"off": "Aus", "on": "An", "boiler_charging": "Laden", "charging": "Laden", "ignore_request": "Anforderung ignorieren", "manual": "Handbetrieb", "residual_heating": "Restwärme"}
       },
       "buffer_charge": {
         "name": "Pufferladung"
@@ -127,7 +127,7 @@
       "boiler_temp_target": {"name": "Boiler {number} Solltemperatur"},
       "boiler_charge": {"name": "Boiler {number} Ladung"},
       "hc_flow_temp_current": {"name": "HK{number} Vorlauf"},
-      "hc_state": {"name": "HK{number} Status", "state": {"off": "Aus", "on": "An"}},
+      "hc_state": {"name": "HK{number} Status", "state": {"off": "Aus", "on": "An", "heating": "Heizen", "cooling": "Kühlen", "reduction_transition": "Übergang Absenkbetrieb", "reduction": "Absenkbetrieb", "daily_nightly_deactivation": "Tag-/Nachtabschaltung", "summer_deactivation": "Sommerabschaltung", "freeze_protection": "Frostschutz", "screed_heating": "Estrichheizen", "manual": "Handbetrieb", "residual_heating": "Restwärme", "solar_heating": "Solarheizen", "boiler_charging": "Boilerladung"}},
       "hc_mode": {"name": "HK{number} Modus"},
       "hc_flow_temp_target": {"name": "HK{number} Soll-Vorlauf"},
       "hc_room_temp_target": {"name": "HK{number} Soll-Raum"},
