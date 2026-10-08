@@ -4,6 +4,7 @@
 
 - Read boiler target temperatures from parameter data when the value field is null
 - Translate heating-circuit modes instead of exposing raw API constants
+- Added a privacy-aware live widget probe for seasonal API troubleshooting
 
 ## 0.5.8
 

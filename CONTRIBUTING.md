@@ -74,6 +74,18 @@ data and stable installation/device/channel identifiers are automatically redact
 The probe requests the active channels over the last 24 hours and prints the most
 recent available value for each channel.
 
+To capture the current widget states, modes, target temperatures, and measurements
+for private troubleshooting, run:
+
+```bash
+.venv/bin/python -m scripts.live_widget_probe \
+  > .private/widget-values.txt
+```
+
+The widget probe redacts credentials, identifiers, and user-defined names, but its
+remaining operating values are still private and must not be committed or posted
+publicly.
+
 ## 🐞 Issues & pull requests
 
 When submitting issues:
