@@ -4,7 +4,7 @@ import logging
 from collections.abc import Mapping
 from typing import Any
 
-import voluptuous as vol
+import probatio
 from aiohttp import ClientError
 from homeassistant import config_entries
 from homeassistant.config_entries import ConfigFlowResult
@@ -99,12 +99,12 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 self._pending_data = user_input
                 return await self.async_step_installation()
 
-        data_schema = vol.Schema(
+        data_schema = probatio.Schema(
             {
-                vol.Required(CONF_USERNAME): str,
-                vol.Required(CONF_PASSWORD): str,
-                vol.Optional(CONF_BASE_URL, default=DEFAULT_BASE_URL): str,
-                vol.Optional(CONF_AREA): str,
+                probatio.Required(CONF_USERNAME): str,
+                probatio.Required(probatio.Secret(CONF_PASSWORD)): str,
+                probatio.Optional(CONF_BASE_URL, default=DEFAULT_BASE_URL): str,
+                probatio.Optional(CONF_AREA): str,
             }
         )
         return self.async_show_form(
@@ -122,7 +122,9 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         choices = {item["id"]: item["name"] for item in self._installations}
         return self.async_show_form(
             step_id="installation",
-            data_schema=vol.Schema({vol.Required(CONF_INSTALLATION): vol.In(choices)}),
+            data_schema=probatio.Schema(
+                {probatio.Required(CONF_INSTALLATION): probatio.In(choices)}
+            ),
         )
 
     async def async_step_reauth(
@@ -159,10 +161,12 @@ class HargassnerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     entry, data_updates=user_input
                 )
 
-        schema = vol.Schema(
+        schema = probatio.Schema(
             {
-                vol.Required(CONF_USERNAME, default=entry.data[CONF_USERNAME]): str,
-                vol.Required(CONF_PASSWORD): str,
+                probatio.Required(
+                    CONF_USERNAME, default=entry.data[CONF_USERNAME]
+                ): str,
+                probatio.Required(probatio.Secret(CONF_PASSWORD)): str,
             }
         )
         return self.async_show_form(

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-import voluptuous as vol
+import probatio
 from homeassistant.config_entries import ConfigFlowResult, OptionsFlowWithReload
 
 from .const import (
@@ -43,14 +43,16 @@ class HargassnerOptionsFlowHandler(OptionsFlowWithReload):
         }
         if user_input is not None:
             defaults.update(user_input)
-        schema = vol.Schema(
+        schema = probatio.Schema(
             {
-                vol.Required(
+                probatio.Required(
                     "scan_interval_seconds", default=defaults["scan_interval_seconds"]
-                ): vol.All(vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL)),
-                vol.Optional(CONF_AREA, default=defaults[CONF_AREA]): str,
+                ): probatio.All(
+                    probatio.Coerce(int), probatio.Range(min=MIN_SCAN_INTERVAL)
+                ),
+                probatio.Optional(CONF_AREA, default=defaults[CONF_AREA]): str,
                 # Freitext-JSON für Mapping-Overrides (Punkt 11)
-                vol.Optional(
+                probatio.Optional(
                     CONF_MAPPING_OVERRIDES_JSON,
                     default=defaults[CONF_MAPPING_OVERRIDES_JSON],
                 ): str,
