@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.10
 
 - Updated the development and CI test baseline to Home Assistant 2026.10.0
 - Migrated config and options flow schemas from Voluptuous to Probatio
