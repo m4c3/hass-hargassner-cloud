@@ -1,11 +1,11 @@
 {
   "domain": "hargassner_cloud",
   "name": "Hargassner Cloud",
-  "codeowners": [
-    "@m4c3"
-  ],
   "categories": [
     "climate"
+  ],
+  "codeowners": [
+    "@m4c3"
   ],
   "config_flow": true,
   "documentation": "https://github.com/m4c3/hass-hargassner-cloud",
