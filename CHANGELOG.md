@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.11
 
 - Updated installation instructions for the Home Assistant 2026.11 Marketplace
 - Added Marketplace integration category metadata
