@@ -29,7 +29,7 @@ jobs:
             python -m json.tool "$translation" >/dev/null
           done
       - name: Test
-        run: pytest
+        run: PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest
       - name: Ruff format
         run: ruff format --check custom_components tests scripts
       - name: Ruff lint

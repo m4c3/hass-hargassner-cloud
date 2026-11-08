@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import logging
 from dataclasses import dataclass
 from datetime import timedelta
@@ -36,6 +37,39 @@ _LOGGER = logging.getLogger(__name__)
 _LOGGER.addFilter(RedactSecretsFilter())
 
 CLIENT_CREDENTIALS_ISSUE_URL = "https://github.com/m4c3/hass-hargassner-cloud/issues"
+
+
+def _create_client_credentials_issue(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Create the web-client credential repair issue.
+
+    Home Assistant 2026.11 added ``config_entry_id`` to the issue registry.
+    Keep compatibility with older supported Home Assistant versions where the
+    argument does not exist yet.
+    """
+    issue_id = f"client_credentials_{entry.entry_id}"
+    if "config_entry_id" in inspect.signature(ir.async_create_issue).parameters:
+        ir.async_create_issue(
+            hass,
+            DOMAIN,
+            issue_id,
+            config_entry_id=entry.entry_id,  # type: ignore[call-arg]
+            is_fixable=False,
+            is_persistent=True,
+            learn_more_url=CLIENT_CREDENTIALS_ISSUE_URL,
+            severity=ir.IssueSeverity.ERROR,
+            translation_key="client_credentials",
+        )
+        return
+    ir.async_create_issue(
+        hass,
+        DOMAIN,
+        issue_id,
+        is_fixable=False,
+        is_persistent=True,
+        learn_more_url=CLIENT_CREDENTIALS_ISSUE_URL,
+        severity=ir.IssueSeverity.ERROR,
+        translation_key="client_credentials",
+    )
 
 
 class HargassnerHub:
@@ -93,16 +127,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         except HargassnerAuthError as err:
             raise ConfigEntryAuthFailed(str(err)) from err
         except HargassnerClientCredentialsError as err:
-            ir.async_create_issue(
-                hass,
-                DOMAIN,
-                f"client_credentials_{entry.entry_id}",
-                is_fixable=False,
-                is_persistent=True,
-                learn_more_url=CLIENT_CREDENTIALS_ISSUE_URL,
-                severity=ir.IssueSeverity.ERROR,
-                translation_key="client_credentials",
-            )
+            _create_client_credentials_issue(hass, entry)
             raise UpdateFailed(str(err)) from err
         except HargassnerConnectionError as err:
             raise UpdateFailed(str(err)) from err

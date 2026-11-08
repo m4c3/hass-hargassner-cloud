@@ -4,6 +4,9 @@
   "codeowners": [
     "@m4c3"
   ],
+  "categories": [
+    "climate"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/m4c3/hass-hargassner-cloud",
   "integration_type": "hub",

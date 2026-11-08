@@ -78,15 +78,15 @@ Aktualisierung. Ein direkter Kanal für den Pelletverbrauch wurde nicht gefunden
 
 ## Installation
 
-### HACS
+### Marketplace
 
-1. **HACS → Integrationen** öffnen.
-1. Im Drei-Punkte-Menü **Benutzerdefinierte Repositories** auswählen.
-1. `https://github.com/m4c3/hass-hargassner-cloud` als **Integration**
-   hinzufügen.
-1. **Hargassner Cloud** installieren und Home Assistant neu starten.
+1. **Einstellungen → Marketplace** öffnen.
+1. Nach **Hargassner Cloud** suchen und **Installieren** auswählen.
 1. **Einstellungen → Geräte & Dienste → Integration hinzufügen** öffnen und
    **Hargassner Cloud** auswählen.
+
+Für ältere Home-Assistant-Versionen kann die Integration weiterhin über HACS
+mit der oben genannten Repository-URL installiert werden.
 
 ### Manuelle Installation
 
@@ -195,7 +195,7 @@ Prüfungen ausführen:
 
 ```bash
 python -m compileall custom_components tests
-pytest
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest
 ruff format --check custom_components tests
 ruff check custom_components tests
 mypy custom_components tests

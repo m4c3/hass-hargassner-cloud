@@ -56,13 +56,14 @@ API nebyl pozorován.
 
 ## Instalace
 
-### HACS
+### Marketplace
 
-1. Otevřete **HACS → Integrace**.
-1. V nabídce se třemi tečkami vyberte **Vlastní repozitáře**.
-1. Přidejte `https://github.com/m4c3/hass-hargassner-cloud` jako **Integraci**.
-1. Nainstalujte **Hargassner Cloud** a restartujte Home Assistant.
+1. Otevřete **Nastavení → Marketplace**.
+1. Vyhledejte **Hargassner Cloud** a vyberte **Instalovat**.
 1. Otevřete **Nastavení → Zařízení a služby → Přidat integraci**.
+
+Ve starších verzích Home Assistantu lze integraci nainstalovat přes HACS pomocí
+výše uvedené URL repozitáře.
 
 ### Ruční instalace
 

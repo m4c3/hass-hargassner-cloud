@@ -61,14 +61,14 @@ numérotation n’a pas encore été observé.
 
 ## Installation
 
-### HACS
+### Marketplace
 
-1. Ouvrir **HACS → Intégrations**.
-1. Choisir **Dépôts personnalisés** dans le menu à trois points.
-1. Ajouter `https://github.com/m4c3/hass-hargassner-cloud` comme
-   **Intégration**.
-1. Installer **Hargassner Cloud** et redémarrer Home Assistant.
+1. Ouvrir **Paramètres → Marketplace**.
+1. Rechercher **Hargassner Cloud** et sélectionner **Installer**.
 1. Ouvrir **Paramètres → Appareils et services → Ajouter une intégration**.
+
+Dans les anciennes versions de Home Assistant, l’intégration peut être
+installée via HACS avec l’URL du dépôt indiquée ci-dessus.
 
 ### Installation manuelle
 

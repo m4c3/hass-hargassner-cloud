@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Updated installation instructions for the Home Assistant 2026.11 Marketplace
+- Added Marketplace integration category metadata
+- Linked credential repair issues to their config entry when supported
+- Updated the development and CI test baseline to Home Assistant 2026.11.0
+- Disabled automatic third-party Pytest plugin loading for the 2026.11 test run
+
 ## 0.5.10
 
 - Updated the development and CI test baseline to Home Assistant 2026.10.0

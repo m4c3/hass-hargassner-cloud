@@ -73,14 +73,15 @@ consumption channel was not observed.
 
 ## Installation
 
-### HACS
+### Marketplace
 
-1. Open **HACS → Integrations**.
-1. Open the three-dot menu and select **Custom repositories**.
-1. Add `https://github.com/m4c3/hass-hargassner-cloud` as an **Integration**.
-1. Install **Hargassner Cloud** and restart Home Assistant.
+1. Open **Settings → Marketplace**.
+1. Search for **Hargassner Cloud** and select **Install**.
 1. Open **Settings → Devices & services → Add integration** and select
    **Hargassner Cloud**.
+
+For older Home Assistant versions, install the integration through HACS using
+the repository URL above.
 
 ### Manual installation
 
@@ -184,7 +185,7 @@ Run the checks:
 
 ```bash
 python -m compileall custom_components tests
-pytest
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest
 ruff format --check custom_components tests
 ruff check custom_components tests
 mypy custom_components tests

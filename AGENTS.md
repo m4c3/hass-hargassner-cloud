@@ -57,7 +57,7 @@ custom_components/hargassner_cloud/
 Run the complete local validation suite after substantive changes:
 
 ```bash
-.venv/bin/pytest -q
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/pytest -q
 .venv/bin/ruff format --check custom_components tests scripts
 .venv/bin/ruff check custom_components tests scripts
 .venv/bin/mypy custom_components tests scripts
@@ -77,7 +77,7 @@ read -r -p "Hargassner email: " HARGASSNER_USERNAME
 read -r -s -p "Hargassner password: " HARGASSNER_PASSWORD
 echo
 export HARGASSNER_USERNAME HARGASSNER_PASSWORD
-.venv/bin/pytest -m live -q
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/pytest -m live -q
 unset HARGASSNER_USERNAME HARGASSNER_PASSWORD
 ```
 

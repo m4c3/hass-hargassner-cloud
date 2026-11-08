@@ -41,7 +41,7 @@ Thanks for contributing to **Hargassner Cloud**!
 
   ```bash
   python -m compileall custom_components tests
-  pytest
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest
   ruff format --check custom_components tests
   ruff check custom_components tests
   mypy custom_components tests
